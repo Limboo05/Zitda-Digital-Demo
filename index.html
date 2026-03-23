@@ -1,0 +1,2282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZITDA — Zamfara Digital Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+  --forest: #0a4a2e;
+  --forest-mid: #0d6b43;
+  --forest-bright: #12955c;
+  --emerald: #00c873;
+  --gold: #f5a623;
+  --gold-light: #ffc95c;
+  --cream: #faf8f3;
+  --cream-dark: #f0ece0;
+  --ink: #111714;
+  --ink-mid: #2a3530;
+  --muted: #6b7f74;
+  --border: rgba(10,74,46,0.12);
+  --white: #ffffff;
+
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ── SCROLL PROGRESS ── */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--forest-bright), var(--emerald), var(--gold));
+  z-index: 1000;
+  transition: width 0.1s linear;
+}
+
+/* ── HEADER ── */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 900;
+  padding: 0 2rem;
+  transition: background 0.4s, box-shadow 0.4s, padding 0.3s;
+}
+
+header.scrolled {
+  background: rgba(250,248,243,0.95);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 var(--border), 0 8px 32px rgba(0,0,0,0.06);
+  padding: 0 2rem;
+}
+
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  height: 72px;
+  gap: 2rem;
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo-badge {
+  width: 44px; height: 44px;
+  background: var(--forest);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--emerald);
+  letter-spacing: -0.5px;
+}
+
+.logo-text-wrap { line-height: 1.1; }
+
+.logo-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--forest);
+  letter-spacing: -0.3px;
+}
+
+.logo-sub {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+  font-weight: 400;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: auto;
+}
+
+nav a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-mid);
+  text-decoration: none;
+  padding: 0.5rem 0.875rem;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+  letter-spacing: -0.1px;
+}
+
+nav a:hover {
+  background: rgba(10,74,46,0.08);
+  color: var(--forest);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: 1rem;
+}
+
+/* ── LANGUAGE SWITCHER ── */
+.lang-switch {
+  display: flex;
+  background: rgba(10,74,46,0.07);
+  border-radius: 20px;
+  padding: 3px;
+  gap: 1px;
+}
+
+.lang-btn {
+  border: none;
+  background: transparent;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.2s;
+  font-family: var(--font-body);
+}
+
+.lang-btn.active {
+  background: var(--white);
+  color: var(--forest);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* ── USER TYPE SELECTOR ── */
+.user-chip-wrap {
+  position: relative;
+}
+
+.user-chip-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px 6px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-mid);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-body);
+}
+
+.user-chip-btn:hover {
+  border-color: var(--forest-bright);
+  color: var(--forest);
+}
+
+.user-chip-btn .user-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--emerald);
+  flex-shrink: 0;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--white);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+  padding: 6px;
+  min-width: 200px;
+  display: none;
+  z-index: 9999;
+}
+
+.user-dropdown.open { display: block; }
+
+.user-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: var(--ink-mid);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+  font-family: var(--font-body);
+}
+
+.user-dropdown button:hover { background: var(--cream); }
+.user-dropdown button.active { background: rgba(0,200,115,0.1); color: var(--forest); font-weight: 500; }
+.user-dropdown button i { width: 18px; color: var(--forest-bright); font-size: 13px; }
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  font-family: var(--font-body);
+  letter-spacing: -0.1px;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--forest);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--forest-mid);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(10,74,46,0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--forest);
+  border: 1.5px solid var(--forest);
+}
+
+.btn-outline:hover {
+  background: var(--forest);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: rgba(255,255,255,0.15);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.btn-lg { padding: 14px 28px; font-size: 15px; border-radius: 12px; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--forest);
+  padding-top: 72px;
+}
+
+/* Geometric background pattern */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(0,200,115,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 90% 80%, rgba(245,166,35,0.08) 0%, transparent 50%);
+}
+
+.hero-grid-lines {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image:
+    linear-gradient(var(--white) 1px, transparent 1px),
+    linear-gradient(90deg, var(--white) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,200,115,0.12);
+  border: 1px solid rgba(0,200,115,0.25);
+  color: var(--emerald);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.hero-eyebrow span.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--emerald);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.7; }
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 .accent { color: var(--emerald); }
+.hero h1 .gold-accent { color: var(--gold-light); }
+
+.hero-desc {
+  font-size: 17px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  max-width: 520px;
+  font-weight: 300;
+}
+
+.hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.hero-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 400;
+}
+
+.hero-pill i { font-size: 12px; color: var(--emerald); }
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Hero visual — dashboard mockup */
+.hero-visual {
+  position: relative;
+}
+
+.dashboard-mockup {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.mockup-topbar {
+  height: 40px;
+  background: rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 6px;
+}
+
+.mockup-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+
+.mockup-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+
+.mockup-stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.mockup-stat {
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.mockup-stat-num {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+
+.mockup-stat-label {
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mockup-chart {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  height: 100px;
+  padding: 14px;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.mockup-bar {
+  flex: 1;
+  border-radius: 4px 4px 0 0;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  background: var(--forest-bright);
+}
+
+.mockup-bar:nth-child(odd) { background: var(--emerald); opacity: 0.5; }
+.mockup-bar:nth-child(4) { background: var(--gold); opacity: 0.8; }
+
+.mockup-list { display: flex; flex-direction: column; gap: 8px; }
+
+.mockup-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 9px 12px;
+}
+
+.mockup-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mockup-row-text { flex: 1; }
+.mockup-row-title { height: 8px; background: rgba(255,255,255,0.35); border-radius: 4px; margin-bottom: 5px; }
+.mockup-row-sub { height: 6px; background: rgba(255,255,255,0.15); border-radius: 4px; width: 60%; }
+.mockup-badge {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.badge-green { background: rgba(0,200,115,0.2); color: var(--emerald); }
+.badge-gold { background: rgba(245,166,35,0.2); color: var(--gold-light); }
+
+/* ── SCROLL ARROW ── */
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,0.4);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  animation: bounce-hint 2.5s ease-in-out infinite;
+}
+
+@keyframes bounce-hint {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.4; }
+  50% { transform: translateX(-50%) translateY(6px); opacity: 0.7; }
+}
+
+/* ── STATS BAND ── */
+.stats-band {
+  background: var(--forest);
+  padding: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.stats-band-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 0 2rem;
+}
+
+.stat-cell {
+  padding: 2.5rem 2rem;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  position: relative;
+}
+
+.stat-cell:last-child { border-right: none; }
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: -1.5px;
+  margin-bottom: 0.375rem;
+}
+
+.stat-value .unit {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--emerald);
+}
+
+.stat-label-text {
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 400;
+}
+
+/* ── SECTION LAYOUT ── */
+.section {
+  padding: 6rem 2rem;
+}
+
+.section-inner { max-width: 1280px; margin: 0 auto; }
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--forest-bright);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.section-eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 2px;
+  background: var(--forest-bright);
+  border-radius: 1px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  color: var(--forest);
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.section-desc {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 560px;
+}
+
+/* ── JOURNEY SECTION ── */
+.journey-section {
+  background: var(--cream-dark);
+  padding: 5rem 2rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.journey-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 3.5rem;
+  position: relative;
+}
+
+.journey-grid::before {
+  content: '';
+  position: absolute;
+  top: 36px;
+  left: calc(12.5% + 28px);
+  right: calc(12.5% + 28px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--forest-bright), var(--emerald));
+  opacity: 0.25;
+  border-radius: 1px;
+}
+
+.journey-step {
+  padding: 0 1.5rem;
+  text-align: center;
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s var(--ease-out);
+}
+
+.journey-step.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.journey-icon {
+  width: 72px; height: 72px;
+  margin: 0 auto 1.25rem;
+  background: var(--white);
+  border-radius: 18px;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--forest-bright);
+  position: relative;
+  transition: all 0.3s var(--ease-spring);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+}
+
+.journey-step:hover .journey-icon {
+  border-color: var(--forest-bright);
+  background: var(--forest);
+  color: var(--emerald);
+  transform: scale(1.08);
+  box-shadow: 0 12px 32px rgba(10,74,46,0.25);
+}
+
+.journey-step-num {
+  position: absolute;
+  top: -8px; right: -8px;
+  width: 22px; height: 22px;
+  background: var(--forest);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--emerald);
+  font-family: var(--font-display);
+}
+
+.journey-step h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--forest);
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.3px;
+}
+
+.journey-step p {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── FEATURES GRID ── */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+  margin-top: 4rem;
+  background: var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+}
+
+.feature-cell {
+  padding: 2.5rem 2rem;
+  background: var(--white);
+  transition: background 0.3s;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out), background 0.3s;
+}
+
+.feature-cell.visible { opacity: 1; transform: none; }
+
+.feature-cell:hover { background: var(--cream); }
+
+.feature-cell::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, var(--forest-bright), var(--emerald));
+  transition: width 0.3s var(--ease-out);
+}
+
+.feature-cell:hover::after { width: 100%; }
+
+.feature-icon-wrap {
+  width: 48px; height: 48px;
+  background: rgba(10,74,46,0.07);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--forest-bright);
+  margin-bottom: 1.25rem;
+  transition: all 0.3s var(--ease-spring);
+}
+
+.feature-cell:hover .feature-icon-wrap {
+  background: var(--forest);
+  color: var(--emerald);
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.feature-cell h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+  margin-bottom: 0.625rem;
+}
+
+.feature-cell p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ── SHOWCASE ── */
+.showcase-section {
+  background: var(--forest);
+  overflow: hidden;
+  position: relative;
+}
+
+.showcase-section::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,200,115,0.08) 0%, transparent 70%);
+}
+
+.showcase-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  align-items: center;
+  gap: 5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.showcase-text .section-eyebrow { color: var(--emerald); }
+.showcase-text .section-eyebrow::before { background: var(--emerald); }
+.showcase-text .section-title { color: var(--white); }
+.showcase-text .section-desc { color: rgba(255,255,255,0.6); max-width: 440px; }
+
+.showcase-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.showcase-feature {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.check-wrap {
+  width: 28px; height: 28px;
+  background: rgba(0,200,115,0.15);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.check-wrap i { font-size: 12px; color: var(--emerald); }
+
+.showcase-feature h4 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+
+.showcase-feature p { font-size: 13.5px; color: rgba(255,255,255,0.55); }
+
+/* Big dashboard preview */
+.big-preview {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.big-preview-header {
+  height: 48px;
+  background: rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.preview-dots { display: flex; gap: 6px; }
+.preview-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+.big-preview-body {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 14px;
+}
+
+.preview-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.preview-nav-item {
+  height: 36px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.preview-nav-item.active {
+  background: rgba(0,200,115,0.15);
+}
+
+.preview-main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.preview-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.preview-card-sm {
+  background: rgba(255,255,255,0.07);
+  border-radius: 10px;
+  height: 60px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.preview-card-top { height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; width: 50%; }
+.preview-card-num {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--white);
+}
+
+.preview-chart-block {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  height: 80px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.p-bar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  background: rgba(0,200,115,0.4);
+}
+
+/* ── TESTIMONIALS ── */
+.testimonials-section {
+  padding: 6rem 2rem;
+  background: var(--cream-dark);
+  border-top: 1px solid var(--border);
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3.5rem;
+}
+
+.testimonial-card {
+  background: var(--white);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  padding: 2rem;
+  position: relative;
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s;
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.testimonial-card.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.08);
+}
+
+.testimonial-quote {
+  font-size: 2.5rem;
+  color: var(--emerald);
+  line-height: 1;
+  font-family: serif;
+  margin-bottom: 0.75rem;
+  opacity: 0.4;
+}
+
+.testimonial-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-mid);
+  margin-bottom: 1.5rem;
+  font-style: italic;
+  font-weight: 300;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.author-avatar {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.author-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.author-role {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+/* Rating stars */
+.testimonial-stars {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 1rem;
+}
+
+.testimonial-stars i { font-size: 12px; color: var(--gold); }
+
+/* ── CTA ── */
+.cta-section {
+  padding: 7rem 2rem;
+  background: var(--forest);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 60% at 30% 50%, rgba(0,200,115,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 70% 50%, rgba(245,166,35,0.08) 0%, transparent 50%);
+}
+
+.cta-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+
+.cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.cta-desc {
+  font-size: 18px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  padding: 4rem 2rem 2.5rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer-brand { }
+
+.footer-brand .logo-badge-footer {
+  width: 48px; height: 48px;
+  background: var(--forest);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--emerald);
+  margin-bottom: 1rem;
+}
+
+.footer-brand p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 1.5rem;
+  max-width: 280px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 0.625rem;
+}
+
+.social-btn {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.social-btn:hover {
+  background: rgba(255,255,255,0.08);
+  color: var(--white);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.footer-col h4 {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 1.25rem;
+}
+
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.footer-col a {
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-col a:hover { color: rgba(255,255,255,0.85); }
+.footer-col li i { font-size: 12px; color: var(--forest-bright); width: 14px; }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-bottom p { font-size: 13px; }
+
+.footer-tagline {
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.25);
+}
+
+/* ── FAB ── */
+.fab-wrap {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+  z-index: 800;
+}
+
+.fab-main {
+  width: 56px; height: 56px;
+  background: var(--forest);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(10,74,46,0.4);
+  transition: all 0.3s var(--ease-spring);
+  z-index: 2;
+}
+
+.fab-main:hover { transform: scale(1.1); background: var(--forest-mid); }
+.fab-main.open { transform: rotate(45deg); background: #b33d3d; }
+
+.fab-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  transition: all 0.3s var(--ease-out);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+
+.fab-options.open { opacity: 1; pointer-events: all; transform: none; }
+
+.fab-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fab-option-label {
+  background: var(--ink);
+  color: var(--white);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.fab-option-btn {
+  width: 44px; height: 44px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--forest);
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.2s var(--ease-spring);
+}
+
+.fab-option-btn:hover { background: var(--forest); color: var(--white); transform: scale(1.08); }
+
+/* ── TOAST ── */
+.toast-stack {
+  position: fixed;
+  top: 88px;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 9999;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink);
+  color: var(--white);
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 400;
+  max-width: 320px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  border-left: 3px solid var(--emerald);
+  animation: toast-in 0.35s var(--ease-out) forwards;
+}
+
+.toast.type-error { border-color: #f87171; }
+.toast.type-warning { border-color: var(--gold); }
+.toast.type-info { border-color: #60a5fa; }
+
+@keyframes toast-in {
+  from { transform: translateX(110%); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+.toast i { font-size: 14px; color: var(--emerald); flex-shrink: 0; }
+.toast.type-error i { color: #f87171; }
+.toast.type-info i { color: #60a5fa; }
+
+/* ── MOBILE ── */
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--ink);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 6px;
+}
+
+/* ── ANIMATIONS / REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+
+.reveal.visible { opacity: 1; transform: none; }
+
+/* Transition delay classes */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+
+/* ── RTL ── */
+[dir="rtl"] { text-align: right; }
+[dir="rtl"] .hero h1, [dir="rtl"] .section-desc { text-align: right; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.5rem 4rem; }
+  .hero-visual { order: -1; }
+  .dashboard-mockup { max-width: 480px; margin: 0 auto; }
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-band-inner { grid-template-columns: repeat(2, 1fr); }
+  .stat-cell { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .showcase-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  nav { display: none; }
+  .mobile-menu-btn { display: flex; }
+  .header-actions { gap: 0.5rem; }
+  .lang-switch { display: none; }
+  .hero h1 { font-size: 2.2rem; }
+  .features-grid { grid-template-columns: 1fr; }
+  .stats-band-inner { grid-template-columns: repeat(2, 1fr); }
+  .journey-grid { grid-template-columns: repeat(2, 1fr); }
+  .journey-grid::before { display: none; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .showcase-inner { padding: 3rem 1.5rem; }
+  .cta-section { padding: 4rem 1.5rem; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Progress Bar -->
+<div id="progress-bar"></div>
+
+<!-- Toast Stack -->
+<div class="toast-stack" id="toastStack"></div>
+
+<!-- Header -->
+<header id="mainHeader">
+  <div class="header-inner">
+    <a href="#" class="logo-wrap">
+       <img src="ZITDA.jpg" width="70" height="70">
+      <div class="logo-text-wrap">
+        <div class="logo-name">ZITDA Digital Hub</div>
+        <div class="logo-sub">Unified Learning Platform</div>
+      </div>
+    </a>
+
+    <nav>
+      <a href="#features" id="nav-features">Features</a>
+      <a href="#showcase" id="nav-showcase">Showcase</a>
+      <a href="#testimonials" id="nav-success">Success Stories</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ha">HA</button>
+        <button class="lang-btn" data-lang="ar">AR</button>
+      </div>
+
+      <div class="user-chip-wrap">
+        <button class="user-chip-btn" id="userChipBtn">
+          <span class="user-dot"></span>
+          <span id="userChipLabel">Civil Servant</span>
+          <i class="fas fa-chevron-down" style="font-size:10px; opacity:0.5;"></i>
+        </button>
+        <div class="user-dropdown" id="userDropdown">
+          <button class="active" data-user="civil-servant"><i class="fas fa-user-tie"></i>Civil Servant</button>
+          <button data-user="teacher"><i class="fas fa-chalkboard-teacher"></i>Teacher</button>
+          <button data-user="student"><i class="fas fa-graduation-cap"></i>Student</button>
+          <button data-user="youth"><i class="fas fa-users"></i>Youth & Skills</button>
+          <button data-user="sme"><i class="fas fa-briefcase"></i>SME Owner</button>
+        </div>
+      </div>
+
+      <a href="Profile Selection.html" class="btn btn-primary" id="btn-cta" style="padding: 9px 18px; font-size: 13.5px;">Start Free</a>
+    </div>
+
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid-lines"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow">
+        <span class="dot"></span>
+        <span id="hero-eyebrow-text">Zamfara State Digital Platform</span>
+      </div>
+      <h1 id="hero-heading">
+        Transform<br>
+        Zamfara's<br>
+        <span class="accent">Workforce</span> with<br>
+        <span class="gold-accent">Digital Excellence</span>
+      </h1>
+      <p class="hero-desc" id="hero-desc">A unified platform empowering civil servants, teachers, students, youth, and SMEs with world-class digital skills and career advancement.</p>
+
+      <div class="hero-pills">
+        <div class="hero-pill"><i class="fas fa-robot"></i><span id="pill1">AI-Powered Learning</span></div>
+        <div class="hero-pill"><i class="fas fa-satellite-dish"></i><span id="pill2">Offline Access</span></div>
+        <div class="hero-pill"><i class="fas fa-language"></i><span id="pill3">Hausa Language Support</span></div>
+        <div class="hero-pill"><i class="fas fa-network-wired"></i><span id="pill4">Gov Integration</span></div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="Profile Selection.html" class="btn btn-primary btn-lg" id="hero-btn-primary">
+          <i class="fas fa-rocket"></i>
+          <span id="hero-btn-primary-text">Start Your Journey</span>
+        </a>
+        <a href="#showcase" class="btn btn-ghost btn-lg" id="hero-btn-secondary">
+          <i class="fas fa-play"></i>
+          <span id="hero-btn-secondary-text">Platform Tour</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Dashboard mockup -->
+    <div class="hero-visual">
+      <div class="dashboard-mockup">
+        <div class="mockup-topbar">
+          <div class="mockup-dot" style="background:#f87171;"></div>
+          <div class="mockup-dot" style="background:#fbbf24;"></div>
+          <div class="mockup-dot" style="background:#4ade80;"></div>
+          <div style="flex:1; height:6px; background:rgba(255,255,255,0.1); border-radius:3px; margin-left:12px;"></div>
+        </div>
+        <div class="mockup-body">
+          <div class="mockup-stat-row">
+            <div class="mockup-stat">
+              <div class="mockup-stat-num">15k</div>
+              <div class="mockup-stat-label">Users</div>
+            </div>
+            <div class="mockup-stat">
+              <div class="mockup-stat-num">98%</div>
+              <div class="mockup-stat-label">Satisfaction</div>
+            </div>
+            <div class="mockup-stat">
+              <div class="mockup-stat-num">500</div>
+              <div class="mockup-stat-label">Modules</div>
+            </div>
+          </div>
+          <div class="mockup-chart">
+            <div class="mockup-bar" style="height:40%;"></div>
+            <div class="mockup-bar" style="height:60%;"></div>
+            <div class="mockup-bar" style="height:75%;"></div>
+            <div class="mockup-bar" style="height:55%;"></div>
+            <div class="mockup-bar" style="height:90%;"></div>
+            <div class="mockup-bar" style="height:70%;"></div>
+            <div class="mockup-bar" style="height:85%;"></div>
+            <div class="mockup-bar" style="height:65%;"></div>
+          </div>
+          <div class="mockup-list">
+            <div class="mockup-row">
+              <div class="mockup-avatar" style="background:rgba(0,200,115,0.3);"></div>
+              <div class="mockup-row-text">
+                <div class="mockup-row-title"></div>
+                <div class="mockup-row-sub"></div>
+              </div>
+              <div class="mockup-badge badge-green">Active</div>
+            </div>
+            <div class="mockup-row">
+              <div class="mockup-avatar" style="background:rgba(245,166,35,0.3);"></div>
+              <div class="mockup-row-text">
+                <div class="mockup-row-title"></div>
+                <div class="mockup-row-sub"></div>
+              </div>
+              <div class="mockup-badge badge-gold">Pending</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <i class="fas fa-chevron-down"></i>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stats-band-inner">
+    <div class="stat-cell reveal">
+      <div class="stat-value"><span class="counter" data-target="15000" data-suffix="+">0</span></div>
+      <div class="stat-label-text" id="stat1-label">Users Empowered</div>
+    </div>
+    <div class="stat-cell reveal delay-1">
+      <div class="stat-value"><span class="counter" data-target="98">0</span><span class="unit">%</span></div>
+      <div class="stat-label-text" id="stat2-label">User Satisfaction</div>
+    </div>
+    <div class="stat-cell reveal delay-2">
+      <div class="stat-value"><span class="counter" data-target="500">0</span><span class="unit">+</span></div>
+      <div class="stat-label-text" id="stat3-label">Skills Modules</div>
+    </div>
+    <div class="stat-cell reveal delay-3">
+      <div class="stat-value"><span class="counter" data-target="42">0</span></div>
+      <div class="stat-label-text" id="stat4-label">Partner Organizations</div>
+    </div>
+  </div>
+</div>
+
+<!-- JOURNEY -->
+<div class="journey-section" id="journey">
+  <div style="max-width:1280px; margin:0 auto; padding:0 2rem;">
+    <div class="section-eyebrow reveal" id="journey-eyebrow">How it works</div>
+    <h2 class="section-title reveal delay-1" id="journey-title">Your Digital Transformation Journey</h2>
+  </div>
+  <div class="journey-grid">
+    <div class="journey-step">
+      <div class="journey-icon">
+        <i class="fas fa-user-plus"></i>
+        <div class="journey-step-num">1</div>
+      </div>
+      <h3 id="step1-title">Register & Onboard</h3>
+      <p id="step1-desc">Quick setup with personalized skills assessment</p>
+    </div>
+    <div class="journey-step">
+      <div class="journey-icon">
+        <i class="fas fa-graduation-cap"></i>
+        <div class="journey-step-num">2</div>
+      </div>
+      <h3 id="step2-title">Learn & Practice</h3>
+      <p id="step2-desc">Interactive modules with real-world simulations</p>
+    </div>
+    <div class="journey-step">
+      <div class="journey-icon">
+        <i class="fas fa-certificate"></i>
+        <div class="journey-step-num">3</div>
+      </div>
+      <h3 id="step3-title">Get Certified</h3>
+      <p id="step3-desc">Earn government-recognized digital certificates</p>
+    </div>
+    <div class="journey-step">
+      <div class="journey-icon">
+        <i class="fas fa-briefcase"></i>
+        <div class="journey-step-num">4</div>
+      </div>
+      <h3 id="step4-title">Advance Career</h3>
+      <p id="step4-desc">Access promotions and job opportunities</p>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal" id="features-eyebrow">Platform Features</div>
+    <h2 class="section-title reveal delay-1" id="features-title">Advanced Tools for Every Learner</h2>
+    <p class="section-desc reveal delay-2" id="features-desc">Cutting-edge technology driving digital transformation across Zamfara State</p>
+
+    <div class="features-grid">
+      <div class="feature-cell">
+        <div class="feature-icon-wrap"><i class="fas fa-robot"></i></div>
+        <h3 id="f1-title">AI-Powered Learning Paths</h3>
+        <p id="f1-desc">Adaptive algorithms personalize content based on your progress, skills gaps, and career goals for maximum efficiency.</p>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-icon-wrap"><i class="fas fa-satellite-dish"></i></div>
+        <h3 id="f2-title">Offline-First Design</h3>
+        <p id="f2-desc">Access all courses without internet — perfect for rural communities. Auto-syncs when your connection returns.</p>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-icon-wrap"><i class="fas fa-language"></i></div>
+        <h3 id="f3-title">Multi-language Voice Interface</h3>
+        <p id="f3-desc">Learn in Hausa, English, or French with voice commands and audio lessons for maximum accessibility.</p>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-icon-wrap"><i class="fas fa-vr-cardboard"></i></div>
+        <h3 id="f4-title">Virtual Reality Labs</h3>
+        <p id="f4-desc">Immersive science and computer labs give students practical learning experiences without physical equipment.</p>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-icon-wrap"><i class="fas fa-chart-line"></i></div>
+        <h3 id="f5-title">Smart Analytics Dashboard</h3>
+        <p id="f5-desc">Real-time tracking of engagement, skill progression, and platform performance with actionable insights.</p>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-icon-wrap"><i class="fas fa-handshake"></i></div>
+        <h3 id="f6-title">Mentorship Network</h3>
+        <p id="f6-desc">Connect with industry experts, senior officials, and successful entrepreneurs for guided career growth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section class="showcase-section" id="showcase">
+  <div class="showcase-inner">
+    <div class="showcase-text">
+      <div class="section-eyebrow reveal" id="showcase-eyebrow">Dashboard Preview</div>
+      <h2 class="section-title reveal delay-1" id="showcase-title">Experience Our Professional Learning Hub</h2>
+      <p class="section-desc reveal delay-2" id="showcase-desc">See how our unified platform delivers personalized experiences across all user groups with real-time data.</p>
+
+      <div class="showcase-features">
+        <div class="showcase-feature reveal delay-1">
+          <div class="check-wrap"><i class="fas fa-check"></i></div>
+          <div>
+            <h4 id="sf1-title">Real-time Progress Tracking</h4>
+            <p id="sf1-desc">Monitor skills development with advanced analytics and visual dashboards</p>
+          </div>
+        </div>
+        <div class="showcase-feature reveal delay-2">
+          <div class="check-wrap"><i class="fas fa-check"></i></div>
+          <div>
+            <h4 id="sf2-title">Interactive Simulations</h4>
+            <p id="sf2-desc">Practice with virtual labs and government exam simulations</p>
+          </div>
+        </div>
+        <div class="showcase-feature reveal delay-3">
+          <div class="check-wrap"><i class="fas fa-check"></i></div>
+          <div>
+            <h4 id="sf3-title">Government HR Integration</h4>
+            <p id="sf3-desc">Seamless connection with state civil service HR systems for promotions</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:2.5rem;" class="reveal delay-4">
+        <a href="Profile Selection.html" class="btn btn-ghost btn-lg">
+          <i class="fas fa-external-link-alt"></i>
+          <span id="showcase-cta">View Full Dashboard</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="big-preview reveal delay-2">
+      <div class="big-preview-header">
+        <div class="preview-dots">
+          <div class="preview-dot" style="background:#f87171;"></div>
+          <div class="preview-dot" style="background:#fbbf24;"></div>
+          <div class="preview-dot" style="background:#4ade80;"></div>
+        </div>
+        <div style="height:6px; width:120px; background:rgba(255,255,255,0.08); border-radius:3px;"></div>
+        <div style="width:24px; height:24px; border-radius:6px; background:rgba(0,200,115,0.15); display:flex; align-items:center; justify-content:center;">
+          <i class="fas fa-bell" style="font-size:10px; color:var(--emerald);"></i>
+        </div>
+      </div>
+      <div class="big-preview-body">
+        <div class="preview-sidebar">
+          <div class="preview-nav-item active"></div>
+          <div class="preview-nav-item"></div>
+          <div class="preview-nav-item"></div>
+          <div class="preview-nav-item"></div>
+          <div class="preview-nav-item"></div>
+          <div class="preview-nav-item"></div>
+        </div>
+        <div class="preview-main">
+          <div class="preview-cards-row">
+            <div class="preview-card-sm">
+              <div class="preview-card-top"></div>
+              <div class="preview-card-num" style="color:var(--emerald);">87%</div>
+            </div>
+            <div class="preview-card-sm">
+              <div class="preview-card-top"></div>
+              <div class="preview-card-num">42</div>
+            </div>
+            <div class="preview-card-sm">
+              <div class="preview-card-top"></div>
+              <div class="preview-card-num" style="color:var(--gold-light);">12</div>
+            </div>
+          </div>
+          <div class="preview-chart-block">
+            <div class="p-bar" style="height:50%;"></div>
+            <div class="p-bar" style="height:70%;"></div>
+            <div class="p-bar" style="height:45%;"></div>
+            <div class="p-bar" style="height:85%;"></div>
+            <div class="p-bar" style="height:60%;"></div>
+            <div class="p-bar" style="height:90%;"></div>
+            <div class="p-bar" style="height:72%;"></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.05); border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:7px;">
+            <div style="height:8px; background:rgba(255,255,255,0.15); border-radius:4px; width:80%;"></div>
+            <div style="height:6px; background:rgba(255,255,255,0.08); border-radius:4px; width:55%;"></div>
+            <div style="height:6px; background:rgba(255,255,255,0.08); border-radius:4px; width:70%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="testimonials">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal" id="testimonials-eyebrow">Success Stories</div>
+    <h2 class="section-title reveal delay-1" id="testimonials-title">Hear from Our Community</h2>
+    <p class="section-desc reveal delay-2" id="testimonials-desc">Real people, real transformations. See how ZITDA is changing lives across Zamfara.</p>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">After completing the e-Government training, I was promoted within 6 months. The digital literacy modules completely changed how I approach my work.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:var(--forest);">AM</div>
+          <div>
+            <div class="author-name">Abubakar Musa</div>
+            <div class="author-role">Senior Civil Servant, Gusau</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">My students' WAEC scores improved by 40% after I started using the virtual labs. The Hausa language interface made it accessible for everyone.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:var(--forest-mid);">HB</div>
+          <div>
+            <div class="author-name">Hajiya Binta</div>
+            <div class="author-role">Secondary School Teacher, Kaura</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+        <div class="testimonial-quote">"</div>
+        <p class="testimonial-text">I built my tailoring business online through the SME e-commerce training. My revenue tripled in one year. This platform literally changed my life.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:#7c3aed;">ZM</div>
+          <div>
+            <div class="author-name">Zainab Mohammed</div>
+            <div class="author-role">SME Owner, Talata Mafara</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="register">
+  <div class="cta-inner">
+    <div class="section-eyebrow reveal" style="justify-content:center; color:var(--emerald);" id="cta-eyebrow">
+      <span style="background:var(--emerald); width:24px; height:2px; border-radius:1px; display:inline-block;"></span>
+      Get Started Today
+    </div>
+    <h2 class="cta-title reveal delay-1" id="cta-title">Ready to Transform Digital Learning in Zamfara?</h2>
+    <p class="cta-desc reveal delay-2" id="cta-desc">Join thousands of learners already growing their skills and careers. Free to start — no credit card needed.</p>
+    <div class="cta-actions reveal delay-3">
+      <a href="Profile Selection.html" class="btn btn-primary btn-lg" style="background:var(--emerald); color:var(--forest);">
+        <i class="fas fa-user-plus"></i>
+        <span id="cta-btn1">Get Started Free</span>
+      </a>
+      <a href="Profile Selection.html" class="btn btn-ghost btn-lg">
+        <i class="fas fa-calendar"></i>
+        <span id="cta-btn2">Schedule a Demo</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo-badge-footer">Z</div>
+        <p id="footer-desc">Empowering Zamfara State through digital transformation and skills development for all citizens — from civil servants to entrepreneurs.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-facebook"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 id="footer-portals-h">Portals</h4>
+        <ul>
+          <li><a href="#" id="footer-civil">Civil Servants Portal</a></li>
+          <li><a href="#" id="footer-teachers">Teachers Academy</a></li>
+          <li><a href="#" id="footer-students">Student Learning Hub</a></li>
+          <li><a href="#" id="footer-youth">Youth Skills Center</a></li>
+          <li><a href="#" id="footer-sme">SME Business Lab</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 id="footer-resources-h">Resources</h4>
+        <ul>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Video Tutorials</a></li>
+          <li><a href="#">Research Papers</a></li>
+          <li><a href="#">Success Stories</a></li>
+          <li><a href="#">Annual Reports</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 id="footer-contact-h">Contact</h4>
+        <ul>
+          <li><i class="fas fa-map-marker-alt"></i> ZITDA, Zamfara State</li>
+          <li><i class="fas fa-phone"></i> +234 800 948 324</li>
+          <li><i class="fas fa-envelope"></i> contact@zitda.zm.gov.ng</li>
+          <li><i class="fas fa-clock"></i> Mon–Fri, 8AM–6PM</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p id="footer-copy">&copy; 2026 Zamfara ICT Development Agency (ZITDA). All rights reserved.</p>
+      <p class="footer-tagline" id="footer-tagline">Building a digitally empowered Zamfara, one skill at a time.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- FAB -->
+<div class="fab-wrap">
+  <div class="fab-options" id="fabOptions">
+    <div class="fab-option">
+      <span class="fab-option-label" id="fab-label-1">Live Support</span>
+      <button class="fab-option-btn" id="fabChat" title="Live Support"><i class="fas fa-comment-dots"></i></button>
+    </div>
+    <div class="fab-option">
+      <span class="fab-option-label" id="fab-label-2">Quick Demo</span>
+      <button class="fab-option-btn" id="fabDemo" title="Quick Demo"><i class="fas fa-play"></i></button>
+    </div>
+    <div class="fab-option">
+      <span class="fab-option-label" id="fab-label-3">View Dashboard</span>
+      <button class="fab-option-btn" id="fabDash" title="Dashboard"><i class="fas fa-tachometer-alt"></i></button>
+    </div>
+  </div>
+  <button class="fab-main" id="fabMain" title="Actions">
+    <i class="fas fa-plus"></i>
+  </button>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   TRANSLATIONS
+═══════════════════════════════════════════ */
+const T = {
+  en: {
+    eyebrow: "Zamfara State Digital Platform",
+    heroH1Parts: ["Transform", "Zamfara's", "Workforce", "Digital Excellence"],
+    heroDesc: "A unified platform empowering civil servants, teachers, students, youth, and SMEs with world-class digital skills and career advancement.",
+    pill1: "AI-Powered Learning", pill2: "Offline Access", pill3: "Hausa Language Support", pill4: "Gov Integration",
+    heroBtnPrimary: "Start Your Journey", heroBtnSecondary: "Platform Tour",
+    stat1: "Users Empowered", stat2: "User Satisfaction", stat3: "Skills Modules", stat4: "Partner Organizations",
+    journeyEyebrow: "How it works", journeyTitle: "Your Digital Transformation Journey",
+    step1T: "Register & Onboard", step1D: "Quick setup with personalized skills assessment",
+    step2T: "Learn & Practice", step2D: "Interactive modules with real-world simulations",
+    step3T: "Get Certified", step3D: "Earn government-recognized digital certificates",
+    step4T: "Advance Career", step4D: "Access promotions and job opportunities",
+    featuresEyebrow: "Platform Features", featuresTitle: "Advanced Tools for Every Learner",
+    featuresDesc: "Cutting-edge technology driving digital transformation across Zamfara State",
+    f1T: "AI-Powered Learning Paths", f1D: "Adaptive algorithms personalize content based on your progress and career goals.",
+    f2T: "Offline-First Design", f2D: "Access all courses without internet — auto-syncs when your connection returns.",
+    f3T: "Multi-language Voice Interface", f3D: "Learn in Hausa, English, or French with voice commands and audio lessons.",
+    f4T: "Virtual Reality Labs", f4D: "Immersive science and computer labs for practical learning experiences.",
+    f5T: "Smart Analytics Dashboard", f5D: "Real-time tracking of engagement, skill progression, and platform performance.",
+    f6T: "Mentorship Network", f6D: "Connect with experts, officials, and entrepreneurs for guided career growth.",
+    showcaseEyebrow: "Dashboard Preview", showcaseTitle: "Experience Our Professional Learning Hub",
+    showcaseDesc: "See how our platform delivers personalized experiences with real-time data.",
+    sf1T: "Real-time Progress Tracking", sf1D: "Monitor skills with advanced analytics",
+    sf2T: "Interactive Simulations", sf2D: "Practice with virtual labs and exam simulations",
+    sf3T: "Government HR Integration", sf3D: "Seamless connection with civil service HR systems",
+    showcaseCta: "View Full Dashboard",
+    testimonialsEyebrow: "Success Stories", testimonialsTitle: "Hear from Our Community",
+    testimonialsDesc: "Real people, real transformations. See how ZITDA is changing lives across Zamfara.",
+    ctaEyebrow: "Get Started Today", ctaTitle: "Ready to Transform Digital Learning in Zamfara?",
+    ctaDesc: "Join thousands of learners already growing their skills. Free to start — no credit card needed.",
+    ctaBtn1: "Get Started Free", ctaBtn2: "Schedule a Demo",
+    footerDesc: "Empowering Zamfara State through digital transformation and skills development for all citizens.",
+    footerPortals: "Portals", footerResources: "Resources", footerContact: "Contact",
+    fCivil: "Civil Servants Portal", fTeachers: "Teachers Academy", fStudents: "Student Learning Hub",
+    fYouth: "Youth Skills Center", fSME: "SME Business Lab",
+    footerCopy: "© 2026 Zamfara ICT Development Agency (ZITDA). All rights reserved.",
+    footerTagline: "Building a digitally empowered Zamfara, one skill at a time.",
+    fabLabel1: "Live Support", fabLabel2: "Quick Demo", fabLabel3: "View Dashboard",
+    userTypes: { "civil-servant": "Civil Servant", teacher: "Teacher", student: "Student", youth: "Youth & Skills", sme: "SME Owner" },
+    navFeatures: "Features", navShowcase: "Showcase", navSuccess: "Success Stories", startFree: "Start Free"
+  },
+  ha: {
+    eyebrow: "Dandalin Dijital na Jihar Zamfara",
+    heroH1Parts: ["Canza", "Ma'aikatan Zamfara", "tare da", "Ƙwararren Dijital"],
+    heroDesc: "Dandamali na haɗin kai wanda ke ba ma'aikatan gwamnati, malamai, ɗalibai, matasa, da ƴan kasuwa karfin ƙwarewar dijital.",
+    pill1: "Hanyoyin Koyo na AI", pill2: "Ba tare da Intanet ba", pill3: "Harshen Hausa", pill4: "Haɗin Gwamnati",
+    heroBtnPrimary: "Fara Tafiyarku", heroBtnSecondary: "Yawon Dandamali",
+    stat1: "Masu Amfani", stat2: "Gamsuwa", stat3: "Tsarukan Ƙwarewa", stat4: "Abokan Harka",
+    journeyEyebrow: "Yadda yake aiki", journeyTitle: "Tafiyarku na Canjin Dijital",
+    step1T: "Yi Rajista & Shiga", step1D: "Saitawa cikin sauri tare da tantancewa",
+    step2T: "Koyi & Yi Aiki", step2D: "Tsarukan hulɗa tare da simintin gwaji",
+    step3T: "Samu Takaddun Shaida", step3D: "Samu shaidun dijital na gwamnati",
+    step4T: "Ci Gaban Aiki", step4D: "Samu damar ayyuka & ci gaba",
+    featuresEyebrow: "Fasalulluka", featuresTitle: "Kayan Aiki na Ci Gaba ga Dukkan Masu Koyo",
+    featuresDesc: "Fasahar ci gaba da ke tafiyar da canjin dijital a Jihar Zamfara",
+    f1T: "Hanyoyin Koyo na AI", f1D: "Algorithms na koyo masu daidaitawa waɗanda ke keɓance abun ciki.",
+    f2T: "Zane Ba tare da Intanet ba", f2D: "Samun darussan ba tare da intanet ba. Haɗawa ta atomatik.",
+    f3T: "Mu'amala ta Murya", f3D: "Koyi cikin Hausa, Ingilishi, ko Faransanci tare da umarnin murya.",
+    f4T: "Dakunan Gwaji na VR", f4D: "Dakunan gwaji na kimiyya da na kwamfuta masu shiga ciki.",
+    f5T: "Dashboard na Ƙididdiga", f5D: "Bin diddigin haɗin mai amfani na ainihin lokaci.",
+    f6T: "Cibiyar Jagora", f6D: "Haɗu da ƙwararrun masana, jami'an gwamnati, da ƴan kasuwa.",
+    showcaseEyebrow: "Nunin Dashboard", showcaseTitle: "Gwada Dashboard ɗinmu na Ƙwararru",
+    showcaseDesc: "Dubi yadda dandamalinmu ke ba da ƙwarewar koyo na musamman.",
+    sf1T: "Bin Diddigin Ci gaba", sf1D: "Kula da haɓaka ƙwarewa tare da ƙididdiga",
+    sf2T: "Simintin Hulɗa", sf2D: "Yi aiki tare da dakunan gwaji na zahiri",
+    sf3T: "Haɗin HR na Gwamnati", sf3D: "Haɗin kai tare da tsarin HR na gwamnati",
+    showcaseCta: "Dubi Dashboard Cikakke",
+    testimonialsEyebrow: "Labaran Nasara", testimonialsTitle: "Ji daga Al'ummarmu",
+    testimonialsDesc: "Mutane na ainihi, canjin ainihi. Dubi yadda ZITDA ke canza rayuka.",
+    ctaEyebrow: "Fara Yau", ctaTitle: "A Shirye kuke don Canza Koyon Dijital a Zamfara?",
+    ctaDesc: "Shiga dubbai masu koyo da suke haɓaka ƙwarewarsu. Kyauta don fara.",
+    ctaBtn1: "Fara Kyauta", ctaBtn2: "Shirya Nunin",
+    footerDesc: "Ƙarfafa Jihar Zamfara ta hanyar canjin dijital da haɓaka ƙwarewa.",
+    footerPortals: "Ƙofofin", footerResources: "Albarkatu", footerContact: "Tuntuɓi",
+    fCivil: "Ƙofar Ma'aikatan Gwamnati", fTeachers: "Kwalejin Malamai", fStudents: "Cibiyar Koyo ta Ɗalibai",
+    fYouth: "Cibiyar Ƙwarewa ta Matasa", fSME: "Laboratorin Kasuwanci",
+    footerCopy: "© 2026 Hukumar Ci gaban ICT ta Jihar Zamfara (ZITDA). Duk haƙƙoƙi suna kiyayewa.",
+    footerTagline: "Gina Zamfara mai ƙarfin dijital, ƙwarewa ɗaya a lokaci.",
+    fabLabel1: "Tallafin Kai tsaye", fabLabel2: "Nunin Sauri", fabLabel3: "Dubi Dashboard",
+    userTypes: { "civil-servant": "Ma'aikacin Gwamnati", teacher: "Malami", student: "Dalibi", youth: "Matasa & Ƙwarewa", sme: "Mai Kasuwanci" },
+    navFeatures: "Fasalulluka", navShowcase: "Nunawa", navSuccess: "Labaran Nasara", startFree: "Fara Kyauta"
+  },
+  ar: {
+    eyebrow: "منصة زمفارة الرقمية",
+    heroH1Parts: ["حوّل", "قوة عمل زمفارة", "إلى", "التميز الرقمي"],
+    heroDesc: "منصة موحدة تمكين الموظفين المدنيين والمعلمين والطلاب والشباب والشركات الصغيرة بمهارات رقمية عالمية المستوى.",
+    pill1: "مسارات تعلم بالذكاء الاصطناعي", pill2: "الوصول بدون اتصال", pill3: "دعم اللغة الهوسية", pill4: "التكامل الحكومي",
+    heroBtnPrimary: "ابدأ رحلتك", heroBtnSecondary: "جولة في المنصة",
+    stat1: "المستخدمين", stat2: "الرضا", stat3: "وحدات المهارات", stat4: "الشركاء",
+    journeyEyebrow: "كيف يعمل", journeyTitle: "رحلتك في التحول الرقمي",
+    step1T: "التسجيل والانضمام", step1D: "إعداد سريع مع تقييم مخصص",
+    step2T: "تعلم وتدرب", step2D: "وحدات تفاعلية مع محاكاة",
+    step3T: "احصل على شهادة", step3D: "احصل على شهادات رقمية معترف بها",
+    step4T: "تقدم في حياتك المهنية", step4D: "الوصول إلى فرص العمل والترقيات",
+    featuresEyebrow: "ميزات المنصة", featuresTitle: "أدوات متقدمة لكل متعلم",
+    featuresDesc: "التكنولوجيا المتطورة التي تقود التحول الرقمي في ولاية زمفارة",
+    f1T: "مسارات التعلم بالذكاء الاصطناعي", f1D: "خوارزميات تكيفية تخصص المحتوى بناءً على تقدمك.",
+    f2T: "تصميم يعمل بدون اتصال", f2D: "الوصول إلى الدورات بدون إنترنت. المزامنة التلقائية عند العودة.",
+    f3T: "واجهة صوتية متعددة اللغات", f3D: "تعلم بالهوسية أو الإنجليزية أو الفرنسية مع الأوامر الصوتية.",
+    f4T: "معامل الواقع الافتراضي", f4D: "معامل علوم وحاسوب غامرة لتجارب التعلم العملية.",
+    f5T: "لوحة تحكم تحليلية ذكية", f5D: "تتبع تفاعل المستخدم وتقدم المهارات في الوقت الحقيقي.",
+    f6T: "شبكة الإرشاد", f6D: "تواصل مع خبراء الصناعة والمسؤولين ورجال الأعمال.",
+    showcaseEyebrow: "معاينة لوحة التحكم", showcaseTitle: "جرب منصة التعلم الاحترافية لدينا",
+    showcaseDesc: "شاهد كيف تقدم منصتنا تجارب تعلم مخصصة مع بيانات في الوقت الحقيقي.",
+    sf1T: "تتبع التقدم في الوقت الحقيقي", sf1D: "مراقبة تطوير المهارات مع تحليلات متقدمة",
+    sf2T: "محاكاة تفاعلية", sf2D: "تدرب مع معامل افتراضية ومحاكاة الامتحانات",
+    sf3T: "تكامل الموارد البشرية الحكومية", sf3D: "اتصال سلس مع أنظمة الموارد البشرية",
+    showcaseCta: "عرض لوحة التحكم",
+    testimonialsEyebrow: "قصص النجاح", testimonialsTitle: "استمع إلى مجتمعنا",
+    testimonialsDesc: "أشخاص حقيقيون، تحولات حقيقية. شاهد كيف تغير ZITDA الحياة.",
+    ctaEyebrow: "ابدأ اليوم", ctaTitle: "هل أنت مستعد لتحويل التعلم الرقمي في زمفارة؟",
+    ctaDesc: "انضم إلى آلاف المتعلمين. مجاني للبدء — لا بطاقة ائتمان.",
+    ctaBtn1: "ابدأ مجانًا", ctaBtn2: "جدولة عرض تجريبي",
+    footerDesc: "تمكين ولاية زمفارة من خلال التحول الرقمي وتنمية المهارات.",
+    footerPortals: "البوابات", footerResources: "الموارد", footerContact: "اتصل بنا",
+    fCivil: "بوابة الموظفين المدنيين", fTeachers: "أكاديمية المعلمين", fStudents: "مركز تعلم الطلاب",
+    fYouth: "مركز مهارات الشباب", fSME: "مختبر الأعمال الصغيرة",
+    footerCopy: "© 2026 وكالة تنمية تكنولوجيا المعلومات بولاية زمفارة (ZITDA). جميع الحقوق محفوظة.",
+    footerTagline: "بناء زمفارة رقميًا متمكنًا، مهارة واحدة في كل مرة.",
+    fabLabel1: "الدعم المباشر", fabLabel2: "عرض سريع", fabLabel3: "لوحة التحكم",
+    userTypes: { "civil-servant": "الموظف المدني", teacher: "المعلم", student: "الطالب", youth: "الشباب والمهارات", sme: "صاحب الأعمال" },
+    navFeatures: "الميزات", navShowcase: "العرض", navSuccess: "قصص النجاح", startFree: "ابدأ مجانًا"
+  }
+};
+
+let currentLang = localStorage.getItem('zitda-lang') || 'en';
+let currentUser = 'civil-servant';
+
+function applyLang(lang) {
+  currentLang = lang;
+  const t = T[lang];
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+  // Header
+  document.querySelectorAll('[data-lang]').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  setTxt('nav-features', t.navFeatures);
+  setTxt('nav-showcase', t.navShowcase);
+  setTxt('nav-success', t.navSuccess);
+  setTxt('btn-cta', t.startFree);
+  setTxt('userChipLabel', t.userTypes[currentUser] || t.userTypes['civil-servant']);
+
+  // Hero
+  setTxt('hero-eyebrow-text', t.eyebrow);
+  setTxt('hero-desc', t.heroDesc);
+  setTxt('pill1', t.pill1); setTxt('pill2', t.pill2); setTxt('pill3', t.pill3); setTxt('pill4', t.pill4);
+  setTxt('hero-btn-primary-text', t.heroBtnPrimary);
+  setTxt('hero-btn-secondary-text', t.heroBtnSecondary);
+
+  // Stats
+  setTxt('stat1-label', t.stat1); setTxt('stat2-label', t.stat2);
+  setTxt('stat3-label', t.stat3); setTxt('stat4-label', t.stat4);
+
+  // Journey
+  setTxt('journey-eyebrow', t.journeyEyebrow);
+  setTxt('journey-title', t.journeyTitle);
+  setTxt('step1-title', t.step1T); setTxt('step1-desc', t.step1D);
+  setTxt('step2-title', t.step2T); setTxt('step2-desc', t.step2D);
+  setTxt('step3-title', t.step3T); setTxt('step3-desc', t.step3D);
+  setTxt('step4-title', t.step4T); setTxt('step4-desc', t.step4D);
+
+  // Features
+  setTxt('features-eyebrow', t.featuresEyebrow);
+  setTxt('features-title', t.featuresTitle);
+  setTxt('features-desc', t.featuresDesc);
+  for (let i = 1; i <= 6; i++) {
+    setTxt(`f${i}-title`, t[`f${i}T`]);
+    setTxt(`f${i}-desc`, t[`f${i}D`]);
+  }
+
+  // Showcase
+  setTxt('showcase-eyebrow', t.showcaseEyebrow);
+  setTxt('showcase-title', t.showcaseTitle);
+  setTxt('showcase-desc', t.showcaseDesc);
+  setTxt('sf1-title', t.sf1T); setTxt('sf1-desc', t.sf1D);
+  setTxt('sf2-title', t.sf2T); setTxt('sf2-desc', t.sf2D);
+  setTxt('sf3-title', t.sf3T); setTxt('sf3-desc', t.sf3D);
+  setTxt('showcase-cta', t.showcaseCta);
+
+  // Testimonials
+  setTxt('testimonials-eyebrow', t.testimonialsEyebrow);
+  setTxt('testimonials-title', t.testimonialsTitle);
+  setTxt('testimonials-desc', t.testimonialsDesc);
+
+  // CTA
+  setTxt('cta-eyebrow', t.ctaEyebrow);
+  setTxt('cta-title', t.ctaTitle);
+  setTxt('cta-desc', t.ctaDesc);
+  setTxt('cta-btn1', t.ctaBtn1);
+  setTxt('cta-btn2', t.ctaBtn2);
+
+  // Footer
+  setTxt('footer-desc', t.footerDesc);
+  setTxt('footer-portals-h', t.footerPortals);
+  setTxt('footer-resources-h', t.footerResources);
+  setTxt('footer-contact-h', t.footerContact);
+  setTxt('footer-civil', t.fCivil); setTxt('footer-teachers', t.fTeachers);
+  setTxt('footer-students', t.fStudents); setTxt('footer-youth', t.fYouth);
+  setTxt('footer-sme', t.fSME);
+  setTxt('footer-copy', t.footerCopy);
+  setTxt('footer-tagline', t.footerTagline);
+
+  // FABs
+  setTxt('fab-label-1', t.fabLabel1);
+  setTxt('fab-label-2', t.fabLabel2);
+  setTxt('fab-label-3', t.fabLabel3);
+
+  // User type dropdown labels
+  document.querySelectorAll('.user-dropdown button').forEach(btn => {
+    const ut = btn.dataset.user;
+    if (ut && t.userTypes[ut]) {
+      btn.lastChild.textContent = t.userTypes[ut];
+    }
+  });
+
+  localStorage.setItem('zitda-lang', lang);
+}
+
+function setTxt(id, val) {
+  const el = document.getElementById(id);
+  if (el && val) el.textContent = val;
+}
+
+/* ══ TOAST ══ */
+function showToast(msg, type = 'success') {
+  const stack = document.getElementById('toastStack');
+  const t = document.createElement('div');
+  const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', warning: 'fa-exclamation-triangle', info: 'fa-info-circle' };
+  t.className = `toast type-${type}`;
+  t.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i><span>${msg}</span>`;
+  stack.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(110%)'; t.style.transition = 'all 0.3s'; setTimeout(() => t.remove(), 350); }, 4000);
+}
+
+/* ══ PROGRESS BAR ══ */
+window.addEventListener('scroll', () => {
+  const s = document.documentElement.scrollTop;
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('progress-bar').style.width = (s / h * 100) + '%';
+});
+
+/* ══ HEADER SCROLL ══ */
+const hdr = document.getElementById('mainHeader');
+window.addEventListener('scroll', () => {
+  hdr.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ══ INTERSECTION OBSERVER — REVEAL ══ */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal, .journey-step, .feature-cell, .testimonial-card').forEach(el => io.observe(el));
+
+/* ══ COUNTER ANIMATION ══ */
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1800;
+      const start = performance.now();
+      const step = ts => {
+        const progress = Math.min((ts - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target).toLocaleString() + (progress === 1 ? suffix : '');
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+      counterObs.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
+
+/* ══ LANGUAGE SWITCHER ══ */
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    applyLang(btn.dataset.lang);
+    const langNames = { en: 'English', ha: 'Hausa', ar: 'العربية' };
+    showToast(`Switched to ${langNames[btn.dataset.lang]}`, 'success');
+  });
+});
+
+/* ══ USER TYPE ══ */
+const userChipBtn = document.getElementById('userChipBtn');
+const userDropdown = document.getElementById('userDropdown');
+const userChipLabel = document.getElementById('userChipLabel');
+
+userChipBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  userDropdown.classList.toggle('open');
+});
+
+document.addEventListener('click', () => userDropdown.classList.remove('open'));
+
+document.querySelectorAll('.user-dropdown button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    currentUser = btn.dataset.user;
+    document.querySelectorAll('.user-dropdown button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const label = T[currentLang].userTypes[currentUser];
+    userChipLabel.textContent = label;
+    userDropdown.classList.remove('open');
+    showToast(`Switched to ${label} view`, 'success');
+    // Update hero heading dynamically
+    updateHeroForUser(currentUser);
+  });
+});
+
+function updateHeroForUser(user) {
+  const t = T[currentLang];
+  const heroDesc = document.getElementById('hero-desc');
+  const userDescMap = {
+    'civil-servant': { en: "Master e-governance, productivity tools, and digital skills for career advancement in Zamfara State civil service.", ha: "Kware a cikin mulkin dijital da kayan aiki don ci gaban aiki a hidimar gwamnatin Jihar Zamfara.", ar: "إتقان الحوكمة الإلكترونية والمهارات الرقمية للتقدم في الخدمة المدنية بولاية زمفارة." },
+    teacher: { en: "Enhance teaching with digital tools, access student resources, and prepare for 21st-century classrooms.", ha: "Haɓaka koyarwa tare da kayan aikin dijital da shirya don ɗakunan karatu na ƙarni na 21.", ar: "عزز تدريسك بالأدوات الرقمية والاستعداد لفصول القرن الحادي والعشرين." },
+    student: { en: "Access JAMB/WAEC practice tests, virtual labs, and digital skills for academic and career success.", ha: "Samu gwaje-gwajen JAMB/WAEC, dakunan gwaji na zahiri, da ƙwarewar dijital.", ar: "الوصول إلى اختبارات JAMB/WAEC والمختبرات الافتراضية والمهارات الرقمية." },
+    youth: { en: "Learn in-demand digital skills, connect with mentors, and unlock career opportunities across Zamfara.", ha: "Koyi ƙwarewar dijital, haɗu da masu ba da shawara, da samun damar ayyukan yi.", ar: "تعلم المهارات المطلوبة والتواصل مع المرشدين وفرص العمل." },
+    sme: { en: "Master e-commerce, digital marketing, and business tools to scale your SME in Zamfara State.", ha: "Kware a cikin kasuwanci na dijital da tallan dijital don haɓaka SME ɗinku.", ar: "إتقان التجارة الإلكترونية والتسويق الرقمي لتوسيع أعمالك في زمفارة." }
+  };
+  if (heroDesc && userDescMap[user]) {
+    heroDesc.textContent = userDescMap[user][currentLang] || userDescMap[user]['en'];
+  }
+}
+
+/* ══ FAB ══ */
+const fabMain = document.getElementById('fabMain');
+const fabOptions = document.getElementById('fabOptions');
+let fabOpen = false;
+
+fabMain.addEventListener('click', () => {
+  fabOpen = !fabOpen;
+  fabMain.classList.toggle('open', fabOpen);
+  fabOptions.classList.toggle('open', fabOpen);
+});
+
+document.getElementById('fabChat').addEventListener('click', () => showToast(T[currentLang].fabLabel1 + '...', 'info'));
+document.getElementById('fabDemo').addEventListener('click', () => {
+  showToast(T[currentLang].fabLabel2 + '...', 'info');
+  document.querySelector('#showcase').scrollIntoView({ behavior: 'smooth' });
+  fabOpen = false; fabMain.classList.remove('open'); fabOptions.classList.remove('open');
+});
+document.getElementById('fabDash').addEventListener('click', () => showToast(T[currentLang].fabLabel3 + '...', 'success'));
+
+/* ══ MOBILE MENU ══ */
+document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+  showToast('Navigation menu — use anchor links to navigate', 'info');
+});
+
+/* ══ INIT ══ */
+applyLang(currentLang);
+
+// Welcome toast after slight delay
+setTimeout(() => showToast('Welcome to ZITDA Digital Hub — Zamfara\'s learning platform', 'info'), 800);
+</script>
+</body>
+</html>
