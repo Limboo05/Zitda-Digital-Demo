@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="u5g8r3a9d2t0k3n1x4v7">
+    <meta name="description" content="Login to Zamfara Higher Education Platform - Access academic resources, research tools, career services, and alumni network">
+    <meta name="keywords" content="Zamfara, University, Undergraduate, Graduate, Login, Academic, Research, Career, Alumni">
+    <title>Higher Education Login | Zamfara Academic Platform</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest-university.json">
+    <meta name="theme-color" content="#2C3E50">
+    <link rel="icon" type="image/x-icon" href="favicon-university.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon-university.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Source+Sans+Pro:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* University Theme Colors */
+            --primary-navy: #2C3E50;
+            --secondary-blue: #3498DB;
+            --accent-gold: #F1C40F;
+            --research-green: #27AE60;
+            --graduate-purple: #8E44AD;
+            --alumni-red: #E74C3C;
+            --library-beige: #F8F9FA;
+            
+            /* UI Colors */
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e8f4f8 100%);
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --border-color: #e2e8f0;
+            --success-color: #38a169;
+            --danger-color: #e53e3e;
+            --warning-color: #d69e2e;
+            --info-color: #3182ce;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(44, 62, 80, 0.08);
+            --shadow-md: 0 4px 6px rgba(44, 62, 80, 0.1);
+            --shadow-lg: 0 10px 25px rgba(44, 62, 80, 0.1);
+            --shadow-xl: 0 20px 40px rgba(44, 62, 80, 0.15);
+            --shadow-card: 0 10px 30px rgba(44, 62, 80, 0.08);
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+            
+            /* Animation */
+            --float-animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Skip to Main Content */
+        .skip-to-main {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            background: var(--primary-navy);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            z-index: 1000;
+            transition: var(--transition-fast);
+        }
+
+        .skip-to-main:focus {
+            top: 20px;
+            left: 20px;
+            outline: 3px solid var(--accent-gold);
+            outline-offset: 2px;
+        }
+
+        /* Header */
+        .login-header {
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--border-color);
+            padding: 1.25rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-navy), var(--secondary-blue));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            animation: var(--float-animation);
+        }
+
+        .logo-icon i {
+            font-size: 1.75rem;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-navy), var(--secondary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.25rem;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .header-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+            border: 2px solid transparent;
+            font-size: 0.95rem;
+        }
+
+        .header-btn:hover {
+            color: var(--primary-navy);
+            background: rgba(44, 62, 80, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .header-btn:focus {
+            outline: none;
+            border-color: var(--primary-navy);
+            box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.2);
+        }
+
+        .header-btn.primary {
+            background: linear-gradient(135deg, var(--primary-navy), var(--secondary-blue));
+            color: white !important;
+            box-shadow: 0 8px 25px rgba(44, 62, 80, 0.25);
+        }
+
+        .header-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(44, 62, 80, 0.35);
+        }
+
+        /* Main Content */
+        .login-container {
+            display: flex;
+            flex: 1;
+            min-height: calc(100vh - 92px);
+        }
+
+        /* Left Panel - Academic Benefits */
+        .academic-panel {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-navy), #1a252f);
+            color: white;
+            padding: 4rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .academic-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(241, 196, 15, 0.1) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M50 50c0-8.284 6.716-15 15-15s15 6.716 15 15-6.716 15-15 15c0 8.284-6.716 15-15 15s-15-6.716-15-15 6.716-15 15-15zM15 15C15 6.716 21.716 0 30 0s15 6.716 15 15-6.716 15-15 15c0 8.284-6.716 15-15 15S0 38.284 0 30s6.716-15 15-15zm15 20c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm40 40c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            animation: var(--float-animation);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+            background: rgba(241, 196, 15, 0.15);
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 1s;
+            background: rgba(142, 68, 173, 0.15);
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 2s;
+            background: rgba(39, 174, 96, 0.15);
+        }
+
+        .academic-content {
+            position: relative;
+            z-index: 2;
+            max-width: 550px;
+        }
+
+        .academic-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(241, 196, 15, 0.2);
+            color: var(--accent-gold);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-full);
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            animation: pulse-glow 2s infinite;
+        }
+
+        .academic-title {
+            font-family: 'Roboto', sans-serif;
+            font-size: clamp(2rem, 4vw, 3.25rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .academic-subtitle {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 3rem;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            margin-bottom: 1.75rem;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-gold);
+            transition: var(--transition-fast);
+        }
+
+        .features-list li:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .features-list i {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            margin-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text h4 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent-gold);
+        }
+
+        .feature-text p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        /* University Events Section */
+        .events-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .events-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .events-header h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+        }
+
+        .events-count {
+            background: var(--accent-gold);
+            color: var(--primary-navy);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .events-list {
+            list-style: none;
+        }
+
+        .events-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .events-list li:last-child {
+            border-bottom: none;
+        }
+
+        .event-date {
+            width: 50px;
+            height: 50px;
+            background: rgba(241, 196, 15, 0.2);
+            border-radius: var(--radius-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .event-date .day {
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .event-date .month {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .event-info h5 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+
+        .event-info p {
+            opacity: 0.8;
+            font-size: 0.8rem;
+        }
+
+        /* Right Panel - Login Form */
+        .login-panel {
+            flex: 1;
+            background: var(--bg-secondary);
+            padding: 3rem 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .login-form-container {
+            width: 100%;
+            max-width: 500px;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .login-header-form {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .login-header-form h2 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 2.25rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-navy), var(--secondary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header-form p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Academic Level Selection */
+        .level-selection {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .level-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .level-option:hover {
+            border-color: var(--primary-navy);
+            background: rgba(44, 62, 80, 0.05);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .level-option.active {
+            border-color: var(--primary-navy);
+            background: linear-gradient(135deg, var(--primary-navy), var(--secondary-blue));
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .level-option i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .level-option.active i {
+            color: var(--accent-gold);
+        }
+
+        /* Form Styles */
+        .login-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.75rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .required {
+            color: var(--danger-color);
+            margin-left: 2px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            padding-right: 45px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1rem;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-navy);
+            box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+        }
+
+        .form-input.error {
+            border-color: var(--danger-color);
+        }
+
+        .form-input.success {
+            border-color: var(--success-color);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-navy);
+        }
+
+        .password-toggle:focus {
+            outline: none;
+            color: var(--primary-navy);
+        }
+
+        /* University/Department Selection */
+        .university-group {
+            margin-bottom: 1.75rem;
+        }
+
+        .university-select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1rem;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            transition: var(--transition-fast);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23718096' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 16px;
+        }
+
+        .university-select:focus {
+            outline: none;
+            border-color: var(--primary-navy);
+            box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+        }
+
+        /* Error Messages */
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: var(--transition-fast);
+        }
+
+        .error-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Form Options */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .remember-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+
+        .remember-checkbox.checked {
+            background: var(--primary-navy);
+            border-color: var(--primary-navy);
+        }
+
+        .remember-checkbox.checked i {
+            color: white;
+            font-size: 0.75rem;
+        }
+
+        .forgot-password {
+            color: var(--primary-navy);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        .forgot-password:hover {
+            color: var(--secondary-blue);
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 0.875rem 2rem;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            font-family: 'Roboto', sans-serif;
+            min-height: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-navy), var(--secondary-blue));
+            color: white !important;
+            box-shadow: 0 10px 30px rgba(44, 62, 80, 0.25);
+            border: 2px solid transparent;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(44, 62, 80, 0.35);
+        }
+
+        .btn-primary:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.3);
+        }
+
+        .btn-research {
+            background: linear-gradient(135deg, var(--research-green), #2ecc71);
+            color: white !important;
+            box-shadow: 0 10px 30px rgba(39, 174, 96, 0.25);
+            margin-top: 1rem;
+        }
+
+        .btn-research:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(39, 174, 96, 0.35);
+        }
+
+        .btn-career {
+            background: linear-gradient(135deg, var(--graduate-purple), #9b59b6);
+            color: white !important;
+            box-shadow: 0 10px 30px rgba(142, 68, 173, 0.25);
+            margin-top: 1rem;
+        }
+
+        .btn-career:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(142, 68, 173, 0.35);
+        }
+
+        .btn-secondary {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .btn-loading .btn-text {
+            visibility: hidden;
+        }
+
+        .btn-loading::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* University Quick Login */
+        .university-login {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .divider span {
+            padding: 0 1rem;
+        }
+
+        .university-login-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .university-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            text-align: center;
+        }
+
+        .university-option:hover {
+            border-color: var(--primary-navy);
+            background: rgba(44, 62, 80, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .university-option i {
+            font-size: 1.5rem;
+            color: var(--primary-navy);
+        }
+
+        .university-option span {
+            font-size: 0.8rem;
+        }
+
+        /* Registration Link */
+        .registration-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .registration-link a {
+            color: var(--primary-navy);
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .registration-link a:hover {
+            color: var(--secondary-blue);
+            text-decoration: underline;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--research-green), var(--accent-gold));
+            color: white;
+            padding: 1.25rem 1.75rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            animation: slideInRight 0.3s ease-out;
+            max-width: 400px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, var(--danger-color), #ff6b6b);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, var(--warning-color), #ffd93d);
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-normal);
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--primary-navy);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        .loading-text {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        /* Footer */
+        .login-footer {
+            background: var(--bg-secondary);
+            border-top: 2px solid var(--border-color);
+            padding: 2rem 2.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-navy);
+        }
+
+        /* Animations */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .login-container {
+                flex-direction: column;
+            }
+            
+            .academic-panel {
+                padding: 3rem 2.5rem;
+            }
+            
+            .login-panel {
+                padding: 2.5rem 3rem;
+            }
+            
+            .university-login-options {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .login-header {
+                padding: 1rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .academic-panel {
+                padding: 2.5rem 2rem;
+            }
+            
+            .academic-title {
+                font-size: 1.75rem;
+            }
+            
+            .login-panel {
+                padding: 2rem;
+            }
+            
+            .login-form-container {
+                max-width: 100%;
+            }
+            
+            .login-header-form h2 {
+                font-size: 1.75rem;
+            }
+            
+            .level-selection {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .university-login-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .form-options {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .events-section {
+                padding: 1.25rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .academic-title {
+                font-size: 1.5rem;
+            }
+            
+            .academic-subtitle {
+                font-size: 1rem;
+            }
+            
+            .login-header-form h2 {
+                font-size: 1.5rem;
+            }
+            
+            .university-login-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .floating-element {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #1a202c;
+                --bg-secondary: #2d3748;
+                --text-primary: #f7fafc;
+                --text-secondary: #cbd5e0;
+                --text-muted: #a0aec0;
+                --border-color: #4a5568;
+                --bg-gradient: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            }
+            
+            .login-header,
+            .login-panel,
+            .login-footer {
+                background: var(--bg-secondary);
+            }
+            
+            .form-input,
+            .university-select {
+                background: var(--bg-primary);
+                color: var(--text-primary);
+            }
+            
+            .btn-secondary,
+            .level-option,
+            .university-option {
+                background: var(--bg-primary);
+            }
+            
+            .level-selection {
+                background: var(--bg-primary);
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .login-header,
+            .academic-panel,
+            .footer-links,
+            .btn,
+            .notification,
+            .level-selection,
+            .university-login {
+                display: none !important;
+            }
+            
+            .login-panel {
+                padding: 0;
+                background: white !important;
+            }
+            
+            .login-form-container {
+                max-width: 100%;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-navy), var(--secondary-blue));
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary-blue), var(--accent-gold));
+        }
+
+        /* Selection */
+        ::selection {
+            background-color: rgba(44, 62, 80, 0.3);
+            color: white;
+        }
+
+        /* Focus Styles */
+        .keyboard-navigation *:focus {
+            outline: 3px solid var(--accent-gold);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Accessibility: Skip to Main Content -->
+    <a href="#login-form" class="skip-to-main sr-only-focusable">
+        Skip to login form
+    </a>
+
+    <!-- Header -->
+    <header class="login-header" role="banner">
+        <a href="index.html" class="header-logo" aria-label="Zamfara Higher Education Platform Home">
+            <div class="logo-icon" aria-hidden="true">
+                <i class="fas fa-university"></i>
+            </div>
+            <div class="logo-text">
+                <h1>Zamfara Academic Platform</h1>
+                <p>Higher Education & Research Portal</p>
+            </div>
+        </a>
+        
+        <div class="header-actions">
+            <a href="registration-university.html" class="header-btn">
+                <i class="fas fa-user-graduate" aria-hidden="true"></i>
+                Register Student
+            </a>
+            <a href="research-portal.html" class="header-btn">
+                <i class="fas fa-flask" aria-hidden="true"></i>
+                Research Portal
+            </a>
+            <a href="career-services.html" class="header-btn primary">
+                <i class="fas fa-briefcase" aria-hidden="true"></i>
+                Career Services
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="login-container" role="main">
+        <!-- Academic Benefits Panel -->
+        <aside class="academic-panel" aria-label="Academic platform benefits">
+            <!-- Floating Elements -->
+            <div class="floating-elements">
+                <div class="floating-element">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="floating-element">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="floating-element">
+                    <i class="fas fa-microscope"></i>
+                </div>
+            </div>
+            
+            <div class="academic-content">
+                <div class="academic-badge" role="status">
+                    <i class="fas fa-brain" aria-hidden="true"></i>
+                    Empowering Higher Education
+                </div>
+                
+                <h1 class="academic-title">
+                    Advance Your<br>
+                    Academic Journey
+                </h1>
+                
+                <p class="academic-subtitle">
+                    Access cutting-edge research tools, academic resources, career services, 
+                    and alumni networks to accelerate your educational and professional growth.
+                </p>
+                
+                <ul class="features-list" role="list">
+                    <li role="listitem">
+                        <i class="fas fa-database" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Digital Library Access</h4>
+                            <p>Millions of academic journals, e-books, and research papers</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-chart-line" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Research Analytics</h4>
+                            <p>Track your research impact, citations, and academic performance</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-network-wired" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Academic Collaboration</h4>
+                            <p>Connect with professors, researchers, and peers worldwide</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-briefcase" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Career Development</h4>
+                            <p>Internships, job placements, and professional networking</p>
+                        </div>
+                    </li>
+                </ul>
+                
+                <!-- University Events -->
+                <div class="events-section" role="region" aria-label="Upcoming academic events">
+                    <div class="events-header">
+                        <h4>
+                            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                            Upcoming Academic Events
+                        </h4>
+                        <div class="events-count" aria-live="polite">5</div>
+                    </div>
+                    
+                    <ul class="events-list" role="list">
+                        <li role="listitem">
+                            <div class="event-date">
+                                <div class="day">24</div>
+                                <div class="month">MAY</div>
+                            </div>
+                            <div class="event-info">
+                                <h5>Research Symposium</h5>
+                                <p>Digital Innovation in Education</p>
+                            </div>
+                        </li>
+                        <li role="listitem">
+                            <div class="event-date">
+                                <div class="day">01</div>
+                                <div class="month">JUN</div>
+                            </div>
+                            <div class="event-info">
+                                <h5>Career Fair 2026</h5>
+                                <p>Top Employers & Graduate Programs</p>
+                            </div>
+                        </li>
+                        <li role="listitem">
+                            <div class="event-date">
+                                <div class="day">15</div>
+                                <div class="month">JUN</div>
+                            </div>
+                            <div class="event-info">
+                                <h5>Alumni Networking</h5>
+                                <p>Connect with Successful Graduates</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Login Form Panel -->
+        <section class="login-panel" aria-labelledby="login-title">
+            <div class="login-form-container">
+                <div class="login-header-form">
+                    <h2 id="login-title">Welcome to Academia</h2>
+                    <p>Sign in to access your academic resources and research tools</p>
+                </div>
+
+                <!-- Academic Level Selection -->
+                <div class="level-selection" role="radiogroup" aria-label="Select academic level">
+                    <div class="level-option active" data-level="undergraduate" tabindex="0" role="radio" aria-checked="true">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Undergraduate</span>
+                        <small>Bachelor's Degree</small>
+                    </div>
+                    <div class="level-option" data-level="graduate" tabindex="0" role="radio" aria-checked="false">
+                        <i class="fas fa-user-tie"></i>
+                        <span>Graduate</span>
+                        <small>Master's/PhD</small>
+                    </div>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="login-form" novalidate aria-label="Higher education login form">
+                    <!-- University Selection -->
+                    <div class="university-group">
+                        <label for="university" class="form-label">
+                            University/Institution <span class="required">*</span>
+                        </label>
+                        <select id="university" name="university" class="university-select" required aria-required="true">
+                            <option value="">Select your institution</option>
+                            <option value="federal-gusau">Federal University Gusau</option>
+                            <option value="state-university">Zamfara State University</option>
+                            <option value="college-education">College of Education, Maru</option>
+                            <option value="polytechnic">Zamfara State Polytechnic</option>
+                            <option value="college-nursing">College of Nursing Sciences</option>
+                            <option value="other">Other Institution</option>
+                        </select>
+                    </div>
+
+                    <!-- Student ID -->
+                    <div class="form-group">
+                        <label for="studentId" class="form-label">
+                            Student ID / Registration Number <span class="required">*</span>
+                        </label>
+                        <div class="input-group">
+                            <input type="text" 
+                                   id="studentId" 
+                                   name="studentId" 
+                                   class="form-input" 
+                                   placeholder="e.g., UG/2021/001 or PG/2023/001" 
+                                   required
+                                   autocomplete="username"
+                                   aria-required="true"
+                                   aria-describedby="studentId-error">
+                            <div class="input-icon">
+                                <i class="fas fa-id-card" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div id="studentId-error" class="error-message" role="alert">
+                            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                            <span>Please enter your student ID</span>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                            Password <span class="required">*</span>
+                        </label>
+                        <div class="input-group">
+                            <input type="password" 
+                                   id="password" 
+                                   name="password" 
+                                   class="form-input" 
+                                   placeholder="Enter your password" 
+                                   required
+                                   autocomplete="current-password"
+                                   aria-required="true"
+                                   aria-describedby="password-error">
+                            <button type="button" 
+                                    class="password-toggle" 
+                                    id="togglePassword"
+                                    aria-label="Show password"
+                                    aria-controls="password">
+                                <i class="fas fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div id="password-error" class="error-message" role="alert">
+                            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                            <span>Password is required</span>
+                        </div>
+                    </div>
+
+                    <!-- Form Options -->
+                    <div class="form-options">
+                        <div class="remember-me" id="rememberMe">
+                            <div class="remember-checkbox" role="checkbox" 
+                                 aria-checked="false" 
+                                 tabindex="0"
+                                 aria-label="Remember me for 30 days">
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                            </div>
+                            <span>Remember me</span>
+                        </div>
+                        <a href="forgot-password.html" class="forgot-password">
+                            Forgot Password?
+                        </a>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary" id="loginButton">
+                        <span class="btn-text">
+                            <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                            Sign In to Academic Portal
+                        </span>
+                    </button>
+
+                    <!-- Quick Research Access -->
+                    <button type="button" class="btn btn-research" id="researchBtn">
+                        <span class="btn-text">
+                            <i class="fas fa-flask" aria-hidden="true"></i>
+                            Quick Research Portal
+                        </span>
+                    </button>
+
+                    <!-- Quick Career Services -->
+                    <button type="button" class="btn btn-career" id="careerBtn">
+                        <span class="btn-text">
+                            <i class="fas fa-briefcase" aria-hidden="true"></i>
+                            Career Services
+                        </span>
+                    </button>
+                </form>
+
+                <!-- University Quick Login -->
+                <div class="university-login">
+                    <div class="divider">
+                        <span>Quick University Access</span>
+                    </div>
+                    
+                    <div class="university-login-options">
+                        <a href="#" class="university-option" aria-label="Login to Federal University Gusau">
+                            <i class="fas fa-university"></i>
+                            <span>FUG</span>
+                        </a>
+                        <a href="#" class="university-option" aria-label="Login to Zamfara State University">
+                            <i class="fas fa-school"></i>
+                            <span>ZSU</span>
+                        </a>
+                        <a href="#" class="university-option" aria-label="Login to College of Education">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span>COE</span>
+                        </a>
+                        <a href="#" class="university-option" aria-label="Login to Polytechnic">
+                            <i class="fas fa-tools"></i>
+                            <span>Poly</span>
+                        </a>
+                        <a href="#" class="university-option" aria-label="Login to Nursing College">
+                            <i class="fas fa-user-md"></i>
+                            <span>Nursing</span>
+                        </a>
+                        <a href="#" class="university-option" aria-label="Login to Other Institutions">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Other</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Registration Link -->
+                <div class="registration-link">
+                    <p>New student? <a href="UGraduate.html">Register Academic Account</a></p>
+                    <p style="margin-top: 0.5rem; font-size: 0.75rem;">
+                        Staff or faculty? <a href="UGraduate.html">Access Staff Portal</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="login-footer" role="contentinfo">
+        <div class="footer-links">
+            <a href="library.html">Digital Library</a>
+            <a href="research.html">Research Database</a>
+            <a href="courses.html">Online Courses</a>
+            <a href="alumni.html">Alumni Network</a>
+            <a href="support.html">Academic Support</a>
+        </div>
+        <p>&copy; 2026 Zamfara State Ministry of Higher Education - Academic Services Division</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">
+            Partners: NUC • TETFUND • JAMB • WAEC • International Universities
+        </p>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" role="alert" aria-live="polite">
+        <div class="loading-spinner" aria-label="Loading"></div>
+        <div class="loading-text" id="loadingText">Accessing academic portal...</div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // DOM Elements
+        const loginForm = document.getElementById('login-form');
+        const studentIdInput = document.getElementById('studentId');
+        const passwordInput = document.getElementById('password');
+        const universitySelect = document.getElementById('university');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const rememberMe = document.getElementById('rememberMe');
+        const rememberCheckbox = rememberMe.querySelector('.remember-checkbox');
+        const loginButton = document.getElementById('loginButton');
+        const researchBtn = document.getElementById('researchBtn');
+        const careerBtn = document.getElementById('careerBtn');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const loadingText = document.getElementById('loadingText');
+        const levelOptions = document.querySelectorAll('.level-option');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+        // Academic Session Manager
+        const academicSession = {
+            saveCredentials: (studentId, university, level, remember) => {
+                if (remember) {
+                    localStorage.setItem('rememberedStudentId', studentId);
+                    localStorage.setItem('rememberedUniversity', university);
+                    localStorage.setItem('rememberedLevel', level);
+                    localStorage.setItem('rememberMeAcademic', 'true');
+                } else {
+                    localStorage.removeItem('rememberedStudentId');
+                    localStorage.removeItem('rememberedUniversity');
+                    localStorage.removeItem('rememberedLevel');
+                    localStorage.removeItem('rememberMeAcademic');
+                }
+            },
+            getRememberedCredentials: () => {
+                const remembered = localStorage.getItem('rememberMeAcademic') === 'true';
+                const studentId = localStorage.getItem('rememberedStudentId');
+                const university = localStorage.getItem('rememberedUniversity');
+                const level = localStorage.getItem('rememberedLevel');
+                return { remembered, studentId, university, level };
+            },
+            clearSession: () => {
+                sessionStorage.clear();
+                localStorage.removeItem('rememberedStudentId');
+                localStorage.removeItem('rememberedUniversity');
+                localStorage.removeItem('rememberedLevel');
+                localStorage.removeItem('rememberMeAcademic');
+                localStorage.removeItem('researchHistory');
+            },
+            saveResearchHistory: (search) => {
+                const history = JSON.parse(localStorage.getItem('researchHistory') || '[]');
+                history.unshift({
+                    query: search,
+                    timestamp: Date.now()
+                });
+                localStorage.setItem('researchHistory', JSON.stringify(history.slice(0, 20)));
+            },
+            getAcademicLevel: () => {
+                return document.querySelector('.level-option.active')?.dataset.level || 'undergraduate';
+            }
+        };
+
+        // Initialize form with remembered credentials
+        function initializeForm() {
+            const { remembered, studentId, university, level } = academicSession.getRememberedCredentials();
+            
+            if (remembered) {
+                if (studentId) studentIdInput.value = studentId;
+                if (university) universitySelect.value = university;
+                if (level) {
+                    // Set active level
+                    levelOptions.forEach(option => {
+                        option.classList.remove('active');
+                        option.setAttribute('aria-checked', 'false');
+                        if (option.dataset.level === level) {
+                            option.classList.add('active');
+                            option.setAttribute('aria-checked', 'true');
+                        }
+                    });
+                }
+                rememberCheckbox.classList.add('checked');
+                rememberCheckbox.setAttribute('aria-checked', 'true');
+                passwordInput.focus();
+            } else {
+                studentIdInput.focus();
+            }
+        }
+
+        // Academic Level Selection
+        function setupLevelSelection() {
+            levelOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    levelOptions.forEach(opt => {
+                        opt.classList.remove('active');
+                        opt.setAttribute('aria-checked', 'false');
+                    });
+                    option.classList.add('active');
+                    option.setAttribute('aria-checked', 'true');
+                    
+                    // Update form based on level
+                    updateFormForLevel(option.dataset.level);
+                });
+                
+                // Keyboard support
+                option.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        option.click();
+                    }
+                });
+            });
+        }
+
+        function updateFormForLevel(level) {
+            // Update placeholder based on level
+            const placeholder = level === 'undergraduate' 
+                ? 'e.g., UG/2021/001' 
+                : 'e.g., PG/2023/001 or PHD/2022/001';
+            
+            studentIdInput.placeholder = placeholder;
+            
+            // Update login button text
+            const buttonText = level === 'undergraduate' 
+                ? 'Sign In to Undergraduate Portal' 
+                : 'Sign In to Graduate Portal';
+            
+            loginButton.querySelector('.btn-text').innerHTML = 
+                `<i class="fas fa-sign-in-alt" aria-hidden="true"></i> ${buttonText}`;
+        }
+
+        // Password Visibility Toggle
+        function togglePasswordVisibility() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            const icon = togglePasswordBtn.querySelector('i');
+            const label = type === 'password' ? 'Show password' : 'Hide password';
+            
+            icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+            togglePasswordBtn.setAttribute('aria-label', label);
+        }
+
+        // Remember Me Toggle
+        function toggleRememberMe() {
+            const isChecked = rememberCheckbox.classList.toggle('checked');
+            rememberCheckbox.setAttribute('aria-checked', isChecked.toString());
+        }
+
+        // Form Validation
+        function validateForm() {
+            let isValid = true;
+            const errors = {
+                university: false,
+                studentId: false,
+                password: false
+            };
+
+            // Reset errors
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.classList.remove('show');
+            });
+            document.querySelectorAll('.form-input, .university-select').forEach(el => {
+                el.classList.remove('error');
+            });
+
+            // Validate University
+            if (!universitySelect.value) {
+                isValid = false;
+                errors.university = true;
+                universitySelect.classList.add('error', 'shake');
+                
+                setTimeout(() => {
+                    universitySelect.classList.remove('shake');
+                }, 500);
+            }
+
+            // Validate Student ID
+            const studentId = studentIdInput.value.trim();
+            const level = academicSession.getAcademicLevel();
+            
+            if (!studentId) {
+                showError(studentIdInput, 'studentId-error', 'Student ID is required');
+                isValid = false;
+                errors.studentId = true;
+            } else if (!isValidStudentId(studentId, level)) {
+                const format = level === 'undergraduate' ? 'UG/YYYY/XXX' : 'PG/YYYY/XXX or PHD/YYYY/XXX';
+                showError(studentIdInput, 'studentId-error', `Invalid format. Expected: ${format}`);
+                isValid = false;
+                errors.studentId = true;
+            }
+
+            // Validate Password
+            if (!passwordInput.value) {
+                showError(passwordInput, 'password-error', 'Password is required');
+                isValid = false;
+                errors.password = true;
+            } else if (passwordInput.value.length < 8) {
+                showError(passwordInput, 'password-error', 'Password must be at least 8 characters');
+                isValid = false;
+                errors.password = true;
+            }
+
+            // Focus on first error
+            if (!isValid) {
+                if (errors.university) universitySelect.focus();
+                else if (errors.studentId) studentIdInput.focus();
+                else if (errors.password) passwordInput.focus();
+            }
+
+            return { isValid, errors };
+        }
+
+        function isValidStudentId(studentId, level) {
+            const patterns = {
+                undergraduate: /^(UG|UNDERGRAD)\/\d{4}\/\d{3,6}$/i,
+                graduate: /^(PG|PHD|GRAD)\/\d{4}\/\d{3,6}$/i
+            };
+            
+            return patterns[level]?.test(studentId) || false;
+        }
+
+        // Show Error Function
+        function showError(inputElement, errorId, message) {
+            const errorElement = document.getElementById(errorId);
+            errorElement.querySelector('span').textContent = message;
+            errorElement.classList.add('show');
+            inputElement.classList.add('error');
+            inputElement.classList.add('shake');
+            
+            setTimeout(() => {
+                inputElement.classList.remove('shake');
+            }, 500);
+        }
+
+        // Show Loading State
+        function showLoading(show, message = 'Accessing academic portal...') {
+            if (show) {
+                loadingOverlay.classList.add('active');
+                loadingOverlay.setAttribute('aria-hidden', 'false');
+                loadingText.textContent = message;
+                loginButton.classList.add('btn-loading');
+            } else {
+                loadingOverlay.classList.remove('active');
+                loadingOverlay.setAttribute('aria-hidden', 'true');
+                loginButton.classList.remove('btn-loading');
+            }
+        }
+
+        // Show Notification
+        function showNotification(message, type = 'info') {
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(n => n.remove());
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.setAttribute('role', 'alert');
+            notification.setAttribute('aria-live', 'assertive');
+            
+            const icon = type === 'success' ? 'check-circle' : 
+                         type === 'error' ? 'exclamation-circle' : 
+                         type === 'warning' ? 'exclamation-triangle' : 'info-circle';
+            
+            notification.innerHTML = `
+                <i class="fas fa-${icon}" aria-hidden="true"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+
+        // Simulate Academic Login
+        async function simulateAcademicLogin(university, studentId, password, level) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    // Mock academic credentials
+                    const validAccounts = {
+                        'federal-gusau': {
+                            'UG/2021/001': 'student123',
+                            'PG/2023/001': 'graduate456',
+                            'PHD/2022/001': 'research789',
+                            'DEMO001': 'demo123'
+                        },
+                        'state-university': {
+                            'UG/2021/002': 'university123',
+                            'PG/2023/002': 'masters456'
+                        }
+                    };
+
+                    const universityAccounts = validAccounts[university];
+                    
+                    if (universityAccounts && universityAccounts[studentId] === password) {
+                        const studentData = getStudentData(university, studentId, level);
+                        resolve({
+                            success: true,
+                            data: studentData
+                        });
+                    } else {
+                        reject({
+                            success: false,
+                            error: 'Invalid credentials or university'
+                        });
+                    }
+                }, 1500);
+            });
+        }
+
+        function getStudentData(university, studentId, level) {
+            const universities = {
+                'federal-gusau': 'Federal University Gusau',
+                'state-university': 'Zamfara State University',
+                'college-education': 'College of Education, Maru',
+                'polytechnic': 'Zamfara State Polytechnic',
+                'college-nursing': 'College of Nursing Sciences',
+                'other': 'Other Institution'
+            };
+
+            const programs = {
+                undergraduate: [
+                    'Computer Science',
+                    'Business Administration',
+                    'Education',
+                    'Agriculture',
+                    'Engineering',
+                    'Medicine'
+                ],
+                graduate: [
+                    'M.Sc. Computer Science',
+                    'MBA',
+                    'M.Ed. Education',
+                    'PhD Agriculture',
+                    'M.Eng. Engineering',
+                    'MPH Public Health'
+                ]
+            };
+
+            const programType = level === 'undergraduate' ? 'undergraduate' : 'graduate';
+            const programIndex = Math.abs(studentId.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) % programs[programType].length;
+            
+            return {
+                studentId,
+                fullName: level === 'undergraduate' ? 'Amina Suleiman' : 'Dr. Musa Abdullahi',
+                university: universities[university],
+                program: programs[programType][programIndex],
+                level: level,
+                year: studentId.includes('2021') ? 'Year 3' : 
+                      studentId.includes('2022') ? 'Year 2' : 
+                      studentId.includes('2023') ? 'Year 1' : 'Final Year',
+                gpa: level === 'undergraduate' ? 3.8 : 4.0,
+                coursesCompleted: level === 'undergraduate' ? 24 : 8,
+                researchPapers: level === 'graduate' ? 3 : 0,
+                lastLogin: new Date().toISOString()
+            };
+        }
+
+        // Form Submission Handler
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const { isValid, errors } = validateForm();
+            if (!isValid) return;
+
+            const university = universitySelect.value;
+            const studentId = studentIdInput.value.trim();
+            const password = passwordInput.value;
+            const level = academicSession.getAcademicLevel();
+            const remember = rememberCheckbox.classList.contains('checked');
+
+            showLoading(true);
+
+            try {
+                // Save credentials if "Remember me" is checked
+                academicSession.saveCredentials(studentId, university, level, remember);
+
+                // Simulate API call
+                const response = await simulateAcademicLogin(university, studentId, password, level);
+                
+                if (response.success) {
+                    // Save student data
+                    sessionStorage.setItem('studentData', JSON.stringify(response.data));
+                    sessionStorage.setItem('academicAuthenticated', 'true');
+                    sessionStorage.setItem('loginTime', Date.now());
+                    
+                    // Track login analytics
+                    trackAcademicLogin(response.data);
+
+                    // Personalize loading message
+                    const welcomeMessage = getWelcomeMessage(response.data.level, response.data.program);
+                    loadingText.textContent = welcomeMessage;
+
+                    showNotification('Accessing your academic dashboard...', 'success');
+
+                    setTimeout(() => {
+                        const redirectUrl = level === 'undergraduate' 
+                            ? 'Graduates_Undergraduates.html' 
+                            : 'Graduates_Undergraduates.html';
+                        window.location.href = redirectUrl;
+                    }, 2000);
+
+                } else {
+                    throw new Error('Authentication failed');
+                }
+
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                let errorMessage = 'Login failed. Please check your credentials.';
+                if (error.error) errorMessage = error.error;
+                
+                showNotification(errorMessage, 'error');
+                
+                // Clear password field on error
+                passwordInput.value = '';
+                passwordInput.focus();
+                
+                // Track failed attempts
+                const failedAttempts = parseInt(sessionStorage.getItem('failedLoginAttempts') || '0') + 1;
+                sessionStorage.setItem('failedLoginAttempts', failedAttempts.toString());
+                
+                if (failedAttempts >= 3) {
+                    showNotification('Multiple failed attempts. Try demo: DEMO001 / demo123', 'warning');
+                }
+
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function getWelcomeMessage(level, program) {
+            if (level === 'graduate') {
+                return `Loading graduate research tools for ${program}...`;
+            } else {
+                return `Preparing undergraduate dashboard for ${program}...`;
+            }
+        }
+
+        // Quick Research Portal
+        function openResearchPortal() {
+            const level = academicSession.getAcademicLevel();
+            
+            showLoading(true, 'Accessing research database...');
+            
+            setTimeout(() => {
+                // Determine appropriate research portal
+                const portalType = level === 'graduate' ? 'advanced' : 'basic';
+                
+                showNotification(`Opening ${portalType} research portal...`, 'info');
+                
+                setTimeout(() => {
+                    window.location.href = `research-portal.html?level=${portalType}&quick=true`;
+                }, 1500);
+            }, 1000);
+        }
+
+        // Quick Career Services
+        function openCareerServices() {
+            const level = academicSession.getAcademicLevel();
+            
+            showLoading(true, 'Loading career opportunities...');
+            
+            setTimeout(() => {
+                // Determine appropriate career services
+                const serviceType = level === 'graduate' ? 'professional' : 'entry-level';
+                
+                showNotification(`Accessing ${serviceType} career services...`, 'info');
+                
+                setTimeout(() => {
+                    window.location.href = `career-services.html?level=${serviceType}&quick=true`;
+                }, 1500);
+            }, 1000);
+        }
+
+        // University Quick Login
+        function setupUniversityQuickLogin() {
+            const universityOptions = document.querySelectorAll('.university-option');
+            
+            universityOptions.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    const universityCode = option.querySelector('span').textContent;
+                    const universityMap = {
+                        'FUG': 'federal-gusau',
+                        'ZSU': 'state-university',
+                        'COE': 'college-education',
+                        'Poly': 'polytechnic',
+                        'Nursing': 'college-nursing',
+                        'Other': 'other'
+                    };
+                    
+                    const universityValue = universityMap[universityCode];
+                    if (universityValue) {
+                        universitySelect.value = universityValue;
+                        showNotification(`${universityCode} selected. Enter your student ID and password.`, 'info');
+                        studentIdInput.focus();
+                    }
+                });
+            });
+        }
+
+        // Analytics Tracking
+        function trackAcademicLogin(studentData) {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'academicLogin',
+                'university': studentData.university,
+                'program': studentData.program,
+                'level': studentData.level,
+                'year': studentData.year,
+                'timestamp': Date.now()
+            });
+
+            // Save login history
+            const loginHistory = JSON.parse(localStorage.getItem('academicLoginHistory') || '[]');
+            loginHistory.push({
+                studentId: studentData.studentId,
+                university: studentData.university,
+                level: studentData.level,
+                timestamp: Date.now(),
+                device: navigator.userAgent
+            });
+            localStorage.setItem('academicLoginHistory', JSON.stringify(loginHistory.slice(-50)));
+        }
+
+        // Event Listeners
+        togglePasswordBtn.addEventListener('click', togglePasswordVisibility);
+        togglePasswordBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                togglePasswordVisibility();
+            }
+        });
+
+        rememberCheckbox.addEventListener('click', toggleRememberMe);
+        rememberCheckbox.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleRememberMe();
+            }
+        });
+
+        loginForm.addEventListener('submit', handleLogin);
+        researchBtn.addEventListener('click', openResearchPortal);
+        careerBtn.addEventListener('click', openCareerServices);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+Enter to submit form
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                loginForm.requestSubmit();
+            }
+            
+            // Ctrl+R for research portal
+            if (e.ctrlKey && e.key === 'r') {
+                e.preventDefault();
+                openResearchPortal();
+            }
+            
+            // Ctrl+C for career services
+            if (e.ctrlKey && e.key === 'c') {
+                e.preventDefault();
+                openCareerServices();
+            }
+            
+            // Ctrl+D for demo account
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                studentIdInput.value = 'DEMO001';
+                passwordInput.value = 'demo123';
+                universitySelect.value = 'federal-gusau';
+                showNotification('Demo account loaded. Press Ctrl+Enter to login.', 'info');
+            }
+            
+            // Escape to clear form
+            if (e.key === 'Escape') {
+                studentIdInput.value = '';
+                passwordInput.value = '';
+                universitySelect.value = '';
+                studentIdInput.focus();
+            }
+        });
+
+        // Real-time validation
+        studentIdInput.addEventListener('blur', () => {
+            const value = studentIdInput.value.trim();
+            const level = academicSession.getAcademicLevel();
+            
+            if (value && !isValidStudentId(value, level)) {
+                const format = level === 'undergraduate' ? 'UG/YYYY/XXX' : 'PG/YYYY/XXX or PHD/YYYY/XXX';
+                showError(studentIdInput, 'studentId-error', `Expected format: ${format}`);
+            }
+        });
+
+        passwordInput.addEventListener('input', () => {
+            const errorElement = document.getElementById('password-error');
+            if (passwordInput.value && errorElement.classList.contains('show')) {
+                errorElement.classList.remove('show');
+                passwordInput.classList.remove('error');
+            }
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeForm();
+            setupLevelSelection();
+            setupUniversityQuickLogin();
+            
+            // Check for session expiry
+            const loginTime = sessionStorage.getItem('loginTime');
+            if (loginTime && (Date.now() - parseInt(loginTime)) > 7200000) { // 2 hours
+                academicSession.clearSession();
+                showNotification('Your session has expired. Please login again.', 'warning');
+            }
+
+            // Check URL parameters for messages
+            const urlParams = new URLSearchParams(window.location.search);
+            const message = urlParams.get('message');
+            if (message === 'registered') {
+                showNotification('Academic registration successful! Please login.', 'success');
+            } else if (message === 'research_published') {
+                showNotification('Congratulations! Your research has been published.', 'success');
+            } else if (message === 'internship_awarded') {
+                showNotification('Congratulations! You have been awarded an internship.', 'success');
+            }
+
+            // Auto-fill demo on triple click
+            studentIdInput.addEventListener('click', (e) => {
+                if (e.detail === 3) { // Triple click
+                    studentIdInput.value = 'UG/2021/001';
+                    passwordInput.value = 'student123';
+                    universitySelect.value = 'federal-gusau';
+                    showNotification('Demo undergraduate account loaded. Press Login to continue.', 'info');
+                }
+            });
+
+            // Load events count
+            updateEventsCount();
+        });
+
+        // Update events count
+        function updateEventsCount() {
+            const eventsList = document.querySelectorAll('.events-list li');
+            const eventsCount = document.querySelector('.events-count');
+            
+            if (eventsCount && eventsList) {
+                eventsCount.textContent = eventsList.length;
+                eventsCount.setAttribute('aria-label', `${eventsList.length} upcoming events`);
+            }
+        }
+
+        // Network status detection
+        window.addEventListener('online', () => {
+            showNotification('Back online! Syncing your academic data...', 'success');
+        });
+
+        window.addEventListener('offline', () => {
+            showNotification('You are offline. Some features may be limited.', 'warning');
+        });
+
+        // Error handling
+        window.addEventListener('error', (event) => {
+            console.error('Error:', event.error);
+            showNotification('An error occurred. Please refresh the page.', 'error');
+        });
+
+        window.addEventListener('unhandledrejection', (event) => {
+            console.error('Unhandled Promise Rejection:', event.reason);
+            showNotification('An unexpected error occurred.', 'error');
+        });
+
+        // Accessibility improvements
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-navigation');
+            }
+        });
+
+        document.addEventListener('mousedown', () => {
+            document.body.classList.remove('keyboard-navigation');
+        });
+
+        // Service Worker Registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw-university.js')
+                    .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+
+        // Update event dates dynamically
+        function updateEventDates() {
+            const today = new Date();
+            const eventDates = document.querySelectorAll('.event-date');
+            
+            eventDates.forEach((dateElement, index) => {
+                const eventDate = new Date(today);
+                eventDate.setDate(today.getDate() + (index * 7) + 7); // Weekly events
+                
+                const day = eventDate.getDate();
+                const month = eventDate.toLocaleString('default', { month: 'short' }).toUpperCase();
+                
+                dateElement.querySelector('.day').textContent = day;
+                dateElement.querySelector('.month').textContent = month;
+            });
+        }
+
+        // Initialize dynamic updates
+        updateEventDates();
+        setInterval(updateEventDates, 60000); // Update every minute
+    </script>
+</body>
+</html>

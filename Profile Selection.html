@@ -1,0 +1,2395 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="z7x9w2v4u6s3p1o5k8j0h2g4f6d8s0a2">
+    <meta name="description" content="Zamfara State Unified Digital Learning Platform - Select your profile category to access tailored digital services, training, and opportunities">
+    <meta name="keywords" content="Zamfara, Digital Platform, e-Governance, Digital Skills, Training, Civil Servant, SME, Youth, Education">
+    <title>Zamfara Digital Platform | Select Your Profile</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#006837">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Zamfara Digital Platform",
+        "description": "Unified digital learning and capacity development platform for Zamfara State residents and civil servants",
+        "url": "https://digital.zamfara.gov.ng",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "NGN"
+        },
+        "provider": {
+            "@type": "GovernmentOrganization",
+            "name": "Zamfara State Information Technology Development Agency",
+            "url": "https://zitda.zamfara.gov.ng"
+        }
+    }
+    </script>
+    
+    <style>
+        :root {
+            /* Zamfara Government Theme */
+            --primary-green: #006837;
+            --secondary-green: #00A859;
+            --accent-green: #4CD964;
+            --dark-green: #004225;
+            --gold-accent: #FFD700;
+            --professional-blue: #1a5f7a;
+            --government-purple: #4a1e5c;
+            
+            /* User Category Colors - WCAG Compliant */
+            --civil-servant-color: #006837;
+            --sme-color: #f4a261;
+            --youth-color: #06b6d4;
+            --graduate-color: #8b5cf6;
+            --student-color: #10b981;
+            --teacher-color: #3b82f6;
+            --guest-color: #6b7280;
+            
+            /* UI Colors */
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.1);
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+            
+            /* Z-index layers */
+            --z-dropdown: 1000;
+            --z-sticky: 1020;
+            --z-modal: 1050;
+            --z-popover: 1070;
+            --z-tooltip: 1080;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Skip to Main Content Link - Accessibility */
+        .skip-to-main {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            background: var(--primary-green);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            z-index: var(--z-popover);
+            transition: var(--transition-fast);
+        }
+
+        .skip-to-main:focus {
+            top: 20px;
+            left: 20px;
+            outline: 3px solid var(--gold-accent);
+            outline-offset: 2px;
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: var(--z-sticky);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-full);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            color: var(--text-secondary);
+        }
+
+        .lang-btn.active {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .lang-btn:focus {
+            outline: 3px solid var(--gold-accent);
+            outline-offset: 2px;
+        }
+
+        /* Navigation Bar - Enhanced */
+        .nav-bar {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: var(--z-sticky);
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .nav-logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-green), var(--professional-blue));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-logo-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .nav-logo-text h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-green), var(--professional-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.125rem;
+        }
+
+        .nav-logo-text p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+            border: 2px solid transparent;
+        }
+
+        .nav-back:hover {
+            color: var(--primary-green);
+            transform: translateX(-3px);
+            background: rgba(0, 104, 55, 0.05);
+        }
+
+        .nav-back:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(0, 104, 55, 0.2);
+        }
+
+        /* Offline Indicator */
+        .offline-indicator {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: var(--danger-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            z-index: var(--z-sticky);
+            display: none;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Hero Section - Enhanced */
+        .hero-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(0, 104, 55, 0.05), rgba(26, 95, 122, 0.05));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300A859' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 104, 55, 0.1);
+            color: var(--primary-green);
+            padding: 0.5rem 1.25rem;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 2px solid rgba(0, 104, 55, 0.2);
+        }
+
+        .hero-badge i {
+            font-size: 1rem;
+        }
+
+        .hero-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--professional-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Guest Access Banner */
+        .guest-banner {
+            background: linear-gradient(135deg, rgba(107, 114, 128, 0.1), rgba(156, 163, 175, 0.1));
+            border: 2px dashed var(--guest-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .guest-content h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .guest-content p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* User Selection Cards - Enhanced Accessibility */
+        .selection-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .user-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            transition: var(--transition-normal);
+            border: 2px solid var(--border-color);
+            box-shadow: var(--shadow-card);
+            cursor: pointer;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-card:hover,
+        .user-card:focus-within {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+            border-color: transparent;
+            outline: none;
+        }
+
+        .user-card:focus-visible {
+            outline: 3px solid var(--primary-green);
+            outline-offset: 4px;
+        }
+
+        .user-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            background: var(--civil-servant-color);
+        }
+
+        .user-card.sme::before { background: var(--sme-color); }
+        .user-card.youth::before { background: var(--youth-color); }
+        .user-card.graduate::before { background: var(--graduate-color); }
+        .user-card.student::before { background: var(--student-color); }
+        .user-card.teacher::before { background: var(--teacher-color); }
+        .user-card.guest::before { background: var(--guest-color); }
+
+        .card-header {
+            padding: 2rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            background: var(--civil-servant-color);
+            transition: var(--transition-normal);
+        }
+
+        .user-card:hover .card-icon,
+        .user-card:focus-within .card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .user-card.sme .card-icon { background: var(--sme-color); }
+        .user-card.youth .card-icon { background: var(--youth-color); }
+        .user-card.graduate .card-icon { background: var(--graduate-color); }
+        .user-card.student .card-icon { background: var(--student-color); }
+        .user-card.teacher .card-icon { background: var(--teacher-color); }
+        .user-card.guest .card-icon { background: var(--guest-color); }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .card-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .card-content {
+            padding: 0 2rem 1.5rem;
+            flex-grow: 1;
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-features {
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .feature-item i {
+            color: var(--success-color);
+            margin-top: 0.125rem;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .card-footer {
+            padding: 1.5rem 2rem;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .card-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: block;
+            transition: var(--transition-normal);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Buttons - Enhanced */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 2rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            font-family: 'Inter', sans-serif;
+            min-height: 44px; /* Touch target size */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-green), var(--professional-blue));
+            color: white !important;
+            box-shadow: 0 10px 30px rgba(0, 104, 55, 0.2);
+            border: 2px solid transparent;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 104, 55, 0.3);
+            outline: none;
+        }
+
+        .btn-primary:focus {
+            border-color: white;
+            box-shadow: 0 0 0 3px rgba(0, 104, 55, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+        }
+
+        .btn-outline:hover,
+        .btn-outline:focus {
+            background: rgba(0, 104, 55, 0.1);
+            transform: translateY(-2px);
+            outline: none;
+        }
+
+        .btn-large {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        /* Loading State */
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .btn-loading .btn-text {
+            visibility: hidden;
+        }
+
+        .btn-loading::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Comparison Table - Enhanced */
+        .comparison-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1.75rem, 3vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .comparison-table {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, rgba(0, 104, 55, 0.1), rgba(26, 95, 122, 0.1));
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table-header h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .table-content {
+            overflow-x: auto;
+        }
+
+        .table-scroll {
+            min-width: 800px;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 1.5fr repeat(7, 1fr);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-cell {
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            min-height: 60px;
+        }
+
+        .table-cell:first-child {
+            font-weight: 600;
+            color: var(--text-primary);
+            border-right: 1px solid var(--border-color);
+            background: rgba(0, 104, 55, 0.02);
+        }
+
+        .table-cell i.fa-check {
+            color: var(--success-color);
+            font-size: 1.125rem;
+        }
+
+        .table-cell i.fa-times {
+            color: var(--danger-color);
+            font-size: 1.125rem;
+        }
+
+        /* FAQ Section - Enhanced */
+        .faq-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-fast);
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary-green);
+            box-shadow: var(--shadow-md);
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .faq-question i {
+            color: var(--primary-green);
+            margin-top: 0.125rem;
+            flex-shrink: 0;
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        /* Footer - Enhanced */
+        .page-footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-column h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 4px 0;
+        }
+
+        .footer-links a:hover,
+        .footer-links a:focus {
+            color: var(--primary-green);
+            transform: translateX(5px);
+            outline: none;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--success-color), var(--accent-green));
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: var(--z-modal);
+            animation: slideIn 0.3s ease-out;
+            max-width: 350px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, var(--danger-color), #f87171);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, var(--warning-color), #fbbf24);
+        }
+
+        /* Demo Mode Banner */
+        .demo-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, var(--primary-green), var(--professional-blue));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: var(--z-tooltip);
+            font-weight: 600;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Form for CSRF */
+        #userSelectionForm {
+            display: none;
+        }
+
+        /* Accessibility Classes */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .focus-visible {
+            outline: 3px solid var(--gold-accent);
+            outline-offset: 2px;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: var(--z-modal);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-normal);
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--primary-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .user-card {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .user-card:nth-child(1) { animation-delay: 0.1s; }
+        .user-card:nth-child(2) { animation-delay: 0.2s; }
+        .user-card:nth-child(3) { animation-delay: 0.3s; }
+        .user-card:nth-child(4) { animation-delay: 0.4s; }
+        .user-card:nth-child(5) { animation-delay: 0.5s; }
+        .user-card:nth-child(6) { animation-delay: 0.6s; }
+        .user-card:nth-child(7) { animation-delay: 0.7s; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 5px;
+            border: 2px solid var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-green);
+        }
+
+        /* Print Styles */
+        @media print {
+            .nav-bar,
+            .language-toggle,
+            .demo-banner,
+            .guest-banner,
+            .btn,
+            .notification,
+            .offline-indicator,
+            .page-footer {
+                display: none !important;
+            }
+
+            .user-card {
+                break-inside: avoid;
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+            }
+
+            .hero-section {
+                background: white !important;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* High Contrast Mode */
+        @media (prefers-contrast: high) {
+            :root {
+                --border-color: #000000;
+                --text-primary: #000000;
+                --text-secondary: #000000;
+            }
+
+            .user-card {
+                border: 2px solid #000000;
+            }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #0f172a;
+                --bg-secondary: #1e293b;
+                --text-primary: #f1f5f9;
+                --text-secondary: #cbd5e1;
+                --text-muted: #94a3b8;
+                --border-color: #334155;
+            }
+
+            .hero-section {
+                background: linear-gradient(135deg, rgba(0, 104, 55, 0.1), rgba(26, 95, 122, 0.2));
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .selection-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-bar {
+                padding: 1rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .nav-logo-text h2 {
+                font-size: 1rem;
+            }
+            
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+            
+            .hero-title {
+                font-size: 1.75rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .selection-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .selection-container {
+                padding: 0 1rem 3rem;
+            }
+            
+            .guest-banner {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem;
+            }
+            
+            .language-toggle {
+                top: 80px;
+                right: 10px;
+            }
+            
+            .demo-banner {
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+            }
+            
+            .table-content {
+                font-size: 0.875rem;
+            }
+            
+            .table-cell {
+                padding: 0.75rem;
+            }
+            
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 0.875rem;
+            }
+            
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .card-header {
+                padding: 1.5rem 1rem 1rem;
+            }
+            
+            .card-content {
+                padding: 0 1rem 1rem;
+            }
+            
+            .card-footer {
+                padding: 1rem;
+            }
+            
+            .btn-large {
+                padding: 0.875rem 1.5rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Accessibility: Skip to Main Content -->
+    <a href="#main-content" class="skip-to-main sr-only-focusable">
+        Skip to main content
+    </a>
+
+    <!-- Language Toggle -->
+    <div class="language-toggle" role="region" aria-label="Language selection">
+        <button class="lang-btn active" onclick="changeLanguage('en')" aria-label="Switch to English">
+            EN
+        </button>
+        <button class="lang-btn" onclick="changeLanguage('ha')" aria-label="Switch to Hausa">
+            HA
+        </button>
+    </div>
+
+    <!-- Offline Indicator -->
+    <div class="offline-indicator" id="offlineIndicator" role="alert" aria-live="polite">
+        <i class="fas fa-wifi-slash"></i>
+        <span>You are offline. Working in offline mode.</span>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="nav-bar" role="navigation" aria-label="Main navigation">
+        <a href="landing-page.html" class="nav-logo" aria-label="Zamfara Digital Platform Home">
+            <div class="nav-logo-icon" aria-hidden="true">
+               <img src="ZITDA.jpg" width="70" height="70">
+            </div>
+            <div class="nav-logo-text">
+                <h2>Zamfara Digital Platform</h2>
+                <p>Digital Transformation Initiative</p>
+            </div>
+        </a>
+        
+        <a href="landing-page.html" class="nav-back" aria-label="Go back to home page">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            Back to Home
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="main-content" role="main" aria-labelledby="hero-title">
+        <div class="hero-content">
+            <div class="hero-badge" role="status" aria-label="Platform status">
+                <i class="fas fa-user-plus" aria-hidden="true"></i>
+                Join the Digital Revolution
+            </div>
+            
+            <h1 class="hero-title" id="hero-title">
+                Who are you on the Zamfara<br>
+                Digital Platform?
+            </h1>
+            
+            <p class="hero-subtitle" id="hero-subtitle">
+                Select your profile category to access tailored digital services, training, and opportunities designed specifically for you.
+            </p>
+        </div>
+    </section>
+
+    <!-- Guest Access Banner -->
+    <div class="guest-banner" role="complementary" aria-label="Guest access information">
+        <div class="guest-content">
+            <h3>Not sure which category fits you?</h3>
+            <p>Try our guest access to explore basic features without registration.</p>
+        </div>
+        <button class="btn btn-outline" onclick="selectUserType('guest')" aria-label="Access platform as guest">
+            <i class="fas fa-user-clock"></i>
+            Try Guest Access
+        </button>
+    </div>
+
+    <!-- User Selection Cards -->
+    <div class="selection-container" role="region" aria-labelledby="selection-title">
+        <h2 id="selection-title" class="sr-only">User Profile Selection</h2>
+        <div class="selection-grid">
+            <!-- Civil Servant Card -->
+            <div class="user-card" 
+                 onclick="selectUserType('civil-servant')" 
+                 onkeydown="handleCardKeydown(event, 'civil-servant')" 
+                 tabindex="0"
+                 role="button"
+                 aria-label="Select Civil Servant profile"
+                 data-user-type="civil-servant">
+                <div class="card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3 class="card-title">Civil Servant</h3>
+                    <p class="card-subtitle">Government Employees & MDAs</p>
+                </div>
+                
+                <div class="card-content">
+                    <p class="card-description">
+                        Access e-governance tools, digital training, and career development resources tailored for government employees.
+                    </p>
+                    
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>e-GovConnect Platform Access</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Digital Skills Training</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Promotion Tracking System</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-stats" aria-label="Statistics for Civil Servant category">
+                        <div class="stat-item">
+                            <span class="stat-value" data-value="8500">0</span>
+                            <span class="stat-label">Registered</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">24</span>
+                            <span class="stat-label">MDAs</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-large" aria-describedby="civil-servant-desc">
+                        <span class="btn-text">
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            Select This Profile
+                        </span>
+                    </button>
+                    <div id="civil-servant-desc" class="sr-only">
+                        Civil Servant profile includes e-governance tools, digital training, and career development resources
+                    </div>
+                </div>
+            </div>
+
+            <!-- SME/Business Owner Card -->
+            <div class="user-card sme" 
+                 onclick="selectUserType('sme')" 
+                 onkeydown="handleCardKeydown(event, 'sme')" 
+                 tabindex="0"
+                 role="button"
+                 aria-label="Select SME/Business Owner profile"
+                 data-user-type="sme">
+                <div class="card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3 class="card-title">SME/Business Owner</h3>
+                    <p class="card-subtitle">Small & Medium Enterprises</p>
+                </div>
+                
+                <div class="card-content">
+                    <p class="card-description">
+                        Grow your business with digital tools, access to government contracts, and business management training.
+                    </p>
+                    
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Digital Marketing Training</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Access to Government Grants</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>E-commerce Setup Support</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-stats" aria-label="Statistics for SME category">
+                        <div class="stat-item">
+                            <span class="stat-value" data-value="2300">0</span>
+                            <span class="stat-label">Businesses</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">₦250M+</span>
+                            <span class="stat-label">Funding Access</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-large" aria-describedby="sme-desc">
+                        <span class="btn-text">
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            Select This Profile
+                        </span>
+                    </button>
+                    <div id="sme-desc" class="sr-only">
+                        SME profile includes digital marketing training, access to grants, and e-commerce setup support
+                    </div>
+                </div>
+            </div>
+
+            <!-- Youth/Skills Acquisition Card -->
+            <div class="user-card youth" 
+                 onclick="selectUserType('youth')" 
+                 onkeydown="handleCardKeydown(event, 'youth')" 
+                 tabindex="0"
+                 role="button"
+                 aria-label="Select Youth profile"
+                 data-user-type="youth">
+                <div class="card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3 class="card-title">Youth/Skills Acquisition</h3>
+                    <p class="card-subtitle">Ages 18-35, Skills Development</p>
+                </div>
+                
+                <div class="card-content">
+                    <p class="card-description">
+                        Acquire in-demand skills, access job opportunities, and connect with entrepreneurship programs.
+                    </p>
+                    
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Digital Skills Training</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Job Placement Support</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Entrepreneurship Programs</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-stats" aria-label="Statistics for Youth category">
+                        <div class="stat-item">
+                            <span class="stat-value" data-value="15000">0</span>
+                            <span class="stat-label">Youths</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" data-value="85">0</span>
+                            <span class="stat-label">% Employed</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-large" aria-describedby="youth-desc">
+                        <span class="btn-text">
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            Select This Profile
+                        </span>
+                    </button>
+                    <div id="youth-desc" class="sr-only">
+                        Youth profile includes skills training, job placement support, and entrepreneurship programs
+                    </div>
+                </div>
+            </div>
+
+            <!-- Graduate/Undergraduate Card -->
+            <div class="user-card graduate" 
+                 onclick="selectUserType('graduate')" 
+                 onkeydown="handleCardKeydown(event, 'graduate')" 
+                 tabindex="0"
+                 role="button"
+                 aria-label="Select Graduate profile"
+                 data-user-type="graduate">
+                <div class="card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3 class="card-title">Graduate/Undergraduate</h3>
+                    <p class="card-subtitle">University Graduates & Students</p>
+                </div>
+                
+                <div class="card-content">
+                    <p class="card-description">
+                        Access career guidance, internship opportunities, and professional development resources.
+                    </p>
+                    
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Career Counseling</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Internship Placements</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Professional Certifications</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-stats" aria-label="Statistics for Graduate category">
+                        <div class="stat-item">
+                            <span class="stat-value" data-value="7200">0</span>
+                            <span class="stat-label">Graduates</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" data-value="2500">0</span>
+                            <span class="stat-label">Internships</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-large" aria-describedby="graduate-desc">
+                        <span class="btn-text">
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            Select This Profile
+                        </span>
+                    </button>
+                    <div id="graduate-desc" class="sr-only">
+                        Graduate profile includes career counseling, internship placements, and professional certifications
+                    </div>
+                </div>
+            </div>
+
+            <!-- O'Level Student Card -->
+            <div class="user-card student" 
+                 onclick="selectUserType('student')" 
+                 onkeydown="handleCardKeydown(event, 'student')" 
+                 tabindex="0"
+                 role="button"
+                 aria-label="Select Student profile"
+                 data-user-type="student">
+                <div class="card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="card-title">O'Level Student</h3>
+                    <p class="card-subtitle">Secondary School Students</p>
+                </div>
+                
+                <div class="card-content">
+                    <p class="card-description">
+                        Access digital learning resources, exam preparation tools, and career guidance for academic success.
+                    </p>
+                    
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Digital Learning Resources</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>WAEC/NECO Practice Tests</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Career Exploration Tools</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-stats" aria-label="Statistics for Student category">
+                        <div class="stat-item">
+                            <span class="stat-value" data-value="25000">0</span>
+                            <span class="stat-label">Students</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" data-value="92">0</span>
+                            <span class="stat-label">% Exam Success</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-large" aria-describedby="student-desc">
+                        <span class="btn-text">
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            Select This Profile
+                        </span>
+                    </button>
+                    <div id="student-desc" class="sr-only">
+                        Student profile includes learning resources, exam practice tests, and career exploration tools
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teacher/Educator Card -->
+            <div class="user-card teacher" 
+                 onclick="selectUserType('teacher')" 
+                 onkeydown="handleCardKeydown(event, 'teacher')" 
+                 tabindex="0"
+                 role="button"
+                 aria-label="Select Teacher profile"
+                 data-user-type="teacher">
+                <div class="card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 class="card-title">Teacher/Educator</h3>
+                    <p class="card-subtitle">Schools & Educational Institutions</p>
+                </div>
+                
+                <div class="card-content">
+                    <p class="card-description">
+                        Access digital teaching tools, professional development, and classroom management resources.
+                    </p>
+                    
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Digital Teaching Resources</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Professional Development</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Student Assessment Tools</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-stats" aria-label="Statistics for Teacher category">
+                        <div class="stat-item">
+                            <span class="stat-value" data-value="3500">0</span>
+                            <span class="stat-label">Teachers</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" data-value="450">0</span>
+                            <span class="stat-label">Schools</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-large" aria-describedby="teacher-desc">
+                        <span class="btn-text">
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            Select This Profile
+                        </span>
+                    </button>
+                    <div id="teacher-desc" class="sr-only">
+                        Teacher profile includes digital teaching resources, professional development, and assessment tools
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guest Access Card -->
+            <div class="user-card guest" 
+                 onclick="selectUserType('guest')" 
+                 onkeydown="handleCardKeydown(event, 'guest')" 
+                 tabindex="0"
+                 role="button"
+                 aria-label="Select Guest profile"
+                 data-user-type="guest">
+                <div class="card-header">
+                    <div class="card-icon" aria-hidden="true">
+                        <i class="fas fa-user-clock"></i>
+                    </div>
+                    <h3 class="card-title">Guest Access</h3>
+                    <p class="card-subtitle">Explore Platform Features</p>
+                </div>
+                
+                <div class="card-content">
+                    <p class="card-description">
+                        Try basic features without registration. Perfect for exploring the platform before committing.
+                    </p>
+                    
+                    <div class="card-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Basic Feature Access</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>No Registration Required</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                            <span>Upgrade Anytime</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="card-stats" aria-label="Statistics for Guest access">
+                        <div class="stat-item">
+                            <span class="stat-value" data-value="5000">0</span>
+                            <span class="stat-label">Monthly Visitors</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">60%</span>
+                            <span class="stat-label">Upgrade Rate</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline btn-large btn-full" aria-describedby="guest-desc">
+                        <span class="btn-text">
+                            <i class="fas fa-eye" aria-hidden="true"></i>
+                            Explore as Guest
+                        </span>
+                    </button>
+                    <div id="guest-desc" class="sr-only">
+                        Guest profile allows exploring basic platform features without registration
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="comparison-section" role="region" aria-labelledby="comparison-title">
+        <div class="section-header">
+            <h2 id="comparison-title">Platform Features Comparison</h2>
+            <p>Discover what each user category can access on the Zamfara Digital Platform</p>
+        </div>
+        
+        <div class="comparison-table">
+            <div class="table-header">
+                <h3>Available Features by User Category</h3>
+            </div>
+            
+            <div class="table-content">
+                <div class="table-scroll" role="table" aria-label="Feature comparison table">
+                    <div class="table-row" role="row">
+                        <div class="table-cell" role="columnheader">Features</div>
+                        <div class="table-cell" role="columnheader">Civil Servant</div>
+                        <div class="table-cell" role="columnheader">SME</div>
+                        <div class="table-cell" role="columnheader">Youth</div>
+                        <div class="table-cell" role="columnheader">Graduate</div>
+                        <div class="table-cell" role="columnheader">Student</div>
+                        <div class="table-cell" role="columnheader">Teacher</div>
+                        <div class="table-cell" role="columnheader">Guest</div>
+                    </div>
+                    
+                    <div class="table-row" role="row">
+                        <div class="table-cell" role="cell">Digital Skills Training</div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                    </div>
+                    
+                    <div class="table-row" role="row">
+                        <div class="table-cell" role="cell">Career Development</div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                    </div>
+                    
+                    <div class="table-row" role="row">
+                        <div class="table-cell" role="cell">Government Services</div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                    </div>
+                    
+                    <div class="table-row" role="row">
+                        <div class="table-cell" role="cell">Business Support</div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                    </div>
+                    
+                    <div class="table-row" role="row">
+                        <div class="table-cell" role="cell">Educational Resources</div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                    </div>
+                    
+                    <div class="table-row" role="row">
+                        <div class="table-cell" role="cell">Mentorship Programs</div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-check" aria-label="Available"></i></div>
+                        <div class="table-cell" role="cell"><i class="fas fa-times" aria-label="Not available"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="faq-section" role="region" aria-labelledby="faq-title">
+        <div class="section-header">
+            <h2 id="faq-title">Frequently Asked Questions</h2>
+            <p>Find answers to common questions about registration and platform access</p>
+        </div>
+        
+        <div class="faq-grid">
+            <div class="faq-item" role="article">
+                <div class="faq-question">
+                    <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    Can I change my user category after registration?
+                </div>
+                <p class="faq-answer">
+                    Yes, you can update your profile category at any time through your account settings. However, some features may require additional verification when switching categories.
+                </p>
+            </div>
+            
+            <div class="faq-item" role="article">
+                <div class="faq-question">
+                    <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    What documents do I need for registration?
+                </div>
+                <p class="faq-answer">
+                    Requirements vary by category. Civil servants need staff ID, while SMEs need business registration. All users need valid identification and contact information.
+                </p>
+            </div>
+            
+            <div class="faq-item" role="article">
+                <div class="faq-question">
+                    <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    Is there a registration fee?
+                </div>
+                <p class="faq-answer">
+                    No, registration on the Zamfara Digital Platform is completely free for all users as part of the state's digital inclusion initiative.
+                </p>
+            </div>
+            
+            <div class="faq-item" role="article">
+                <div class="faq-question">
+                    <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    How long does verification take?
+                </div>
+                <p class="faq-answer">
+                    Most registrations are verified within 24-48 hours. Civil servant verification may take up to 72 hours as it involves cross-checking with government databases.
+                </p>
+            </div>
+
+            <div class="faq-item" role="article">
+                <div class="faq-question">
+                    <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    Can I access the platform offline?
+                </div>
+                <p class="faq-answer">
+                    Yes! The platform works offline. You can download content when online and access it later without an internet connection. Your progress will sync when you're back online.
+                </p>
+            </div>
+
+            <div class="faq-item" role="article">
+                <div class="faq-question">
+                    <i class="fas fa-question-circle" aria-hidden="true"></i>
+                    Is the platform available in Hausa?
+                </div>
+                <p class="faq-answer">
+                    Yes! You can switch between English and Hausa using the language toggle at the top right of the page. More languages will be added soon.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Platform Categories</h3>
+                <ul class="footer-links" role="list">
+                    <li><a href="civil servant login.html"><i class="fas fa-user-tie" aria-hidden="true"></i> Civil Servants</a></li>
+                    <li><a href="Sme's Login.html"><i class="fas fa-store" aria-hidden="true"></i> SME/Business</a></li>
+                    <li><a href="#"><i class="fas fa-hands-helping" aria-hidden="true"></i> Youth Development</a></li>
+                    <li><a href="U-G lOGIN.html"><i class="fas fa-user-graduate" aria-hidden="true"></i> Graduates</a></li>
+                    <li><a href="O'Level.html"><i class="fas fa-book-open" aria-hidden="true"></i> Students</a></li>
+                    <li><a href="edu.html"><i class="fas fa-chalkboard-teacher" aria-hidden="true"></i> Teachers</a></li>
+                    <li><a href="#"><i class="fas fa-user-clock" aria-hidden="true"></i> Guest Access</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links" role="list">
+                    <li><a href="landing-page.html"><i class="fas fa-home" aria-hidden="true"></i> Home Page</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle" aria-hidden="true"></i> About Platform</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle" aria-hidden="true"></i> Help Center</a></li>
+                    <li><a href="#"><i class="fas fa-envelope" aria-hidden="true"></i> Contact Support</a></li>
+                    <li><a href="#"><i class="fas fa-newspaper" aria-hidden="true"></i> News & Updates</a></li>
+                    <li><a href="#"><i class="fas fa-shield-alt" aria-hidden="true"></i> Privacy Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Information</h3>
+                <ul class="footer-links" role="list">
+                    <li><a href="#"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> ZITDA Headquarters, Gusau</a></li>
+                    <li><a href="tel:+2348031234567"><i class="fas fa-phone" aria-hidden="true"></i> +234 803 123 4567</a></li>
+                    <li><a href="mailto:support@zamfaradigital.gov.ng"><i class="fas fa-envelope" aria-hidden="true"></i> support@zamfaradigital.gov.ng</a></li>
+                    <li><a href="#"><i class="fas fa-clock" aria-hidden="true"></i> Mon-Fri: 8AM - 5PM</a></li>
+                    <li><a href="#"><i class="fas fa-globe" aria-hidden="true"></i> digital.zamfara.gov.ng</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2025 Zamfara State Government - Digital Transformation Initiative. All rights reserved.
+            <br>
+            <small>Accessibility compliant | WCAG 2.1 AA | PWA Ready</small>
+        </div>
+    </footer>
+
+    <!-- Hidden Form for CSRF -->
+    <form id="userSelectionForm">
+        <input type="hidden" id="selectedUserType" name="userType">
+        <input type="hidden" name="csrfToken" value="z7x9w2v4u6s3p1o5k8j0h2g4f6d8s0a2">
+    </form>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" role="alert" aria-live="polite">
+        <div class="loading-spinner" aria-label="Loading"></div>
+    </div>
+
+    <!-- Demo Mode Banner -->
+    <div class="demo-banner" role="status" aria-label="Presentation mode active">
+        <i class="fas fa-laptop-code" aria-hidden="true"></i>
+        Presentation Mode Active
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Service Worker Registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // DOM Elements
+        const offlineIndicator = document.getElementById('offlineIndicator');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const userSelectionForm = document.getElementById('userSelectionForm');
+        const selectedUserTypeInput = document.getElementById('selectedUserType');
+
+        // CSRF Token
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+        // Language Data
+        const translations = {
+            en: {
+                heroTitle: "Who are you on the Zamfara<br>Digital Platform?",
+                heroSubtitle: "Select your profile category to access tailored digital services, training, and opportunities designed specifically for you.",
+                guestTitle: "Not sure which category fits you?",
+                guestText: "Try our guest access to explore basic features without registration.",
+                civilServant: "Civil Servant",
+                sme: "SME/Business Owner",
+                youth: "Youth/Skills Acquisition",
+                graduate: "Graduate/Undergraduate",
+                student: "O'Level Student",
+                teacher: "Teacher/Educator",
+                guest: "Guest Access"
+            },
+            ha: {
+                heroTitle: "Wane ne ku a cikin Zamfara<br>Dijital Platform?",
+                heroSubtitle: "Zaɓi rukunin bayanin ku don samun damar sabis na dijital, horo, da damar da aka tsara musamman don ku.",
+                guestTitle: "Ba ku da tabbas wane rukuni ya dace da ku?",
+                guestText: "Gwada damar bako don bincika ainihin fasalulluka ba tare da rajista ba.",
+                civilServant: "Ma'aikacin Gwamnati",
+                sme: "Ma'aikacin Kasuwanci/Kasuwancin",
+                youth: "Matasa/Samun ƙwarewa",
+                graduate: "Dalibai/Masu Digiri",
+                student: "Dalibai na O'Level",
+                teacher: "Malamai/Malamai",
+                guest: "Shiga Baƙo"
+            }
+        };
+
+        // Current Language
+        let currentLang = 'en';
+
+        // Session Management
+        const sessionManager = {
+            setSelection: (userType) => {
+                sessionStorage.setItem('selectedUserType', userType);
+                sessionStorage.setItem('selectionTime', Date.now());
+            },
+            getSelection: () => {
+                const selectionTime = sessionStorage.getItem('selectionTime');
+                if (selectionTime && (Date.now() - selectionTime) > 300000) { // 5 minutes
+                    sessionStorage.removeItem('selectedUserType');
+                    sessionStorage.removeItem('selectionTime');
+                    return null;
+                }
+                return sessionStorage.getItem('selectedUserType');
+            },
+            clearSelection: () => {
+                sessionStorage.removeItem('selectedUserType');
+                sessionStorage.removeItem('selectionTime');
+            }
+        };
+
+       // User Type Selection Function with Enhanced Error Handling
+async function selectUserType(userType) {
+    try {
+        // Validate input
+        if (!userType) {
+            throw new Error('No user type selected');
+        }
+
+        // Show loading
+        showLoading(true);
+
+        // Store selection in session
+        sessionManager.setSelection(userType);
+
+        // Track analytics
+        trackUserSelection(userType);
+
+        // Get button and card
+        const selectedCard = document.querySelector(`[data-user-type="${userType}"]`);
+        const button = selectedCard?.querySelector('.btn');
+        
+        if (button) {
+            button.classList.add('btn-loading');
+        }
+
+        // Show notification
+        const userTypeNames = {
+            'civil-servant': 'Civil Servant',
+            'sme': 'SME/Business',
+            'youth': 'Youth',
+            'graduate': 'Graduate',
+            'student': 'Student',
+            'teacher': 'Teacher',
+            'guest': 'Guest'
+        };
+
+        // REMOVED THE NOTIFICATION HERE - causing confusion
+        // showNotification(`Selected: ${userTypeNames[userType]} Profile`, 'success');
+
+        // Fixed redirect URLs based on your footer links
+        const redirectUrls = {
+            'civil-servant': 'Civil Servant/civil servant login.html',
+            'sme': 'Sme/Login.html',
+            'youth': '#', // No specific link in footer
+            'graduate': 'Graduate-UG/U-G lOGIN.html',
+            'student': 'O-Level/Login.html',
+            'teacher': 'Teachers Educators/edu.html',
+            'guest': '#' // No specific link in footer
+        };
+
+        const redirectUrl = redirectUrls[userType];
+        
+        // If no specific redirect URL, use a default registration page
+        if (!redirectUrl || redirectUrl === '#') {
+            // Use a default registration page
+            window.location.href = `registration-${userType}.html`;
+            return;
+        }
+
+        // Validate redirect URL
+        if (!isValidRedirect(redirectUrl)) {
+            // Use a safe fallback
+            window.location.href = `registration-${userType}.html`;
+            return;
+        }
+
+        // Play sound for demo
+        playSelectionSound();
+
+        // Simulate API call and redirect
+        setTimeout(() => {
+            showLoading(false);
+            if (button) {
+                button.classList.remove('btn-loading');
+            }
+            window.location.href = redirectUrl;
+        }, 500); // Reduced delay for better UX
+
+    } catch (error) {
+        console.error('Selection error:', error);
+        showNotification('Error selecting profile. Please try again.', 'error');
+        showLoading(false);
+        
+        // Reset button state
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(btn => btn.classList.remove('btn-loading'));
+    }
+}
+
+        // Keyboard Navigation for Cards
+        function handleCardKeydown(event, userType) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                selectUserType(userType);
+            }
+            
+            // Arrow key navigation
+            const cards = Array.from(document.querySelectorAll('.user-card'));
+            const currentIndex = cards.findIndex(card => card === event.currentTarget);
+            
+            if (event.key === 'ArrowRight') {
+                event.preventDefault();
+                const nextIndex = (currentIndex + 1) % cards.length;
+                cards[nextIndex].focus();
+            } else if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                const prevIndex = currentIndex > 0 ? currentIndex - 1 : cards.length - 1;
+                cards[prevIndex].focus();
+            } else if (event.key === 'Home') {
+                event.preventDefault();
+                cards[0].focus();
+            } else if (event.key === 'End') {
+                event.preventDefault();
+                cards[cards.length - 1].focus();
+            }
+        }
+
+        // Notification System
+        function showNotification(message, type = 'info') {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(n => n.remove());
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.setAttribute('role', 'alert');
+            notification.setAttribute('aria-live', 'assertive');
+            
+            const icon = type === 'success' ? 'check-circle' : 
+                         type === 'error' ? 'exclamation-circle' : 
+                         type === 'warning' ? 'exclamation-triangle' : 'info-circle';
+            
+            notification.innerHTML = `
+                <i class="fas fa-${icon}" aria-hidden="true"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 5000);
+        }
+
+        // Loading Overlay
+        function showLoading(show) {
+            if (show) {
+                loadingOverlay.classList.add('active');
+                loadingOverlay.setAttribute('aria-hidden', 'false');
+            } else {
+                loadingOverlay.classList.remove('active');
+                loadingOverlay.setAttribute('aria-hidden', 'true');
+            }
+        }
+
+        // Offline Detection
+        function updateOnlineStatus() {
+            if (!navigator.onLine) {
+                offlineIndicator.style.display = 'flex';
+                showNotification('You are offline. Working in offline mode.', 'warning');
+                // Save offline state
+                localStorage.setItem('lastOffline', Date.now());
+            } else {
+                offlineIndicator.style.display = 'none';
+                // Check if we just came back online
+                const lastOffline = localStorage.getItem('lastOffline');
+                if (lastOffline) {
+                    showNotification('You are back online. Syncing data...', 'success');
+                    localStorage.removeItem('lastOffline');
+                }
+            }
+        }
+
+        // Language Change
+        function changeLanguage(lang) {
+            currentLang = lang;
+            
+            // Update UI
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === lang.toUpperCase()) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Update text content
+            const heroTitle = document.getElementById('hero-title');
+            const heroSubtitle = document.getElementById('hero-subtitle');
+            const guestContent = document.querySelector('.guest-content h3');
+            const guestText = document.querySelector('.guest-content p');
+            
+            if (heroTitle) heroTitle.innerHTML = translations[lang].heroTitle;
+            if (heroSubtitle) heroSubtitle.textContent = translations[lang].heroSubtitle;
+            if (guestContent) guestContent.textContent = translations[lang].guestTitle;
+            if (guestText) guestText.textContent = translations[lang].guestText;
+
+            // Update card titles if they have data attributes
+            document.querySelectorAll('.user-card').forEach(card => {
+                const userType = card.dataset.userType;
+                const title = card.querySelector('.card-title');
+                if (title && translations[lang][userType]) {
+                    title.textContent = translations[lang][userType];
+                }
+            });
+
+            // Track language change
+            trackLanguageChange(lang);
+        }
+
+        // Analytics Tracking
+        function trackUserSelection(userType) {
+            // Google Analytics (if available)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'profile_selection', {
+                    'event_category': 'engagement',
+                    'event_label': userType,
+                    'value': 1
+                });
+            }
+            
+            // Data Layer for GTM
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'profileSelection',
+                'selectedProfile': userType,
+                'language': currentLang,
+                'timestamp': Date.now()
+            });
+
+            // Local storage for analytics
+            const selections = JSON.parse(localStorage.getItem('userSelections') || '[]');
+            selections.push({
+                type: userType,
+                timestamp: Date.now(),
+                language: currentLang
+            });
+            localStorage.setItem('userSelections', JSON.stringify(selections.slice(-100))); // Keep last 100
+        }
+
+        function trackLanguageChange(lang) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'language_change', {
+                    'event_category': 'preferences',
+                    'event_label': lang,
+                    'value': 1
+                });
+            }
+        }
+
+        // Statistics Animation
+        function animateStatistics() {
+            const stats = document.querySelectorAll('.stat-value[data-value]');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const stat = entry.target;
+                        const targetValue = parseInt(stat.dataset.value);
+                        const hasPlus = stat.textContent.includes('+') || stat.textContent.includes('%');
+                        let currentValue = 0;
+                        
+                        const increment = targetValue / 30; // Divide into 30 steps
+                        const interval = setInterval(() => {
+                            currentValue += increment;
+                            if (currentValue >= targetValue) {
+                                stat.textContent = targetValue + (hasPlus ? (stat.textContent.includes('%') ? '%' : '+') : '');
+                                clearInterval(interval);
+                            } else {
+                                const displayValue = Math.floor(currentValue);
+                                stat.textContent = displayValue + (hasPlus ? (stat.textContent.includes('%') ? '%' : '+') : '');
+                            }
+                        }, 30);
+                        
+                        observer.unobserve(stat);
+                    }
+                });
+            }, { threshold: 0.5, rootMargin: '0px 0px -50px 0px' });
+            
+            stats.forEach(stat => observer.observe(stat));
+        }
+
+        // Security Functions
+function isValidRedirect(url) {
+    // Allow relative URLs and URLs within the same origin
+    if (url.startsWith('/') || url.startsWith('./') || url.startsWith('../') || 
+        url === '#' || !url.includes('://')) {
+        return true;
+    }
+    
+    // Check for absolute URLs
+    try {
+        const urlObj = new URL(url);
+        const currentOrigin = window.location.origin;
+        return urlObj.origin === currentOrigin;
+    } catch {
+        // If URL parsing fails, it's likely a relative path
+        return true;
+    }
+}
+
+        // Demo Functions
+        function playSelectionSound() {
+            // Create a simple click sound
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+            } catch (error) {
+                console.log('Audio not supported');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize cards
+            const cards = document.querySelectorAll('.user-card');
+            cards.forEach(card => {
+                card.setAttribute('tabindex', '0');
+                card.setAttribute('role', 'button');
+                
+                // Add hover effects
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Initialize online status
+            updateOnlineStatus();
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+
+            // Initialize statistics animation
+            animateStatistics();
+
+            // Check for expired session
+            const previousSelection = sessionManager.getSelection();
+            if (previousSelection) {
+                console.log('Previous selection found:', previousSelection);
+            }
+
+            // Add focus styles for accessibility
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Tab') {
+                    document.body.classList.add('keyboard-navigation');
+                }
+            });
+
+            document.addEventListener('mousedown', function() {
+                document.body.classList.remove('keyboard-navigation');
+            });
+
+            // Initialize service worker for offline capability
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.ready.then(() => {
+                    console.log('Service Worker ready for offline functionality');
+                });
+            }
+
+            // Load saved preferences
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            changeLanguage(savedLang);
+        });
+
+        // Error Boundary for JavaScript
+        window.addEventListener('error', function(event) {
+            console.error('JavaScript Error:', event.error);
+            showNotification('An error occurred. Please refresh the page.', 'error');
+            
+            // Send error to analytics if available
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'exception', {
+                    'description': event.error.message,
+                    'fatal': false
+                });
+            }
+        });
+
+        // Unhandled Promise Rejection
+        window.addEventListener('unhandledrejection', function(event) {
+            console.error('Unhandled Promise Rejection:', event.reason);
+            showNotification('An unexpected error occurred.', 'error');
+        });
+    </script>
+</body>
+</html>

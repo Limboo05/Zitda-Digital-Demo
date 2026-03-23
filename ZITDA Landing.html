@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZITDA - Zamfara State Unified Digital Learning Platform</title>
+    
+    <!-- Lottie Animations -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    
+    <!-- GSAP for Advanced Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="Final.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        
+    </style>
+</head>
+<body>
+    <!-- Progress Indicator -->
+    <div class="progress-indicator" id="progressIndicator"></div>
+
+    <!-- Voice Command Indicator -->
+    <button class="voice-indicator" id="voiceIndicator" title="Voice Commands">
+        <i class="fas fa-microphone"></i>
+    </button>
+
+    <!-- IMPROVED Language & User Type Selector -->
+    <div class="language-selector-container">
+        <div class="language-selector" id="languageSelector">
+            <i class="fas fa-globe"></i>
+            <span id="currentLanguage">🇺🇸 English</span>
+            <div class="language-dropdown">
+                <div class="language-option active" data-lang="en">
+                    <span>🇺🇸 English</span>
+                </div>
+                <div class="language-option" data-lang="ha">
+                    <span>🇳🇬 Hausa</span>
+                </div>
+                
+                <div class="language-option" data-lang="ar">
+                    <span>🇸🇦 العربية</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-type-switcher" id="userTypeSwitcher">
+            <i class="fas fa-user-tie"></i>
+            <span id="currentUserType">Civil Servant</span>
+            <div class="user-type-dropdown">
+                <button class="user-type-option active" data-user="civil-servant">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Civil Servant</span>
+                </button>
+                <button class="user-type-option" data-user="teacher">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Teacher</span>
+                </button>
+                <button class="user-type-option" data-user="student">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Student</span>
+                </button>
+                <button class="user-type-option" data-user="youth">
+                    <i class="fas fa-users"></i>
+                    <span>Youth & Skills</span>
+                </button>
+                <button class="user-type-option" data-user="sme">
+                    <i class="fas fa-briefcase"></i>
+                    <span>SME Owner</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Buttons -->
+    <div class="fab-container">
+        <button class="fab" id="chatFab" title="Live Support">
+            <i class="fas fa-comment-dots"></i>
+            <span class="fab-label">Live Support</span>
+        </button>
+        <button class="fab" id="demoFab" title="Quick Demo">
+            <i class="fas fa-play"></i>
+            <span class="fab-label">Quick Demo</span>
+        </button>
+        <button class="fab" id="dashboardFab" title="View Dashboard">
+            <i class="fas fa-tachometer-alt"></i>
+            <span class="fab-label">View Dashboard</span>
+        </button>
+    </div>
+
+    <!-- Header -->
+    <header id="mainHeader">
+        <div class="header-container">
+            <a href="#home" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>ZITDA Digital Hub</h1>
+                    <p>Unified Learning & Capacity Platform</p>
+                </div>
+            </a>
+
+            <nav class="nav-desktop">
+                <div class="nav-item">
+                    <span>Platform</span>
+                    <div class="mega-menu">
+                        <div class="mega-menu-column">
+                            <h4>For Civil Servants</h4>
+                            <ul class="mega-menu-links">
+                                <li><a href="#"><i class="fas fa-file-excel"></i>Digital Literacy</a></li>
+                                <li><a href="#"><i class="fas fa-cogs"></i>E-Government Training</a></li>
+                                <li><a href="#"><i class="fas fa-chart-line"></i>Productivity Tools</a></li>
+                                <li><a href="#"><i class="fas fa-certificate"></i>Promotional Exams</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>For Education</h4>
+                            <ul class="mega-menu-links">
+                                <li><a href="#"><i class="fas fa-chalkboard"></i>Teacher Upskilling</a></li>
+                                <li><a href="#"><i class="fas fa-file-alt"></i>JAMB/WAEC Practice</a></li>
+                                <li><a href="#"><i class="fas fa-flask"></i>Virtual Labs</a></li>
+                                <li><a href="#"><i class="fas fa-keyboard"></i>Typing Tutor</a></li>
+                            </ul>
+                        </div>
+                        <div class="mega-menu-column">
+                            <h4>For Youth & SMEs</h4>
+                            <ul class="mega-menu-links">
+                                <li><a href="#"><i class="fas fa-laptop-code"></i>Digital Skills</a></li>
+                                <li><a href="#"><i class="fas fa-briefcase"></i>Job Readiness</a></li>
+                                <li><a href="#"><i class="fas fa-store"></i>E-commerce Training</a></li>
+                                <li><a href="#"><i class="fas fa-handshake"></i>Mentorship</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="#features" class="nav-item">Features</a>
+                <a href="#showcase" class="nav-item">Showcase</a>
+                <a href="#testimonials" class="nav-item">Success Stories</a>
+               
+            </nav>
+
+            <div class="auth-buttons">
+                <a href="Profile Selection.html" class="btn btn-outline">Login</a>
+                <a href="Profile Selection.html" class="btn btn-primary">Start Free Trial</a>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Transform Zamfara's Workforce with Digital Excellence</h1>
+                <p>A unified platform empowering civil servants, teachers, students, youth, and SMEs with world-class digital skills, certifications, and career advancement opportunities.</p>
+                
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>AI-Powered Learning</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Offline Access</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Hausa Language Support</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Government Integration</span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2.5rem;">
+                    <a href="#register" class="btn btn-primary btn-large">
+                        <i class="fas fa-rocket"></i> Start Your Journey
+                    </a>
+                    <a href="#showcase" class="btn btn-outline btn-large">
+                        <i class="fas fa-video"></i> Platform Tour
+                    </a>
+                </div>
+            </div>
+            <div class="hero-animation">
+                <lottie-player
+                    src="https://assets5.lottiefiles.com/packages/lf20_ikvz7qhc.json"
+                    background="transparent"
+                    speed="1"
+                    style="width: 100%; height: 100%;"
+                    loop
+                    autoplay>
+                </lottie-player>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Journey -->
+    <section class="user-journey">
+        <div class="journey-container">
+            <h2 style="text-align: center; font-family: var(--font-heading); font-size: 2.5rem; color: var(--dark-green); margin-bottom: 3rem;">
+                Your Digital Transformation Journey
+            </h2>
+            <div class="journey-track">
+                <div class="journey-step">
+                    <div class="step-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>Register & Onboard</h3>
+                        <p>Quick setup with personalized assessment</p>
+                    </div>
+                </div>
+                <div class="journey-step">
+                    <div class="step-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>Learn & Practice</h3>
+                        <p>Interactive modules with simulations</p>
+                    </div>
+                </div>
+                <div class="journey-step">
+                    <div class="step-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>Get Certified</h3>
+                        <p>Earn recognized digital certificates</p>
+                    </div>
+                </div>
+                <div class="journey-step">
+                    <div class="step-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>Advance Career</h3>
+                        <p>Access job opportunities & promotions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Showcase -->
+    <section class="platform-showcase" id="showcase">
+        <div class="showcase-container">
+            <div class="showcase-text">
+                <h2>Experience Our Professional Dashboard</h2>
+                <p style="opacity: 0.9; margin-bottom: 3rem; font-size: 1.125rem;">
+                    See how our unified platform delivers personalized learning experiences across all user groups.
+                </p>
+                
+                <div class="showcase-features">
+                    <div class="showcase-feature">
+                        <div class="feature-check">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h4 style="color: white; margin-bottom: 0.5rem;">Real-time Progress Tracking</h4>
+                            <p style="opacity: 0.8;">Monitor skills development with advanced analytics</p>
+                        </div>
+                    </div>
+                    <div class="showcase-feature">
+                        <div class="feature-check">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h4 style="color: white; margin-bottom: 0.5rem;">Interactive Simulations</h4>
+                            <p style="opacity: 0.8;">Practice with virtual labs and exam simulations</p>
+                        </div>
+                    </div>
+                    <div class="showcase-feature">
+                        <div class="feature-check">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <h4 style="color: white; margin-bottom: 0.5rem;">HR Integration</h4>
+                            <p style="opacity: 0.8;">Seamless connection with government HR systems</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="showcase-preview">
+                <div class="dashboard-preview">
+                    <div class="preview-header"></div>
+                    <div class="preview-sidebar"></div>
+                    <div class="preview-content">
+                        <div class="preview-card"></div>
+                        <div class="preview-card"></div>
+                        <div class="preview-card"></div>
+                        <div class="preview-card"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Counter -->
+    <div class="stats-counter">
+        <div class="stat-item">
+            <div class="stat-number" data-target="15000">0</div>
+            <div class="stat-label">Users Empowered</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" data-target="98">98</div>
+            <div class="stat-label">% User Satisfaction</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" data-target="500">0</div>
+            <div class="stat-label">Skills Modules</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" data-target="42">0</div>
+            <div class="stat-label">Partner Organizations</div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header" style="text-align: center; margin-bottom: 4rem;">
+            <h2 style="font-family: var(--font-heading); font-size: 3rem; font-weight: 900; color: var(--dark-green); margin-bottom: 1rem;">Advanced Platform Features</h2>
+            <p style="color: var(--gray-800); max-width: 700px; margin: 0 auto; font-size: 1.25rem;">Cutting-edge technology driving digital transformation in Zamfara State</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>AI-Powered Learning Paths</h3>
+                <p>Adaptive learning algorithms that personalize content based on your progress, skills gap analysis, and career goals.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-satellite-dish"></i>
+                </div>
+                <h3>Offline-First Design</h3>
+                <p>Access courses without internet - perfect for rural areas. Auto-sync when connection returns.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-language"></i>
+                </div>
+                <h3>Multi-language Voice Interface</h3>
+                <p>Learn in Hausa, English, or French with voice commands and audio lessons for accessibility.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-vr-cardboard"></i>
+                </div>
+                <h3>Virtual Reality Labs</h3>
+                <p>Immersive science and computer labs for practical learning experiences.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-network"></i>
+                </div>
+                <h3>Smart Analytics Dashboard</h3>
+                <p>Real-time tracking of user engagement, skill progression, and platform performance.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Mentorship Network</h3>
+                <p>Connect with industry experts, government officials, and successful entrepreneurs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="testimonial-slider">
+            <div class="testimonial-track">
+                <!-- Testimonial cards will be added by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="register">
+        <div class="cta-content">
+            <h2>Ready to Transform Digital Learning in Zamfara?</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 3rem; opacity: 0.9;">
+                Join the digital revolution. Empower yourself, your organization, and your community.
+            </p>
+            <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                <a href="Profile Selection.html" class="btn btn-primary btn-large" style="background: white; color: var(--primary-green);">
+                    <i class="fas fa-user-plus"></i> Get Started Free
+                </a>
+                <a href="Profile Selection.html" class="btn btn-outline btn-large" style="border-color: white; color: white;">
+                    <i class="fas fa-calendar"></i> Schedule Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>ZITDA Digital Hub</h3>
+                <p>Empowering Zamfara State through digital transformation and skills development for all citizens.</p>
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <a href="#" style="color: var(--gray-400);"><i class="fab fa-twitter"></i></a>
+                    <a href="#" style="color: var(--gray-400);"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" style="color: var(--gray-400);"><i class="fab fa-facebook"></i></a>
+                    <a href="#" style="color: var(--gray-400);"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>User Portals</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Civil Servants Portal</a></li>
+                    <li><a href="#">Teachers Academy</a></li>
+                    <li><a href="#">Student Learning Hub</a></li>
+                    <li><a href="#">Youth Skills Center</a></li>
+                    <li><a href="#">SME Business Lab</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Video Tutorials</a></li>
+                    <li><a href="#">Research Papers</a></li>
+                    <li><a href="#">Success Stories</a></li>
+                    <li><a href="#">Annual Reports</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> Zamfara State ICT Development Agency</li>
+                    <li><i class="fas fa-phone"></i> +234 800 948 324</li>
+                    <li><i class="fas fa-envelope"></i> contact@zitda.zm.gov.ng</li>
+                    <li><i class="fas fa-clock"></i> Mon-Fri, 8AM-6PM</li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+            <p>&copy; 2026 Zamfara State ICT Development Agency (ZITDA). All rights reserved.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem; opacity: 0.7;">Building a digitally empowered Zamfara, one skill at a time.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Complete Language Translations
+const translations = {
+    en: {
+        // Hero Section
+        heroTitle: "Transform Zamfara's Workforce with Digital Excellence",
+        heroSubtitle: "A unified platform empowering civil servants, teachers, students, youth, and SMEs with world-class digital skills, certifications, and career advancement opportunities.",
+        
+        // Features
+        feature1: "AI-Powered Learning",
+        feature2: "Offline Access",
+        feature3: "Hausa Language Support",
+        feature4: "Government Integration",
+        
+        // Journey Steps
+        step1Title: "Register & Onboard",
+        step1Desc: "Quick setup with personalized assessment",
+        step2Title: "Learn & Practice",
+        step2Desc: "Interactive modules with simulations",
+        step3Title: "Get Certified",
+        step3Desc: "Earn recognized digital certificates",
+        step4Title: "Advance Career",
+        step4Desc: "Access job opportunities & promotions",
+        
+        // Buttons
+        startJourney: "Start Your Journey",
+        platformTour: "Platform Tour",
+        login: "Login",
+        startTrial: "Start Free Trial",
+        
+        // Navigation
+        platform: "Platform",
+        features: "Features",
+        showcase: "Showcase",
+        successStories: "Success Stories",
+        
+        // User Types
+        civilServant: "Civil Servant",
+        teacher: "Teacher",
+        student: "Student",
+        youth: "Youth & Skills",
+        sme: "SME Owner"
+    },
+    
+    ha: {
+        // Hero Section - Hausa
+        heroTitle: "Canza Ma'aikatan Zamfara tare da Ƙwararren Dijital",
+        heroSubtitle: "Dandamali na haɗin kai wanda ke ba ma'aikatan gwamnati, malamai, ɗalibai, matasa, da ƴan kasuwa karfin gwiwa tare da ƙwarewar dijital na duniya, shaidu, da damar ci gaban aiki.",
+        
+        // Features - Hausa
+        feature1: "Hanyoyin Koyo na AI",
+        feature2: "Samun dama Ba tare da Intanet ba",
+        feature3: "Tallafin Harshen Hausa",
+        feature4: "Haɗin Gwamnati",
+        
+        // Journey Steps - Hausa
+        step1Title: "Yi Rajista & Shiga",
+        step1Desc: "Saitawa cikin sauri tare da tantancewa na musamman",
+        step2Title: "Koyi & Yi Aiki",
+        step2Desc: "Tsarukan hulɗa tare da simintin gwaji",
+        step3Title: "Samu Takaddun Shaida",
+        step3Desc: "Samu shaidun dijital da aka gane",
+        step4Title: "Ci Gaban Aiki",
+        step4Desc: "Samu damar ayyuka & ci gaba",
+        
+        // Buttons - Hausa
+        startJourney: "Fara Tafiyarku",
+        platformTour: "Yawon Dandamali",
+        login: "Shiga",
+        startTrial: "Fara Gwaji Kyauta",
+        
+        // Navigation - Hausa
+        platform: "Dandamali",
+        features: "Fasalulluka",
+        showcase: "Nunawa",
+        successStories: "Labaran Nasara",
+        
+        // User Types - Hausa
+        civilServant: "Ma'aikacin Gwamnati",
+        teacher: "Malami",
+        student: "Dalibi",
+        youth: "Matasa & Ƙwarewa",
+        sme: "Mai Kasuwanci"
+    },
+    
+    ar: {
+        // Hero Section - Arabic
+        heroTitle: "حوّل قوة عمل زمفارة إلى التميز الرقمي",
+        heroSubtitle: "منصة موحدة تمكين الموظفين المدنيين والمعلمين والطلاب والشباب والشركات الصغيرة والمتوسطة بمهارات رقمية عالمية المستوى والشهادات وفرص التقدم الوظيفي.",
+        
+        // Features - Arabic
+        feature1: "مسارات تعلم بالذكاء الاصطناعي",
+        feature2: "الوصول بدون اتصال",
+        feature3: "دعم اللغة الهوسية",
+        feature4: "التكامل الحكومي",
+        
+        // Journey Steps - Arabic
+        step1Title: "التسجيل والانضمام",
+        step1Desc: "إعداد سريع مع تقييم مخصص",
+        step2Title: "تعلم وتدرب",
+        step2Desc: "وحدات تفاعلية مع محاكاة",
+        step3Title: "احصل على شهادة",
+        step3Desc: "احصل على شهادات رقمية معترف بها",
+        step4Title: "تقدم في حياتك المهنية",
+        step4Desc: "الوصول إلى فرص العمل والترقيات",
+        
+        // Buttons - Arabic
+        startJourney: "ابدأ رحلتك",
+        platformTour: "جولة في المنصة",
+        login: "تسجيل الدخول",
+        startTrial: "ابدأ التجربة المجانية",
+        
+        // Navigation - Arabic
+        platform: "المنصة",
+        features: "الميزات",
+        showcase: "العرض",
+        successStories: "قصص النجاح",
+        
+        // User Types - Arabic
+        civilServant: "الموظف المدني",
+        teacher: "المعلم",
+        student: "الطالب",
+        youth: "الشباب والمهارات",
+        sme: "صاحب الأعمال الصغيرة"
+    }
+};
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize GSAP
+            gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+            
+            // Progress Indicator
+            const progressIndicator = document.getElementById('progressIndicator');
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                progressIndicator.style.transform = `scaleX(${scrolled / 100})`;
+            });
+             // Language initialization
+    const savedLang = localStorage.getItem('zitda-language') || 'en';
+    changeLanguage(savedLang);
+    
+    // Enhanced language selector event
+    const languageOptions = document.querySelectorAll('.language-option');
+    languageOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const lang = this.dataset.lang;
+            changeLanguage(lang);
+        });
+    });
+            // IMPROVED Language Selector
+            const languageSelector = document.getElementById('languageSelector');
+            const languageOptions = document.querySelectorAll('.language-option');
+            const currentLanguage = document.getElementById('currentLanguage');
+            
+            languageOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.dataset.lang;
+                    const flag = this.querySelector('span').textContent;
+                    
+                    // Remove active class from all options
+                    languageOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Add active class to clicked option
+                    this.classList.add('active');
+                    
+                    // Update current language display
+                    currentLanguage.textContent = flag;
+                    
+                    // Show toast notification
+                    showToast(`Language switched to ${flag}`, 'success');
+                    
+                    // In production, this would trigger language change logic
+                    // changeLanguage(lang);
+                });
+            });
+            
+            // IMPROVED User Type Selector
+            const userTypeSwitcher = document.getElementById('userTypeSwitcher');
+            const userTypeOptions = document.querySelectorAll('.user-type-option');
+            const currentUserType = document.getElementById('currentUserType');
+            
+            userTypeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const userType = this.dataset.user;
+                    const userTypeText = this.querySelector('span').textContent;
+                    
+                    // Remove active class from all options
+                    userTypeOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Add active class to clicked option
+                    this.classList.add('active');
+                    
+                    // Update current user type display
+                    currentUserType.textContent = userTypeText;
+                    
+                    // Show toast notification
+                    showToast(`Switched to ${userTypeText} view`, 'success');
+                    
+                    // Update hero content based on user type
+                    updateHeroForUserType(userType);
+                });
+            });
+            
+            function updateHeroForUserType(userType) {
+                const heroTitle = document.querySelector('.hero-text h1');
+                const heroDescription = document.querySelector('.hero-text p');
+                
+                const contentMap = {
+                    'civil-servant': {
+                        title: 'Transform Zamfara\'s Workforce with Digital Excellence',
+                        description: 'Master e-governance, productivity tools, and digital skills for career advancement in Zamfara State civil service.'
+                    },
+                    'teacher': {
+                        title: 'Transform Education with Technology',
+                        description: 'Enhance your teaching with digital tools, access student resources, and prepare for 21st-century classrooms.'
+                    },
+                    'student': {
+                        title: 'Excel in Your Academic Journey',
+                        description: 'Access JAMB/WAEC practice tests, virtual labs, and digital skills for academic and career success.'
+                    },
+                    'youth': {
+                        title: 'Build Your Future with Digital Skills',
+                        description: 'Learn in-demand skills, connect with mentors, and access job opportunities to build a successful career.'
+                    },
+                    'sme': {
+                        title: 'Grow Your Business Digitally',
+                        description: 'Master e-commerce, digital marketing, and business management tools to scale your SME in Zamfara.'
+                    }
+                };
+                
+                if (contentMap[userType]) {
+                    heroTitle.textContent = contentMap[userType].title;
+                    heroDescription.textContent = contentMap[userType].description;
+                }
+            }
+            
+            // Floating Action Buttons
+            const chatFab = document.getElementById('chatFab');
+            const demoFab = document.getElementById('demoFab');
+            const dashboardFab = document.getElementById('dashboardFab');
+            
+            chatFab.addEventListener('click', () => {
+                showToast('Live support chat opening...', 'success');
+            });
+            
+            demoFab.addEventListener('click', () => {
+                showToast('Starting platform demo...', 'success');
+                gsap.to(window, {
+                    duration: 1,
+                    scrollTo: '#showcase',
+                    ease: 'power2.out'
+                });
+            });
+            
+            dashboardFab.addEventListener('click', () => {
+                showToast('Redirecting to dashboard preview...', 'success');
+            });
+            
+            // Animated Stats Counter
+            const statNumbers = document.querySelectorAll('.stat-number');
+            
+            function animateCounter() {
+                statNumbers.forEach(stat => {
+                    const target = parseInt(stat.getAttribute('data-target'));
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    let current = 0;
+                    
+                    const updateCounter = () => {
+                        current += step;
+                        if (current < target) {
+                            stat.textContent = Math.ceil(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            stat.textContent = target;
+                        }
+                    };
+                    
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                updateCounter();
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.5 });
+                    
+                    observer.observe(stat);
+                });
+            }
+            
+            animateCounter();
+            
+            // GSAP Animations
+            gsap.from('.hero-text', {
+                duration: 1.5,
+                y: 100,
+                opacity: 0,
+                ease: "power4.out",
+                delay: 0.5
+            });
+            
+            gsap.from('.hero-feature', {
+                duration: 1,
+                x: -50,
+                opacity: 0,
+                stagger: 0.2,
+                ease: "power3.out",
+                delay: 1
+            });
+            
+            gsap.from('.journey-step', {
+                scrollTrigger: {
+                    trigger: '.user-journey',
+                    start: "top 70%",
+                    toggleActions: "play none none none"
+                },
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                stagger: 0.3,
+                ease: "power3.out"
+            });
+            
+            gsap.from('.feature-card', {
+                scrollTrigger: {
+                    trigger: '.features',
+                    start: "top 70%",
+                    toggleActions: "play none none none"
+                },
+                duration: 1,
+                y: 50,
+                opacity: 400,
+                stagger: 0.2,
+                ease: "power3.out"
+            });
+            
+            gsap.from('.showcase-text', {
+                scrollTrigger: {
+                    trigger: '.platform-showcase',
+                    start: "top 70%",
+                    toggleActions: "play none none none"
+                },
+                duration: 1,
+                x: -100,
+                opacity: 500,
+                ease: "power3.out"
+            });
+            
+            gsap.from('.showcase-preview', {
+                scrollTrigger: {
+                    trigger: '.platform-showcase',
+                    start: "top 70%",
+                    toggleActions: "play none none none"
+                },
+                duration: 500,
+                x: 100,
+                opacity: 400,
+                ease: "power3.out"
+            });
+            
+            gsap.from('.stat-item', {
+                scrollTrigger: {
+                    trigger: '.stats-counter',
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                duration: 500,
+                y: 30,
+                opacity: 400,
+                stagger: 0.2,
+                ease: "power3.out"
+            });
+            
+            // Voice Command System
+            let isListening = false;
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            
+            if (SpeechRecognition) {
+                const recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.lang = 'en-US';
+                recognition.interimResults = false;
+                
+                recognition.onstart = () => {
+                    isListening = true;
+                    voiceIndicator.classList.add('listening');
+                    voiceIndicator.innerHTML = '<i class="fas fa-stop"></i>';
+                    showToast("🎤 Listening... Speak your command", "info");
+                };
+                
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript.toLowerCase();
+                    processVoiceCommand(transcript);
+                };
+                
+                recognition.onend = () => {
+                    isListening = false;
+                    voiceIndicator.classList.remove('listening');
+                    voiceIndicator.innerHTML = '<i class="fas fa-microphone"></i>';
+                };
+                
+                voiceIndicator.addEventListener('click', () => {
+                    if (!isListening) {
+                        try {
+                            recognition.start();
+                        } catch (error) {
+                            showToast("Voice recognition not available. Please check permissions.", "error");
+                        }
+                    } else {
+                        recognition.stop();
+                    }
+                });
+            } else {
+                voiceIndicator.style.display = 'none';
+            }
+            
+            // Toast Notification System
+            function showToast(message, type = 'success') {
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.innerHTML = `
+                    <i class="fas fa-${getIconForType(type)}"></i>
+                    <span>${message}</span>
+                    <button class="toast-close"><i class="fas fa-times"></i></button>
+                `;
+                
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.transform = 'translateX(0)';
+                }, 10);
+                
+                const closeBtn = toast.querySelector('.toast-close');
+                closeBtn.addEventListener('click', () => {
+                    toast.style.transform = 'translateX(150%)';
+                    setTimeout(() => toast.remove(), 300);
+                });
+                
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.style.transform = 'translateX(150%)';
+                        setTimeout(() => toast.remove(), 300);
+                    }
+                }, 5000);
+            }
+            
+            function getIconForType(type) {
+                const icons = {
+                    'success': 'check-circle',
+                    'error': 'exclamation-circle',
+                    'info': 'info-circle',
+                    'warning': 'exclamation-triangle'
+                };
+                return icons[type] || 'info-circle';
+            }
+            
+            // Header scroll effect
+            const mainHeader = document.getElementById('mainHeader');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    mainHeader.classList.add('scrolled');
+                } else {
+                    mainHeader.classList.remove('scrolled');
+                }
+            });
+            
+            // Mobile Navigation
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileNav = document.createElement('div');
+            mobileNav.className = 'mobile-nav';
+            mobileNav.innerHTML = `
+                <nav>
+                    <ul>
+                        <li><a href="#home" class="nav-link active">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#showcase">Showcase</a></li>
+                        <li><a href="#testimonials">Success Stories</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#register" class="btn btn-primary" style="margin-top: 2rem;">Start Free Trial</a></li>
+                    </ul>
+                </nav>
+            `;
+            document.body.appendChild(mobileNav);
+            
+            const mobileOverlay = document.createElement('div');
+            mobileOverlay.className = 'mobile-overlay';
+            document.body.appendChild(mobileOverlay);
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.add('active');
+                mobileOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            mobileOverlay.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
+            // Welcome toast
+            showToast("Welcome to ZITDA Digital Hub! Use the language and user type switchers to customize your experience.", "info");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2848 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="o3l2e5v8e1l9r4e7g6i3s">
+    <meta name="description" content="Register for Zamfara O-Level Student Platform - Access study materials, exam prep, class schedules, and educational resources">
+    <meta name="keywords" content="Zamfara, O-Level, Student Registration, WAEC, NECO, JAMB, Secondary School, Education">
+    <title>O-Level Student Registration | Zamfara Education Platform</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest-student-reg.json">
+    <meta name="theme-color" content="#1a5f7a">
+    <link rel="icon" type="image/x-icon" href="favicon-student.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon-student.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Student Theme - Vibrant Educational Colors */
+            --primary-blue: #1a5f7a;
+            --secondary-blue: #2d8fbd;
+            --accent-blue: #57c1eb;
+            --dark-blue: #0a3d62;
+            --success-green: #00b894;
+            --warning-orange: #fdcb6e;
+            --exam-red: #e17055;
+            --highlight-yellow: #ffeaa7;
+            --energy-purple: #6c5ce7;
+            
+            /* UI Colors */
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(26, 95, 122, 0.08);
+            --shadow-md: 0 4px 6px rgba(26, 95, 122, 0.1);
+            --shadow-lg: 0 10px 25px rgba(26, 95, 122, 0.1);
+            --shadow-xl: 0 20px 40px rgba(26, 95, 122, 0.15);
+            --shadow-card: 0 10px 30px rgba(26, 95, 122, 0.08);
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+            
+            /* Animation */
+            --float-animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Skip to Main Content */
+        .skip-to-main {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            background: var(--primary-blue);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            z-index: 1000;
+            transition: var(--transition-fast);
+        }
+
+        .skip-to-main:focus {
+            top: 20px;
+            left: 20px;
+            outline: 3px solid var(--highlight-yellow);
+            outline-offset: 2px;
+        }
+
+        /* Header */
+        .registration-header {
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--border-color);
+            padding: 1.25rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            animation: var(--float-animation);
+        }
+
+        .logo-icon i {
+            font-size: 1.75rem;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.25rem;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .header-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+            border: 2px solid transparent;
+            font-size: 0.95rem;
+        }
+
+        .header-btn:hover {
+            color: var(--primary-blue);
+            background: rgba(26, 95, 122, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .header-btn:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.2);
+        }
+
+        .header-btn.primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: white !important;
+            box-shadow: 0 8px 25px rgba(26, 95, 122, 0.25);
+        }
+
+        .header-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(26, 95, 122, 0.35);
+        }
+
+        /* Progress Indicator */
+        .progress-container {
+            background: var(--bg-secondary);
+            padding: 1.5rem 2.5rem;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 25px;
+            left: 10%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+            transition: var(--transition-slow);
+            z-index: 2;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 3;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 3px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+            transition: var(--transition-normal);
+            font-size: 1.25rem;
+            color: var(--text-muted);
+        }
+
+        .step.active .step-icon {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            border-color: var(--primary-blue);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(26, 95, 122, 0.3);
+        }
+
+        .step.completed .step-icon {
+            background: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+        }
+
+        .step-text {
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .step.active .step-text {
+            color: var(--text-primary);
+        }
+
+        /* Main Content */
+        .registration-container {
+            display: flex;
+            flex: 1;
+            min-height: calc(100vh - 180px);
+        }
+
+        /* Left Panel - Benefits */
+        .benefits-panel {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: white;
+            padding: 3rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(87, 193, 235, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(253, 203, 110, 0.1) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M50 50c0-8.284 6.716-15 15-15s15 6.716 15 15-6.716 15-15 15c0 8.284-6.716 15-15 15s-15-6.716-15-15 6.716-15 15-15zM15 15C15 6.716 21.716 0 30 0s15 6.716 15 15-6.716 15-15 15c0 8.284-6.716 15-15 15S0 38.284 0 30s6.716-15 15-15zm15 20c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm40 40c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            animation: var(--float-animation);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+            background: rgba(253, 203, 110, 0.15);
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 1s;
+            background: rgba(0, 184, 148, 0.15);
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 2s;
+            background: rgba(108, 92, 231, 0.15);
+        }
+
+        .benefits-content {
+            position: relative;
+            z-index: 2;
+            max-width: 500px;
+        }
+
+        .benefits-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(255, 234, 167, 0.2);
+            color: var(--highlight-yellow);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-full);
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 234, 167, 0.3);
+            animation: pulse-glow 2s infinite;
+        }
+
+        .benefits-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .benefits-subtitle {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 3rem;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            margin-bottom: 1.75rem;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--highlight-yellow);
+            transition: var(--transition-fast);
+        }
+
+        .features-list li:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .features-list i {
+            color: var(--highlight-yellow);
+            font-size: 1.5rem;
+            margin-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text h4 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--highlight-yellow);
+        }
+
+        .feature-text p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        /* Exam Countdown */
+        .exam-countdown {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .exam-countdown h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            color: var(--highlight-yellow);
+        }
+
+        .countdown-timer {
+            font-family: 'Poppins', monospace;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.75rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 0.5rem;
+        }
+
+        .exam-info {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            text-align: center;
+        }
+
+        /* Registration Form Panel */
+        .registration-panel {
+            flex: 1.5;
+            background: var(--bg-secondary);
+            padding: 3rem 3.5rem;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            overflow-y: auto;
+            max-height: calc(100vh - 180px);
+        }
+
+        .registration-form-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Form Steps */
+        .form-step {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .step-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Form Styles */
+        .registration-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-label .required {
+            color: var(--danger-color);
+            margin-left: 3px;
+        }
+
+        .form-label .helper {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: normal;
+            margin-left: 0.5rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            transition: var(--transition-fast);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.1);
+        }
+
+        .form-control.error {
+            border-color: var(--danger-color);
+        }
+
+        .form-control.success {
+            border-color: var(--success-color);
+        }
+
+        .form-control:disabled {
+            background: var(--bg-primary);
+            cursor: not-allowed;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: var(--transition-fast);
+        }
+
+        .error-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .success-message {
+            color: var(--success-color);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Select Styles */
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper select {
+            appearance: none;
+            padding-right: 3rem;
+        }
+
+        .select-wrapper::after {
+            content: '▼';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+            font-size: 0.75rem;
+        }
+
+        /* Radio Groups */
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .radio-item input[type="radio"] {
+            display: none;
+        }
+
+        .radio-custom {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+
+        .radio-item input:checked + .radio-custom {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .radio-item input:checked + .radio-custom::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        /* Class/Level Selection */
+        .class-selection {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .class-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-align: center;
+        }
+
+        .class-option:hover {
+            border-color: var(--primary-blue);
+            background: rgba(26, 95, 122, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .class-option.active {
+            border-color: var(--primary-blue);
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .class-option i {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Subject Selection */
+        .subject-selection {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .subject-checkbox {
+            display: none;
+        }
+
+        .subject-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-align: center;
+        }
+
+        .subject-checkbox:checked + .subject-label {
+            border-color: var(--primary-blue);
+            background: rgba(26, 95, 122, 0.1);
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        .subject-label i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .subject-checkbox:checked + .subject-label i {
+            color: var(--primary-blue);
+        }
+
+        /* Guardian Information */
+        .guardian-section {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--border-color);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .section-header i {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+        }
+
+        /* Form Navigation */
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 0.875rem 2rem;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            font-family: 'Poppins', sans-serif;
+            min-width: 150px;
+            min-height: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: white !important;
+            box-shadow: 0 10px 30px rgba(26, 95, 122, 0.25);
+            border: 2px solid transparent;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(26, 95, 122, 0.35);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .btn-secondary {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .btn-outline:hover {
+            background: rgba(26, 95, 122, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .btn-loading .btn-text {
+            visibility: hidden;
+        }
+
+        .btn-loading::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Information Cards */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .info-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition-fast);
+        }
+
+        .info-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .info-card i {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .info-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .info-card p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--success-green), var(--accent-blue));
+            color: white;
+            padding: 1.25rem 1.75rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            animation: slideInRight 0.3s ease-out;
+            max-width: 400px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, var(--danger-color), #ff6b6b);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, var(--warning-color), #ffd93d);
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-normal);
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        .loading-text {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        /* Footer */
+        .registration-footer {
+            background: var(--bg-secondary);
+            border-top: 2px solid var(--border-color);
+            padding: 2rem 2.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .registration-container {
+                flex-direction: column;
+            }
+            
+            .benefits-panel {
+                padding: 2.5rem 2rem;
+            }
+            
+            .registration-panel {
+                padding: 2rem 2.5rem;
+                max-height: none;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .subject-selection {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .class-selection {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .info-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .registration-header {
+                padding: 1rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .progress-container {
+                padding: 1rem;
+            }
+            
+            .progress-steps {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .step {
+                flex: none;
+                width: calc(33.333% - 1rem);
+            }
+            
+            .benefits-panel {
+                padding: 2rem 1.5rem;
+            }
+            
+            .benefits-title {
+                font-size: 1.75rem;
+            }
+            
+            .registration-panel {
+                padding: 1.5rem;
+            }
+            
+            .step-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .subject-selection {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .class-selection {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .form-navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .step-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .benefits-title {
+                font-size: 1.5rem;
+            }
+            
+            .benefits-list li {
+                padding: 1rem;
+            }
+            
+            .subject-selection {
+                grid-template-columns: 1fr;
+            }
+            
+            .class-selection {
+                grid-template-columns: 1fr;
+            }
+            
+            .floating-element {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #0f172a;
+                --bg-secondary: #1e293b;
+                --text-primary: #f1f5f9;
+                --text-secondary: #cbd5e1;
+                --text-muted: #94a3b8;
+                --border-color: #334155;
+                --bg-gradient: linear-gradient(135deg, #0c1a2d 0%, #1a365d 100%);
+            }
+            
+            .registration-header,
+            .progress-container,
+            .registration-panel,
+            .registration-footer {
+                background: var(--bg-secondary);
+            }
+            
+            .form-control,
+            .class-option,
+            .subject-label {
+                background: var(--bg-primary);
+                color: var(--text-primary);
+            }
+            
+            .btn-secondary {
+                background: var(--bg-primary);
+            }
+            
+            .info-card {
+                background: var(--bg-primary);
+            }
+            
+            .guardian-section {
+                background: rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .registration-header,
+            .benefits-panel,
+            .footer-links,
+            .btn,
+            .notification,
+            .progress-container {
+                display: none !important;
+            }
+            
+            .registration-panel {
+                padding: 0;
+                background: white !important;
+            }
+            
+            .registration-form-container {
+                max-width: 100%;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary-blue), var(--accent-blue));
+        }
+
+        /* Selection */
+        ::selection {
+            background-color: rgba(26, 95, 122, 0.3);
+            color: white;
+        }
+
+        /* Focus Styles */
+        .keyboard-navigation *:focus {
+            outline: 3px solid var(--highlight-yellow);
+            outline-offset: 2px;
+        }
+
+        /* Animation for form elements */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Accessibility: Skip to Main Content -->
+    <a href="#step1" class="skip-to-main sr-only-focusable">
+        Skip to registration form
+    </a>
+
+    <!-- Header -->
+    <header class="registration-header" role="banner">
+        <a href="index.html" class="header-logo" aria-label="Zamfara Education Platform Home">
+            <div class="logo-icon" aria-hidden="true">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="logo-text">
+                <h1>Zamfara Education Platform</h1>
+                <p>O-Level Student Registration</p>
+            </div>
+        </a>
+        
+        <div class="header-actions">
+            <a href="student-login.html" class="header-btn">
+                <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                Student Login
+            </a>
+            <a href="exam-prep.html" class="header-btn">
+                <i class="fas fa-file-alt" aria-hidden="true"></i>
+                Exam Prep
+            </a>
+            <a href="resources.html" class="header-btn primary">
+                <i class="fas fa-book-open" aria-hidden="true"></i>
+                Study Resources
+            </a>
+        </div>
+    </header>
+
+    <!-- Progress Indicator -->
+    <div class="progress-container" role="navigation" aria-label="Registration progress">
+        <div class="progress-steps">
+            <div class="progress-bar" id="progressBar" style="width: 20%;"></div>
+            
+            <div class="step active" id="step1-indicator">
+                <div class="step-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="step-text">Personal Details</div>
+                <div class="step-number" aria-hidden="true">1</div>
+            </div>
+            
+            <div class="step" id="step2-indicator">
+                <div class="step-icon">
+                    <i class="fas fa-school"></i>
+                </div>
+                <div class="step-text">School Information</div>
+                <div class="step-number" aria-hidden="true">2</div>
+            </div>
+            
+            <div class="step" id="step3-indicator">
+                <div class="step-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="step-text">Academic Details</div>
+                <div class="step-number" aria-hidden="true">3</div>
+            </div>
+            
+            <div class="step" id="step4-indicator">
+                <div class="step-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="step-text">Guardian Info</div>
+                <div class="step-number" aria-hidden="true">4</div>
+            </div>
+            
+            <div class="step" id="step5-indicator">
+                <div class="step-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="step-text">Review & Submit</div>
+                <div class="step-number" aria-hidden="true">5</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="registration-container" role="main">
+        <!-- Benefits Panel -->
+        <aside class="benefits-panel" aria-label="Registration benefits">
+            <!-- Floating Elements -->
+            <div class="floating-elements">
+                <div class="floating-element">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="floating-element">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="floating-element">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+            </div>
+            
+            <div class="benefits-content">
+                <div class="benefits-badge" role="status">
+                    <i class="fas fa-rocket" aria-hidden="true"></i>
+                    Boost Your Academic Success
+                </div>
+                
+                <h2 class="benefits-title">
+                    Join Thousands of<br>
+                    Successful Students
+                </h2>
+                
+                <p class="benefits-subtitle">
+                    Register today to access personalized learning paths, expert exam preparation, 
+                    and interactive study tools designed to help you excel in WAEC, NECO, and JAMB.
+                </p>
+                
+                <ul class="features-list" role="list">
+                    <li role="listitem">
+                        <i class="fas fa-bolt" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Smart Study Plans</h4>
+                            <p>AI-powered learning paths tailored to your strengths and weaknesses</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-chart-bar" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Progress Analytics</h4>
+                            <p>Track your performance with detailed insights and recommendations</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-users" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Peer Learning</h4>
+                            <p>Join study groups and connect with students across Zamfara</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-award" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Certification</h4>
+                            <p>Earn certificates for completed courses and exam excellence</p>
+                        </div>
+                    </li>
+                </ul>
+                
+                <!-- Exam Countdown -->
+                <div class="exam-countdown" role="region" aria-label="Exam countdown">
+                    <h4>
+                        <i class="fas fa-clock" aria-hidden="true"></i>
+                        WAEC Countdown
+                    </h4>
+                    <div class="countdown-timer" id="countdownTimer" aria-live="polite">
+                        45 days, 12:30:15
+                    </div>
+                    <p class="exam-info">Start preparing now for better results!</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Registration Form Panel -->
+        <section class="registration-panel" aria-label="Registration form">
+            <div class="registration-form-container">
+                <!-- Step 1: Personal Details -->
+                <div class="form-step active" id="step1" role="tabpanel" aria-labelledby="step1-indicator">
+                    <div class="step-header">
+                        <h2>Personal Information</h2>
+                        <p>Tell us about yourself. All fields marked with <span class="required">*</span> are required.</p>
+                    </div>
+
+                    <form class="registration-form" id="personalForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">
+                                    First Name <span class="required">*</span>
+                                </label>
+                                <input type="text" 
+                                       id="firstName" 
+                                       name="firstName" 
+                                       class="form-control" 
+                                       placeholder="Enter your first name" 
+                                       required
+                                       aria-required="true"
+                                       aria-describedby="firstName-error">
+                                <div id="firstName-error" class="error-message" role="alert">
+                                    <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                                    <span>First name is required</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">
+                                    Last Name <span class="required">*</span>
+                                </label>
+                                <input type="text" 
+                                       id="lastName" 
+                                       name="lastName" 
+                                       class="form-control" 
+                                       placeholder="Enter your last name" 
+                                       required
+                                       aria-required="true">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="otherNames" class="form-label">
+                                    Other Names
+                                    <span class="helper">Middle names if any</span>
+                                </label>
+                                <input type="text" 
+                                       id="otherNames" 
+                                       name="otherNames" 
+                                       class="form-control" 
+                                       placeholder="Enter other names">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Gender <span class="required">*</span>
+                                </label>
+                                <div class="radio-group" role="radiogroup" aria-label="Gender selection">
+                                    <div class="radio-item">
+                                        <input type="radio" id="genderMale" name="gender" value="male" required>
+                                        <span class="radio-custom" aria-hidden="true"></span>
+                                        <label for="genderMale">Male</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="genderFemale" name="gender" value="female">
+                                        <span class="radio-custom" aria-hidden="true"></span>
+                                        <label for="genderFemale">Female</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dateOfBirth" class="form-label">
+                                    Date of Birth <span class="required">*</span>
+                                </label>
+                                <input type="date" 
+                                       id="dateOfBirth" 
+                                       name="dateOfBirth" 
+                                       class="form-control" 
+                                       required
+                                       aria-required="true"
+                                       max="2010-12-31"
+                                       min="1995-01-01">
+                                <div class="success-message">
+                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                    <span>Must be between 14 and 29 years old for O-Level</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="form-label">
+                                    Email Address
+                                    <span class="helper">For account recovery</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="email" 
+                                           id="email" 
+                                           name="email" 
+                                           class="form-control" 
+                                           placeholder="student@example.com"
+                                           aria-describedby="email-error">
+                                    <div class="input-icon">
+                                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div id="email-error" class="error-message" role="alert">
+                                    <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                                    <span>Please enter a valid email address</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" class="form-label">
+                                    Phone Number
+                                    <span class="helper">For important updates</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="tel" 
+                                           id="phone" 
+                                           name="phone" 
+                                           class="form-control" 
+                                           placeholder="0803 123 4567"
+                                           pattern="[0-9\s]{11,15}">
+                                    <div class="input-icon">
+                                        <i class="fas fa-phone" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nin" class="form-label">
+                                    National Identification Number (NIN)
+                                    <span class="helper">11-digit NIN if available</span>
+                                </label>
+                                <input type="text" 
+                                       id="nin" 
+                                       name="nin" 
+                                       class="form-control" 
+                                       placeholder="12345678901"
+                                       pattern="[0-9]{11}"
+                                       maxlength="11">
+                            </div>
+                        </div>
+
+                        <div class="info-cards">
+                            <div class="info-card">
+                                <i class="fas fa-shield-alt"></i>
+                                <h4>Secure Account</h4>
+                                <p>Your personal information is protected with encryption</p>
+                            </div>
+                            <div class="info-card">
+                                <i class="fas fa-bell"></i>
+                                <h4>Exam Updates</h4>
+                                <p>Get notified about WAEC, NECO, and JAMB updates</p>
+                            </div>
+                            <div class="info-card">
+                                <i class="fas fa-user-graduate"></i>
+                                <h4>Progress Tracking</h4>
+                                <p>Monitor your academic growth and performance</p>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-outline" id="saveDraftBtn">
+                                <i class="fas fa-save" aria-hidden="true"></i>
+                                <span class="btn-text">Save Draft</span>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStep1">
+                                <span class="btn-text">Continue to School Info</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2: School Information -->
+                <div class="form-step" id="step2" role="tabpanel" aria-labelledby="step2-indicator">
+                    <div class="step-header">
+                        <h2>School Information</h2>
+                        <p>Tell us about your school and current academic status</p>
+                    </div>
+
+                    <form class="registration-form" id="schoolForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="schoolName" class="form-label">
+                                    School Name <span class="required">*</span>
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="schoolName" name="schoolName" class="form-control" required aria-required="true">
+                                        <option value="">Select your school</option>
+                                        <option value="gss-gusau">Government Secondary School, Gusau</option>
+                                        <option value="gss-talata">Government Secondary School, Talata Mafara</option>
+                                        <option value="gss-anka">Government Secondary School, Anka</option>
+                                        <option value="gss-maradun">Government Secondary School, Maradun</option>
+                                        <option value="gss-bungudu">Government Secondary School, Bungudu</option>
+                                        <option value="model-school">Zamfara Model School</option>
+                                        <option value="private-school">Private Secondary School</option>
+                                        <option value="other">Other School</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="schoolAddress" class="form-label">
+                                    School Address
+                                </label>
+                                <textarea id="schoolAddress" 
+                                          name="schoolAddress" 
+                                          class="form-control" 
+                                          rows="2" 
+                                          placeholder="Enter school address if different from main location"></textarea>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="form-label">
+                                    Current Class/Level <span class="required">*</span>
+                                </label>
+                                <div class="class-selection" role="radiogroup" aria-label="Class selection">
+                                    <div class="class-option active" data-class="jss1">
+                                        <i class="fas fa-child"></i>
+                                        <span>JSS 1</span>
+                                        <small>Year 7</small>
+                                    </div>
+                                    <div class="class-option" data-class="jss2">
+                                        <i class="fas fa-user"></i>
+                                        <span>JSS 2</span>
+                                        <small>Year 8</small>
+                                    </div>
+                                    <div class="class-option" data-class="jss3">
+                                        <i class="fas fa-user-graduate"></i>
+                                        <span>JSS 3</span>
+                                        <small>Year 9</small>
+                                    </div>
+                                    <div class="class-option" data-class="sss1">
+                                        <i class="fas fa-user-tie"></i>
+                                        <span>SSS 1</span>
+                                        <small>Year 10</small>
+                                    </div>
+                                    <div class="class-option" data-class="sss2">
+                                        <i class="fas fa-user-tie"></i>
+                                        <span>SSS 2</span>
+                                        <small>Year 11</small>
+                                    </div>
+                                    <div class="class-option" data-class="sss3">
+                                        <i class="fas fa-graduation-cap"></i>
+                                        <span>SSS 3</span>
+                                        <small>Year 12</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="registrationNumber" class="form-label">
+                                    School Registration Number
+                                    <span class="helper">If assigned by school</span>
+                                </label>
+                                <input type="text" 
+                                       id="registrationNumber" 
+                                       name="registrationNumber" 
+                                       class="form-control" 
+                                       placeholder="e.g., GSS/2021/001">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="expectedGraduation" class="form-label">
+                                    Expected Graduation Year
+                                </label>
+                                <select id="expectedGraduation" name="expectedGraduation" class="form-control">
+                                    <option value="">Select year</option>
+                                    <option value="2026">2026</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                    <option value="2027">2027</option>
+                                    <option value="2028">2028</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="house" class="form-label">
+                                    House/Dormitory
+                                    <span class="helper">If applicable</span>
+                                </label>
+                                <select id="house" name="house" class="form-control">
+                                    <option value="">Select house</option>
+                                    <option value="red">Red House</option>
+                                    <option value="blue">Blue House</option>
+                                    <option value="green">Green House</option>
+                                    <option value="yellow">Yellow House</option>
+                                    <option value="none">Not Applicable</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevStep2">
+                                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                                <span class="btn-text">Back</span>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStep2">
+                                <span class="btn-text">Continue to Academic Details</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 3: Academic Details -->
+                <div class="form-step" id="step3" role="tabpanel" aria-labelledby="step3-indicator">
+                    <div class="step-header">
+                        <h2>Academic Information</h2>
+                        <p>Tell us about your subjects and academic goals</p>
+                    </div>
+
+                    <form class="registration-form" id="academicForm">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label class="form-label">
+                                    Select Your Subjects <span class="required">*</span>
+                                    <span class="helper">Choose at least 8 subjects (minimum for WAEC)</span>
+                                </label>
+                                <div class="subject-selection">
+                                    <!-- Core Subjects -->
+                                    <input type="checkbox" id="math" name="subjects[]" value="mathematics" class="subject-checkbox" checked>
+                                    <label for="math" class="subject-label">
+                                        <i class="fas fa-calculator"></i>
+                                        <span>Mathematics</span>
+                                    </label>
+
+                                    <input type="checkbox" id="english" name="subjects[]" value="english" class="subject-checkbox" checked>
+                                    <label for="english" class="subject-label">
+                                        <i class="fas fa-language"></i>
+                                        <span>English</span>
+                                    </label>
+
+                                    <input type="checkbox" id="biology" name="subjects[]" value="biology" class="subject-checkbox">
+                                    <label for="biology" class="subject-label">
+                                        <i class="fas fa-dna"></i>
+                                        <span>Biology</span>
+                                    </label>
+
+                                    <input type="checkbox" id="chemistry" name="subjects[]" value="chemistry" class="subject-checkbox">
+                                    <label for="chemistry" class="subject-label">
+                                        <i class="fas fa-flask"></i>
+                                        <span>Chemistry</span>
+                                    </label>
+
+                                    <input type="checkbox" id="physics" name="subjects[]" value="physics" class="subject-checkbox">
+                                    <label for="physics" class="subject-label">
+                                        <i class="fas fa-atom"></i>
+                                        <span>Physics</span>
+                                    </label>
+
+                                    <!-- Additional Subjects -->
+                                    <input type="checkbox" id="geography" name="subjects[]" value="geography" class="subject-checkbox">
+                                    <label for="geography" class="subject-label">
+                                        <i class="fas fa-globe-africa"></i>
+                                        <span>Geography</span>
+                                    </label>
+
+                                    <input type="checkbox" id="economics" name="subjects[]" value="economics" class="subject-checkbox">
+                                    <label for="economics" class="subject-label">
+                                        <i class="fas fa-chart-line"></i>
+                                        <span>Economics</span>
+                                    </label>
+
+                                    <input type="checkbox" id="accounting" name="subjects[]" value="accounting" class="subject-checkbox">
+                                    <label for="accounting" class="subject-label">
+                                        <i class="fas fa-calculator"></i>
+                                        <span>Accounting</span>
+                                    </label>
+
+                                    <input type="checkbox" id="government" name="subjects[]" value="government" class="subject-checkbox">
+                                    <label for="government" class="subject-label">
+                                        <i class="fas fa-landmark"></i>
+                                        <span>Government</span>
+                                    </label>
+
+                                    <input type="checkbox" id="literature" name="subjects[]" value="literature" class="subject-checkbox">
+                                    <label for="literature" class="subject-label">
+                                        <i class="fas fa-book-open"></i>
+                                        <span>Literature</span>
+                                    </label>
+
+                                    <input type="checkbox" id="hausa" name="subjects[]" value="hausa" class="subject-checkbox">
+                                    <label for="hausa" class="subject-label">
+                                        <i class="fas fa-book"></i>
+                                        <span>Hausa</span>
+                                    </label>
+
+                                    <input type="checkbox" id="islamic" name="subjects[]" value="islamic" class="subject-checkbox">
+                                    <label for="islamic" class="subject-label">
+                                        <i class="fas fa-mosque"></i>
+                                        <span>Islamic Studies</span>
+                                    </label>
+
+                                    <input type="checkbox" id="agriculture" name="subjects[]" value="agriculture" class="subject-checkbox">
+                                    <label for="agriculture" class="subject-label">
+                                        <i class="fas fa-tractor"></i>
+                                        <span>Agriculture</span>
+                                    </label>
+
+                                    <input type="checkbox" id="technical" name="subjects[]" value="technical" class="subject-checkbox">
+                                    <label for="technical" class="subject-label">
+                                        <i class="fas fa-tools"></i>
+                                        <span>Technical Drawing</span>
+                                    </label>
+
+                                    <input type="checkbox" id="computer" name="subjects[]" value="computer" class="subject-checkbox">
+                                    <label for="computer" class="subject-label">
+                                        <i class="fas fa-laptop-code"></i>
+                                        <span>Computer Studies</span>
+                                    </label>
+                                </div>
+                                <div id="subjects-error" class="error-message" role="alert">
+                                    <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                                    <span>Please select at least 8 subjects</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="examType" class="form-label">
+                                    Planned Examinations <span class="required">*</span>
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="examType" name="examType" class="form-control" required aria-required="true" multiple size="3">
+                                        <option value="waec">WAEC (West African Examinations Council)</option>
+                                        <option value="neco">NECO (National Examinations Council)</option>
+                                        <option value="jamb">JAMB (Joint Admissions and Matriculation Board)</option>
+                                    </select>
+                                </div>
+                                <div class="success-message">
+                                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                    <span>Hold Ctrl/Cmd to select multiple options</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="careerInterest" class="form-label">
+                                    Career Interest
+                                </label>
+                                <select id="careerInterest" name="careerInterest" class="form-control">
+                                    <option value="">Select career interest</option>
+                                    <option value="medicine">Medicine & Healthcare</option>
+                                    <option value="engineering">Engineering</option>
+                                    <option value="law">Law</option>
+                                    <option value="education">Education</option>
+                                    <option value="business">Business & Management</option>
+                                    <option value="technology">Technology & IT</option>
+                                    <option value="arts">Arts & Humanities</option>
+                                    <option value="agriculture">Agriculture</option>
+                                    <option value="undefined">Not Sure Yet</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="studyHours" class="form-label">
+                                    Daily Study Hours
+                                    <span class="helper">Average hours per day</span>
+                                </label>
+                                <select id="studyHours" name="studyHours" class="form-control">
+                                    <option value="">Select hours</option>
+                                    <option value="1-2">1-2 hours</option>
+                                    <option value="2-3">2-3 hours</option>
+                                    <option value="3-4">3-4 hours</option>
+                                    <option value="4-5">4-5 hours</option>
+                                    <option value="5+">5+ hours</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="academicGoals" class="form-label">
+                                    Academic Goals
+                                    <span class="helper">What do you hope to achieve?</span>
+                                </label>
+                                <textarea id="academicGoals" 
+                                          name="academicGoals" 
+                                          class="form-control" 
+                                          rows="3" 
+                                          placeholder="Describe your academic goals and aspirations..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevStep3">
+                                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                                <span class="btn-text">Back</span>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStep3">
+                                <span class="btn-text">Continue to Guardian Info</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 4: Guardian Information -->
+                <div class="form-step" id="step4" role="tabpanel" aria-labelledby="step4-indicator">
+                    <div class="step-header">
+                        <h2>Parent/Guardian Information</h2>
+                        <p>Provide details of your parent or guardian for verification</p>
+                    </div>
+
+                    <form class="registration-form" id="guardianForm">
+                        <div class="guardian-section">
+                            <div class="section-header">
+                                <i class="fas fa-user-shield"></i>
+                                <h3>Primary Guardian</h3>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="guardianName" class="form-label">
+                                        Guardian Name <span class="required">*</span>
+                                    </label>
+                                    <input type="text" 
+                                           id="guardianName" 
+                                           name="guardianName" 
+                                           class="form-control" 
+                                           placeholder="Full name of parent/guardian" 
+                                           required
+                                           aria-required="true">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="guardianRelationship" class="form-label">
+                                        Relationship <span class="required">*</span>
+                                    </label>
+                                    <select id="guardianRelationship" name="guardianRelationship" class="form-control" required aria-required="true">
+                                        <option value="">Select relationship</option>
+                                        <option value="father">Father</option>
+                                        <option value="mother">Mother</option>
+                                        <option value="brother">Brother</option>
+                                        <option value="sister">Sister</option>
+                                        <option value="uncle">Uncle</option>
+                                        <option value="aunt">Aunt</option>
+                                        <option value="grandparent">Grandparent</option>
+                                        <option value="guardian">Legal Guardian</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="guardianPhone" class="form-label">
+                                        Phone Number <span class="required">*</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="tel" 
+                                               id="guardianPhone" 
+                                               name="guardianPhone" 
+                                               class="form-control" 
+                                               placeholder="0803 123 4567" 
+                                               pattern="[0-9\s]{11,15}"
+                                               required
+                                               aria-required="true">
+                                        <div class="input-icon">
+                                            <i class="fas fa-phone" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="guardianEmail" class="form-label">
+                                        Email Address
+                                    </label>
+                                    <input type="email" 
+                                           id="guardianEmail" 
+                                           name="guardianEmail" 
+                                           class="form-control" 
+                                           placeholder="guardian@example.com">
+                                </div>
+
+                                <div class="form-group full-width">
+                                    <label for="guardianAddress" class="form-label">
+                                        Home Address
+                                    </label>
+                                    <textarea id="guardianAddress" 
+                                              name="guardianAddress" 
+                                              class="form-control" 
+                                              rows="2" 
+                                              placeholder="Enter home address"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Emergency Contact -->
+                        <div class="guardian-section">
+                            <div class="section-header">
+                                <i class="fas fa-phone-alt"></i>
+                                <h3>Emergency Contact</h3>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="emergencyName" class="form-label">
+                                        Contact Name <span class="required">*</span>
+                                    </label>
+                                    <input type="text" 
+                                           id="emergencyName" 
+                                           name="emergencyName" 
+                                           class="form-control" 
+                                           placeholder="Full name of emergency contact" 
+                                           required
+                                           aria-required="true">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="emergencyPhone" class="form-label">
+                                        Phone Number <span class="required">*</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="tel" 
+                                               id="emergencyPhone" 
+                                               name="emergencyPhone" 
+                                               class="form-control" 
+                                               placeholder="0803 123 4567" 
+                                               pattern="[0-9\s]{11,15}"
+                                               required
+                                               aria-required="true">
+                                        <div class="input-icon">
+                                            <i class="fas fa-phone" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevStep4">
+                                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                                <span class="btn-text">Back</span>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStep4">
+                                <span class="btn-text">Continue to Review</span>
+                                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 5: Review & Submit -->
+                <div class="form-step" id="step5" role="tabpanel" aria-labelledby="step5-indicator">
+                    <div class="step-header">
+                        <h2>Review & Submit</h2>
+                        <p>Please review your information before submitting</p>
+                    </div>
+
+                    <div class="registration-form" id="reviewForm">
+                        <!-- Summary Cards -->
+                        <div class="info-cards" id="summaryCards">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+
+                        <!-- Terms and Conditions -->
+                        <div class="guardian-section">
+                            <div class="section-header">
+                                <i class="fas fa-file-contract"></i>
+                                <h3>Terms & Conditions</h3>
+                            </div>
+
+                            <div class="form-group">
+                                <div style="max-height: 200px; overflow-y: auto; padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md); margin-bottom: 1.5rem;">
+                                    <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Zamfara Education Platform - Student Agreement</h4>
+                                    <p style="color: var(--text-secondary); line-height: 1.6; font-size: 0.9rem;">
+                                        1. I certify that all information provided is accurate and complete.<br>
+                                        2. I agree to abide by the platform's code of conduct and academic integrity policy.<br>
+                                        3. I understand that my data will be used for educational purposes and platform improvement.<br>
+                                        4. I consent to receiving educational updates, exam notifications, and academic resources.<br>
+                                        5. I acknowledge that platform access may be revoked for violation of terms.<br>
+                                        6. I agree to maintain respectful and constructive engagement with teachers and peers.<br>
+                                        7. I understand that exam preparation materials are supplemental and not a replacement for school curriculum.<br>
+                                        8. I consent to periodic academic assessments for personalized learning recommendations.
+                                    </p>
+                                </div>
+
+                                <div class="radio-item" style="margin-bottom: 1rem;">
+                                    <input type="checkbox" id="termsAgreement" name="termsAgreement" required>
+                                    <span class="radio-custom" style="border-radius: 4px;" aria-hidden="true"></span>
+                                    <label for="termsAgreement" style="font-weight: 600; color: var(--text-primary);">
+                                        I agree to the terms and conditions <span class="required">*</span>
+                                    </label>
+                                </div>
+
+                                <div class="radio-item">
+                                    <input type="checkbox" id="privacyAgreement" name="privacyAgreement" required>
+                                    <span class="radio-custom" style="border-radius: 4px;" aria-hidden="true"></span>
+                                    <label for="privacyAgreement" style="font-weight: 600; color: var(--text-primary);">
+                                        I agree to the privacy policy and data usage <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Password Setup -->
+                        <div class="guardian-section">
+                            <div class="section-header">
+                                <i class="fas fa-lock"></i>
+                                <h3>Account Security</h3>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="password" class="form-label">
+                                        Create Password <span class="required">*</span>
+                                        <span class="helper">Minimum 8 characters</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="password" 
+                                               id="password" 
+                                               name="password" 
+                                               class="form-control" 
+                                               placeholder="Create secure password" 
+                                               required
+                                               minlength="8"
+                                               aria-required="true">
+                                        <div class="input-icon">
+                                            <i class="fas fa-key" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div id="password-error" class="error-message" role="alert">
+                                        <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                                        <span>Password must be at least 8 characters</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="confirmPassword" class="form-label">
+                                        Confirm Password <span class="required">*</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="password" 
+                                               id="confirmPassword" 
+                                               name="confirmPassword" 
+                                               class="form-control" 
+                                               placeholder="Re-enter password" 
+                                               required
+                                               aria-required="true">
+                                        <div class="input-icon">
+                                            <i class="fas fa-key" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div id="confirm-error" class="error-message" role="alert">
+                                        <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                                        <span>Passwords do not match</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevStep5">
+                                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                                <span class="btn-text">Back to Guardian Info</span>
+                            </button>
+                            <button type="button" class="btn btn-primary" id="submitRegistration">
+                                <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                                <span class="btn-text">Submit Registration</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="registration-footer" role="contentinfo">
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-of-service.html">Terms of Service</a>
+            <a href="contact.html">Contact Support</a>
+            <a href="faq.html">FAQ</a>
+        </div>
+        <p>&copy; 2026 Zamfara Education Platform. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.7;">
+            Empowering the next generation of leaders through digital education
+        </p>
+    </footer>
+
+    <script>
+        // Complete Registration Form JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // =====================
+            // DOM Elements
+            // =====================
+            const progressBar = document.getElementById('progressBar');
+            const formSteps = document.querySelectorAll('.form-step');
+            const stepIndicators = document.querySelectorAll('.step');
+            
+            // Navigation buttons
+            const nextStep1 = document.getElementById('nextStep1');
+            const nextStep2 = document.getElementById('nextStep2');
+            const nextStep3 = document.getElementById('nextStep3');
+            const nextStep4 = document.getElementById('nextStep4');
+            const prevStep2 = document.getElementById('prevStep2');
+            const prevStep3 = document.getElementById('prevStep3');
+            const prevStep4 = document.getElementById('prevStep4');
+            const prevStep5 = document.getElementById('prevStep5');
+            const submitBtn = document.getElementById('submitRegistration');
+            const saveDraftBtn = document.getElementById('saveDraftBtn');
+            
+            // Form elements
+            const firstName = document.getElementById('firstName');
+            const email = document.getElementById('email');
+            const classOptions = document.querySelectorAll('.class-option');
+            const subjectCheckboxes = document.querySelectorAll('.subject-checkbox');
+            const termsAgreement = document.getElementById('termsAgreement');
+            const privacyAgreement = document.getElementById('privacyAgreement');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            
+            // Notification and loading
+            const loadingOverlay = document.createElement('div');
+            loadingOverlay.className = 'loading-overlay';
+            loadingOverlay.innerHTML = `
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Processing your registration...</div>
+            `;
+            document.body.appendChild(loadingOverlay);
+            
+            // =====================
+            // Form Data Storage
+            // =====================
+            const formData = {
+                personal: {},
+                school: {},
+                academic: {},
+                guardian: {},
+                account: {}
+            };
+            
+            // Load draft from localStorage
+            function loadDraft() {
+                const draft = localStorage.getItem('studentRegistrationDraft');
+                if (draft) {
+                    const savedData = JSON.parse(draft);
+                    Object.assign(formData, savedData);
+                    populateFormFromDraft();
+                    showNotification('Draft loaded successfully', 'success');
+                }
+            }
+            
+            // Save draft to localStorage
+            function saveDraft() {
+                collectCurrentStepData();
+                localStorage.setItem('studentRegistrationDraft', JSON.stringify(formData));
+                showNotification('Draft saved successfully', 'success');
+            }
+            
+            // =====================
+            // Step Navigation
+            // =====================
+            let currentStep = 1;
+            const totalSteps = 5;
+            
+            function showStep(stepNumber) {
+                // Hide all steps
+                formSteps.forEach(step => step.classList.remove('active'));
+                
+                // Show current step
+                document.getElementById(`step${stepNumber}`).classList.add('active');
+                
+                // Update progress indicators
+                stepIndicators.forEach((indicator, index) => {
+                    indicator.classList.remove('active', 'completed');
+                    if (index + 1 < stepNumber) {
+                        indicator.classList.add('completed');
+                    } else if (index + 1 === stepNumber) {
+                        indicator.classList.add('active');
+                    }
+                });
+                
+                // Update progress bar
+                const progressPercentage = ((stepNumber - 1) / (totalSteps - 1)) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+                
+                // Update current step
+                currentStep = stepNumber;
+                
+                // Collect data from current step before leaving
+                if (stepNumber > 1) {
+                    collectCurrentStepData();
+                }
+                
+                // Scroll to top of form
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Dispatch step change event
+                document.dispatchEvent(new CustomEvent('stepChanged', { detail: { step: stepNumber } }));
+            }
+            
+            // =====================
+            // Data Collection
+            // =====================
+            function collectCurrentStepData() {
+                switch (currentStep) {
+                    case 1:
+                        formData.personal = {
+                            firstName: firstName.value,
+                            lastName: document.getElementById('lastName').value,
+                            otherNames: document.getElementById('otherNames').value,
+                            gender: document.querySelector('input[name="gender"]:checked')?.value,
+                            dateOfBirth: document.getElementById('dateOfBirth').value,
+                            email: email.value,
+                            phone: document.getElementById('phone').value,
+                            nin: document.getElementById('nin').value
+                        };
+                        break;
+                        
+                    case 2:
+                        const selectedClass = document.querySelector('.class-option.active')?.dataset.class;
+                        formData.school = {
+                            schoolName: document.getElementById('schoolName').value,
+                            schoolAddress: document.getElementById('schoolAddress').value,
+                            currentClass: selectedClass,
+                            registrationNumber: document.getElementById('registrationNumber').value,
+                            expectedGraduation: document.getElementById('expectedGraduation').value,
+                            house: document.getElementById('house').value
+                        };
+                        break;
+                        
+                    case 3:
+                        const selectedSubjects = Array.from(subjectCheckboxes)
+                            .filter(cb => cb.checked)
+                            .map(cb => cb.value);
+                            
+                        const examTypeSelect = document.getElementById('examType');
+                        const selectedExams = Array.from(examTypeSelect.selectedOptions).map(opt => opt.value);
+                        
+                        formData.academic = {
+                            subjects: selectedSubjects,
+                            exams: selectedExams,
+                            careerInterest: document.getElementById('careerInterest').value,
+                            studyHours: document.getElementById('studyHours').value,
+                            academicGoals: document.getElementById('academicGoals').value
+                        };
+                        break;
+                        
+                    case 4:
+                        formData.guardian = {
+                            guardianName: document.getElementById('guardianName').value,
+                            guardianRelationship: document.getElementById('guardianRelationship').value,
+                            guardianPhone: document.getElementById('guardianPhone').value,
+                            guardianEmail: document.getElementById('guardianEmail').value,
+                            guardianAddress: document.getElementById('guardianAddress').value,
+                            emergencyName: document.getElementById('emergencyName').value,
+                            emergencyPhone: document.getElementById('emergencyPhone').value
+                        };
+                        break;
+                        
+                    case 5:
+                        formData.account = {
+                            termsAgreed: termsAgreement.checked,
+                            privacyAgreed: privacyAgreement.checked,
+                            password: password.value
+                        };
+                        break;
+                }
+            }
+            
+            // =====================
+            // Form Validation
+            // =====================
+            function validateStep(stepNumber) {
+                let isValid = true;
+                
+                switch (stepNumber) {
+                    case 1:
+                        if (!firstName.value.trim()) {
+                            showError(firstName, 'First name is required');
+                            isValid = false;
+                        } else {
+                            clearError(firstName);
+                        }
+                        
+                        if (email.value && !isValidEmail(email.value)) {
+                            showError(email, 'Please enter a valid email address');
+                            isValid = false;
+                        } else {
+                            clearError(email);
+                        }
+                        
+                        const dob = document.getElementById('dateOfBirth').value;
+                        if (dob) {
+                            const age = calculateAge(new Date(dob));
+                            if (age < 14 || age > 29) {
+                                showError(document.getElementById('dateOfBirth'), 'Age must be between 14 and 29 years');
+                                isValid = false;
+                            }
+                        }
+                        break;
+                        
+                    case 2:
+                        const schoolName = document.getElementById('schoolName');
+                        if (!schoolName.value) {
+                            showError(schoolName, 'Please select your school');
+                            isValid = false;
+                        } else {
+                            clearError(schoolName);
+                        }
+                        
+                        const selectedClass = document.querySelector('.class-option.active');
+                        if (!selectedClass) {
+                            showNotification('Please select your current class', 'error');
+                            isValid = false;
+                        }
+                        break;
+                        
+                    case 3:
+                        const selectedSubjects = Array.from(subjectCheckboxes)
+                            .filter(cb => cb.checked)
+                            .map(cb => cb.value);
+                            
+                        if (selectedSubjects.length < 8) {
+                            document.getElementById('subjects-error').classList.add('show');
+                            showNotification('Please select at least 8 subjects for WAEC', 'error');
+                            isValid = false;
+                        } else {
+                            document.getElementById('subjects-error').classList.remove('show');
+                        }
+                        
+                        const exams = document.getElementById('examType');
+                        if (!exams.value) {
+                            showError(exams, 'Please select at least one examination');
+                            isValid = false;
+                        } else {
+                            clearError(exams);
+                        }
+                        break;
+                        
+                    case 4:
+                        const guardianName = document.getElementById('guardianName');
+                        if (!guardianName.value.trim()) {
+                            showError(guardianName, 'Guardian name is required');
+                            isValid = false;
+                        } else {
+                            clearError(guardianName);
+                        }
+                        
+                        const guardianPhone = document.getElementById('guardianPhone');
+                        if (!guardianPhone.value.trim()) {
+                            showError(guardianPhone, 'Guardian phone number is required');
+                            isValid = false;
+                        } else {
+                            clearError(guardianPhone);
+                        }
+                        break;
+                        
+                    case 5:
+                        if (!termsAgreement.checked || !privacyAgreement.checked) {
+                            showNotification('Please agree to terms and conditions', 'error');
+                            isValid = false;
+                        }
+                        
+                        if (password.value.length < 8) {
+                            showError(password, 'Password must be at least 8 characters');
+                            isValid = false;
+                        } else {
+                            clearError(password);
+                        }
+                        
+                        if (password.value !== confirmPassword.value) {
+                            showError(confirmPassword, 'Passwords do not match');
+                            isValid = false;
+                        } else {
+                            clearError(confirmPassword);
+                        }
+                        break;
+                }
+                
+                return isValid;
+            }
+            
+            // =====================
+            // Utility Functions
+            // =====================
+            function showError(inputElement, message) {
+                const errorElement = document.getElementById(`${inputElement.id}-error`) || 
+                                   inputElement.nextElementSibling?.querySelector('.error-message');
+                if (errorElement) {
+                    errorElement.querySelector('span').textContent = message;
+                    errorElement.classList.add('show');
+                    inputElement.classList.add('error');
+                    inputElement.classList.add('shake');
+                    setTimeout(() => inputElement.classList.remove('shake'), 500);
+                }
+            }
+            
+            function clearError(inputElement) {
+                const errorElement = document.getElementById(`${inputElement.id}-error`) || 
+                                   inputElement.nextElementSibling?.querySelector('.error-message');
+                if (errorElement) {
+                    errorElement.classList.remove('show');
+                    inputElement.classList.remove('error');
+                }
+            }
+            
+            function isValidEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+            
+            function calculateAge(birthDate) {
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const monthDiff = today.getMonth() - birthDate.getMonth();
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                return age;
+            }
+            
+            function showNotification(message, type = 'success') {
+                const existing = document.querySelector('.notification');
+                if (existing) existing.remove();
+                
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                    <span>${message}</span>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+            
+            function showLoading(show) {
+                if (show) {
+                    loadingOverlay.classList.add('active');
+                } else {
+                    loadingOverlay.classList.remove('active');
+                }
+            }
+            
+            // =====================
+            // Event Listeners
+            // =====================
+            // Step Navigation
+            nextStep1.addEventListener('click', () => {
+                if (validateStep(1)) {
+                    showStep(2);
+                }
+            });
+            
+            nextStep2.addEventListener('click', () => {
+                if (validateStep(2)) {
+                    showStep(3);
+                }
+            });
+            
+            nextStep3.addEventListener('click', () => {
+                if (validateStep(3)) {
+                    showStep(4);
+                }
+            });
+            
+            nextStep4.addEventListener('click', () => {
+                if (validateStep(4)) {
+                    showStep(5);
+                }
+            });
+            
+            prevStep2.addEventListener('click', () => showStep(1));
+            prevStep3.addEventListener('click', () => showStep(2));
+            prevStep4.addEventListener('click', () => showStep(3));
+            prevStep5.addEventListener('click', () => showStep(4));
+            
+            // Class selection
+            classOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    classOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Save draft
+            saveDraftBtn.addEventListener('click', saveDraft);
+            
+            // Form submission
+            submitBtn.addEventListener('click', async function() {
+                if (!validateStep(5)) return;
+                
+                collectCurrentStepData();
+                
+                // Prepare final data
+                const finalData = {
+                    ...formData,
+                    registrationDate: new Date().toISOString(),
+                    studentId: 'ZST' + Date.now().toString().slice(-8),
+                    status: 'pending'
+                };
+                
+                showLoading(true);
+                
+                try {
+                    // Simulate API call
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    
+                    // Save to localStorage (in real app, send to backend)
+                    localStorage.setItem('registeredStudent', JSON.stringify(finalData));
+                    localStorage.removeItem('studentRegistrationDraft'); // Clear draft
+                    
+                    // Show success message
+                    showLoading(false);
+                    showNotification('Registration successful! Redirecting to dashboard...', 'success');
+                    
+                    // Redirect to student dashboard
+                    setTimeout(() => {
+                        window.location.href = `student-dashboard.html?student=${finalData.studentId}`;
+                    }, 2000);
+                    
+                } catch (error) {
+                    showLoading(false);
+                    showNotification('Registration failed. Please try again.', 'error');
+                    console.error('Registration error:', error);
+                }
+            });
+            
+            // Real-time validation
+            firstName.addEventListener('input', () => {
+                if (firstName.value.trim()) clearError(firstName);
+            });
+            
+            email.addEventListener('input', () => {
+                if (isValidEmail(email.value)) clearError(email);
+            });
+            
+            password.addEventListener('input', () => {
+                if (password.value.length >= 8) clearError(password);
+            });
+            
+            confirmPassword.addEventListener('input', () => {
+                if (confirmPassword.value === password.value) clearError(confirmPassword);
+            });
+            
+            // =====================
+            // Countdown Timer
+            // =====================
+            function updateCountdown() {
+                const waecDate = new Date('2026-05-15T09:00:00'); // Example WAEC start date
+                const now = new Date();
+                const diff = waecDate - now;
+                
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                    
+                    document.getElementById('countdownTimer').textContent = 
+                        `${days} days, ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                } else {
+                    document.getElementById('countdownTimer').textContent = 'Exam in progress';
+                }
+            }
+            
+            // Initialize countdown
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            
+            // =====================
+            // Initialize Form
+            // =====================
+            loadDraft();
+            showStep(1);
+            
+            // Populate draft data into form
+            function populateFormFromDraft() {
+                // Personal info
+                if (formData.personal.firstName) firstName.value = formData.personal.firstName;
+                if (formData.personal.email) email.value = formData.personal.email;
+                if (formData.personal.dateOfBirth) document.getElementById('dateOfBirth').value = formData.personal.dateOfBirth;
+                
+                // Set gender
+                if (formData.personal.gender) {
+                    document.querySelector(`input[name="gender"][value="${formData.personal.gender}"]`).checked = true;
+                }
+                
+                // School info
+                if (formData.school.schoolName) document.getElementById('schoolName').value = formData.school.schoolName;
+                if (formData.school.currentClass) {
+                    classOptions.forEach(option => {
+                        if (option.dataset.class === formData.school.currentClass) {
+                            option.classList.add('active');
+                        }
+                    });
+                }
+                
+                // Academic info
+                if (formData.academic.subjects) {
+                    subjectCheckboxes.forEach(cb => {
+                        cb.checked = formData.academic.subjects.includes(cb.value);
+                    });
+                }
+                
+                if (formData.academic.exams) {
+                    const examSelect = document.getElementById('examType');
+                    Array.from(examSelect.options).forEach(option => {
+                        option.selected = formData.academic.exams.includes(option.value);
+                    });
+                }
+                
+                // Guardian info
+                if (formData.guardian.guardianName) document.getElementById('guardianName').value = formData.guardian.guardianName;
+                if (formData.guardian.guardianPhone) document.getElementById('guardianPhone').value = formData.guardian.guardianPhone;
+            }
+            
+            // =====================
+            // Summary Generation (for step 5)
+            // =====================
+            function generateSummary() {
+                const summaryCards = document.getElementById('summaryCards');
+                if (!summaryCards) return;
+                
+                summaryCards.innerHTML = `
+                    <div class="info-card">
+                        <i class="fas fa-user"></i>
+                        <h4>Personal Info</h4>
+                        <p>${formData.personal.firstName || 'Not provided'} ${formData.personal.lastName || ''}</p>
+                        <small>${formData.personal.gender || 'Gender not specified'}</small>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-school"></i>
+                        <h4>School</h4>
+                        <p>${formData.school.schoolName || 'School not selected'}</p>
+                        <small>Class: ${formData.school.currentClass || 'Not specified'}</small>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-book"></i>
+                        <h4>Subjects</h4>
+                        <p>${formData.academic.subjects?.length || 0} subjects selected</p>
+                        <small>${formData.academic.exams?.join(', ') || 'Exams not selected'}</small>
+                    </div>
+                `;
+            }
+            
+            // Update summary when reaching step 5
+            document.addEventListener('stepChanged', function(e) {
+                if (e.detail.step === 5) {
+                    generateSummary();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1939 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="zcsr-2026-auth-token">
+    <meta name="description" content="Civil Servants Registration for Zamfara Digital Platform - Access e-GovConnect, training, promotions tracking and digital government services">
+    <meta name="keywords" content="Zamfara, Civil Servants, Government, Registration, e-GovConnect, Training, Promotions">
+    <title>Civil Servants Registration | Zamfara Digital Platform</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest-civil-servant.json">
+    <meta name="theme-color" content="#006837">
+    <link rel="icon" type="image/x-icon" href="favicon-government.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon-government.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Framework CSS (Shared) -->
+    <link rel="stylesheet" href="css/registration-framework.css">
+    
+    <style>
+        :root {
+            /* Zamfara Government Theme */
+            --primary-green: #006837;
+            --secondary-green: #00A859;
+            --accent-green: #4CD964;
+            --dark-green: #004225;
+            --gold-accent: #FFD700;
+            --professional-blue: #1a5f7a;
+            --government-purple: #4a1e5c;
+            
+            /* Status Colors */
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #3b82f6;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--primary-green), var(--government-purple));
+            --gradient-success: linear-gradient(135deg, var(--success-color), var(--accent-green));
+            --gradient-warning: linear-gradient(135deg, var(--warning-color), #f4a261);
+            --gradient-tech: linear-gradient(135deg, #06b6d4, #6366f1);
+            --gradient-career: linear-gradient(135deg, #8B4513, var(--professional-blue));
+            
+            /* Shadows */
+            --shadow-green: 0 10px 30px rgba(0, 104, 55, 0.2);
+        }
+
+        /* Civil Servant Specific Styles */
+        .registration-header {
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, white, var(--accent-green));
+        }
+
+        .logo-icon i {
+            color: var(--primary-green);
+        }
+
+        .header-badge {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Progress Indicator - Government Theme */
+        .progress-step.active .step-number {
+            background: var(--gradient-primary);
+            color: white;
+            border: 2px solid white;
+            box-shadow: var(--shadow-green);
+        }
+
+        .progress-step.completed .step-number {
+            background: var(--gradient-success);
+        }
+
+        /* Benefits Panel - Government Theme */
+        .benefits-panel {
+            background: linear-gradient(135deg, var(--primary-green), var(--professional-blue));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M50 50c0-8.284 6.716-15 15-15s15 6.716 15 15-6.716 15-15 15c0 8.284-6.716 15-15 15s-15-6.716-15-15 6.716-15 15-15zM15 15C15 6.716 21.716 0 30 0s15 6.716 15 15-6.716 15-15 15c0 8.284-6.716 15-15 15S0 38.284 0 30s6.716-15 15-15zm15 20c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm40 40c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .benefits-badge {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--gold-accent);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Form Input Government Styling */
+        .form-control:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(0, 104, 55, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--dark-green), var(--government-purple));
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-green);
+        }
+
+        /* Ministry Specific Cards */
+        .ministry-card {
+            background: linear-gradient(135deg, rgba(0, 104, 55, 0.05), rgba(26, 95, 122, 0.05));
+            border: 2px solid transparent;
+            border-image: var(--gradient-primary);
+            border-image-slice: 1;
+            transition: var(--transition-normal);
+        }
+
+        .ministry-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Grade Level Indicators */
+        .grade-level-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin: 0.25rem;
+        }
+
+        .grade-entry { background: rgba(59, 130, 246, 0.1); color: var(--info-color); border: 1px solid rgba(59, 130, 246, 0.2); }
+        .grade-intermediate { background: rgba(16, 185, 129, 0.1); color: var(--success-color); border: 1px solid rgba(16, 185, 129, 0.2); }
+        .grade-senior { background: rgba(245, 158, 11, 0.1); color: var(--warning-color); border: 1px solid rgba(245, 158, 11, 0.2); }
+        .grade-management { background: rgba(139, 69, 19, 0.1); color: #8B4513; border: 1px solid rgba(139, 69, 19, 0.2); }
+        .grade-directorate { background: rgba(106, 13, 173, 0.1); color: var(--government-purple); border: 1px solid rgba(106, 13, 173, 0.2); }
+
+        /* Verification Badges */
+        .verification-badge {
+            background: linear-gradient(135deg, var(--bg-primary), white);
+            border: 1px solid var(--border-color);
+        }
+
+        .verification-badge.verified {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(76, 217, 100, 0.1));
+            border-color: var(--success-color);
+            color: var(--success-color);
+        }
+
+        /* Training Assessment */
+        .training-assessment {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05), rgba(99, 102, 241, 0.05));
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        /* Digital Skills Meter */
+        .skills-meter {
+            margin: 1rem 0;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .skill-name {
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            min-width: 150px;
+        }
+
+        .skill-level {
+            flex: 1;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 1rem;
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: var(--gradient-tech);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .skill-percent {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* Promotion Timeline */
+        .promotion-timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .promotion-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gradient-career);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 0.5rem 0 0.5rem 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1rem;
+            height: 1rem;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        /* HR Integration Section */
+        .hr-integration {
+            background: linear-gradient(135deg, rgba(0, 104, 55, 0.05), rgba(74, 30, 92, 0.05));
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 2px dashed var(--primary-green);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .skills-meter .skill-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .skill-level {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            .benefits-panel {
+                background: linear-gradient(135deg, #004225, #0f172a);
+            }
+            
+            .ministry-card {
+                background: rgba(30, 41, 59, 0.5);
+            }
+        }
+
+        /* Print Optimizations */
+        @media print {
+            .benefits-panel {
+                background: white !important;
+                color: black !important;
+                border: 2px solid black;
+            }
+            
+            .btn, .file-upload, .verification-badge {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="government-theme">
+    <!-- Skip to Main Content -->
+    <a href="#step1" class="skip-to-main">
+        <i class="fas fa-forward"></i> Skip to registration form
+    </a>
+
+    <!-- Header -->
+    <header class="registration-header">
+        <a href="index.html" class="header-logo" aria-label="Zamfara Digital Platform Home">
+            <div class="logo-icon">
+                <i class="fas fa-landmark"></i>
+            </div>
+            <div class="logo-text">
+                <h1>Zamfara Digital Platform</h1>
+                <p>Civil Servants Registration Portal</p>
+            </div>
+        </a>
+        
+        <div class="header-actions">
+            <div class="header-badge">
+                <i class="fas fa-user-shield"></i>
+                <span>Official Government Portal</span>
+            </div>
+            <div class="language-selector">
+                <i class="fas fa-globe-africa"></i>
+                <select id="languageSelect" aria-label="Select language">
+                    <option value="en">English</option>
+                    <option value="ha">Hausa</option>
+                </select>
+            </div>
+            <a href="civil-servant-login.html" class="header-btn">
+                <i class="fas fa-sign-in-alt"></i>
+                Staff Login
+            </a>
+        </div>
+    </header>
+
+    <!-- Progress Container -->
+    <div class="progress-container">
+        <div class="progress-steps">
+            <div class="progress-bar" id="progressBar" style="width: 16.67%;"></div>
+            
+            <div class="progress-step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-info">
+                    <h4>Personal Information</h4>
+                    <p>Basic details & contact</p>
+                </div>
+            </div>
+            
+            <div class="progress-step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-info">
+                    <h4>Employment Details</h4>
+                    <p>Ministry, grade & position</p>
+                </div>
+            </div>
+            
+            <div class="progress-step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-info">
+                    <h4>Digital Skills Assessment</h4>
+                    <p>Training needs analysis</p>
+                </div>
+            </div>
+            
+            <div class="progress-step" data-step="4">
+                <div class="step-number">4</div>
+                <div class="step-info">
+                    <h4>Account Setup</h4>
+                    <p>Login credentials</p>
+                </div>
+            </div>
+            
+            <div class="progress-step" data-step="5">
+                <div class="step-number">5</div>
+                <div class="step-info">
+                    <h4>Document Upload</h4>
+                    <p>Verification documents</p>
+                </div>
+            </div>
+            
+            <div class="progress-step" data-step="6">
+                <div class="step-number">6</div>
+                <div class="step-info">
+                    <h4>Review & Submit</h4>
+                    <p>Final verification</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="registration-container">
+        <!-- Benefits Panel -->
+        <aside class="benefits-panel">
+            <div class="benefits-header">
+                <div class="benefits-badge">
+                    <i class="fas fa-crown"></i>
+                    Exclusive Benefits for Civil Servants
+                </div>
+                
+                <h2 class="benefits-title">
+                    Your Digital Government Career Starts Here
+                </h2>
+                
+                <p class="benefits-subtitle">
+                    Register to access the unified digital platform for Zamfara State civil servants.
+                    Streamline your work, track promotions, and access digital training.
+                </p>
+            </div>
+            
+            <ul class="benefits-list">
+                <li>
+                    <i class="fas fa-laptop-code"></i>
+                    <div class="benefit-text">
+                        <h4>e-GovConnect Access</h4>
+                        <p>Full access to digital government services platform</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-chart-line"></i>
+                    <div class="benefit-text">
+                        <h4>Promotion Tracking</h4>
+                        <p>Real-time tracking of promotion points and career progression</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-graduation-cap"></i>
+                    <div class="benefit-text">
+                        <h4>Digital Training</h4>
+                        <p>Access to mandatory and elective digital skills courses</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <div class="benefit-text">
+                        <h4>Payroll Integration</h4>
+                        <p>Direct integration with state payroll systems</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-tasks"></i>
+                    <div class="benefit-text">
+                        <h4>Performance Management</h4>
+                        <p>Digital performance appraisal and goal tracking</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="benefit-text">
+                        <h4>Secure Digital Identity</h4>
+                        <p>Government-verified digital identity for all services</p>
+                    </div>
+                </li>
+            </ul>
+            
+            <div class="support-section">
+                <h4>
+                    <i class="fas fa-headset"></i>
+                    Civil Service Support
+                </h4>
+                <div class="support-contacts">
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>0800-CIVIL-SUPPORT</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>civilservice@zamfara.gov.ng</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Civil Service Commission, Gusau</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Mon-Fri, 8AM-4PM</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Registration Form -->
+        <section class="registration-panel">
+            <div class="registration-form-container">
+                <!-- Step 1: Personal Information -->
+                <div class="form-step active" id="step1">
+                    <div class="step-header">
+                        <h2>Personal Information</h2>
+                        <p>Enter your details as they appear on official government records</p>
+                    </div>
+
+                    <form class="registration-form" id="personalForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">
+                                    First Name <span class="required">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" id="firstName" name="firstName" class="form-control" 
+                                           placeholder="Enter first name" required
+                                           pattern="[A-Za-z\s]{2,}"
+                                           aria-describedby="firstNameHelp">
+                                    <div class="input-icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </div>
+                                <div id="firstNameHelp" class="form-helper">
+                                    As it appears on official documents
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="middleName" class="form-label">
+                                    Middle Name
+                                </label>
+                                <input type="text" id="middleName" name="middleName" 
+                                       class="form-control" placeholder="Enter middle name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">
+                                    Last Name <span class="required">*</span>
+                                </label>
+                                <input type="text" id="lastName" name="lastName" 
+                                       class="form-control" placeholder="Enter last name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dateOfBirth" class="form-label">
+                                    Date of Birth <span class="required">*</span>
+                                </label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" 
+                                       class="form-control" required max="2006-01-01">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Gender <span class="required">*</span>
+                                </label>
+                                <div class="radio-group">
+                                    <div class="radio-item">
+                                        <input type="radio" id="genderMale" name="gender" value="male" required>
+                                        <label for="genderMale">Male</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="genderFemale" name="gender" value="female">
+                                        <label for="genderFemale">Female</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" class="form-label">
+                                    Phone Number <span class="required">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="tel" id="phone" name="phone" class="form-control" 
+                                           placeholder="0803 123 4567" required
+                                           pattern="[0-9\s]{11,15}">
+                                    <div class="input-icon">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="form-label">
+                                    Email Address <span class="required">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="email" id="email" name="email" class="form-control" 
+                                           placeholder="name@zamfara.gov.ng" required>
+                                    <div class="input-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                </div>
+                                <div class="form-helper">
+                                    Official email preferred. Use personal email if no official email.
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nin" class="form-label">
+                                    National Identification Number (NIN)
+                                </label>
+                                <input type="text" id="nin" name="nin" class="form-control" 
+                                       placeholder="11-digit NIN"
+                                       pattern="[0-9]{11}">
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="residentialAddress" class="form-label">
+                                    Residential Address <span class="required">*</span>
+                                </label>
+                                <textarea id="residentialAddress" name="residentialAddress" 
+                                          class="form-control" rows="3" 
+                                          placeholder="Enter complete residential address" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lga" class="form-label">
+                                    Local Government Area <span class="required">*</span>
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="lga" name="lga" class="form-control" required>
+                                        <option value="">Select LGA</option>
+                                        <option value="gusau">Gusau</option>
+                                        <option value="kaura-namoda">Kaura Namoda</option>
+                                        <option value="anka">Anka</option>
+                                        <option value="talata-mafara">Talata Mafara</option>
+                                        <option value="maru">Maru</option>
+                                        <option value="bukkuyum">Bukkuyum</option>
+                                        <option value="gummi">Gummi</option>
+                                        <option value="bungudu">Bungudu</option>
+                                        <option value="tsafe">Tsafe</option>
+                                        <option value="maradun">Maradun</option>
+                                        <option value="shinkafi">Shinkafi</option>
+                                        <option value="bakura">Bakura</option>
+                                        <option value="zurmi">Zurmi</option>
+                                        <option value="birnin-magaji">Birnin Magaji</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="maritalStatus" class="form-label">
+                                    Marital Status
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="maritalStatus" name="maritalStatus" class="form-control">
+                                        <option value="">Select status</option>
+                                        <option value="single">Single</option>
+                                        <option value="married">Married</option>
+                                        <option value="divorced">Divorced</option>
+                                        <option value="widowed">Widowed</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-cards">
+                            <div class="info-card ministry-card">
+                                <i class="fas fa-database"></i>
+                                <h4>Data Verification</h4>
+                                <p>Information will be verified against government records</p>
+                            </div>
+                            <div class="info-card ministry-card">
+                                <i class="fas fa-user-check"></i>
+                                <h4>Digital Identity</h4>
+                                <p>Creates your verified digital identity for government services</p>
+                            </div>
+                            <div class="info-card ministry-card">
+                                <i class="fas fa-shield-alt"></i>
+                                <h4>Privacy Protected</h4>
+                                <p>Your data is protected under government privacy laws</p>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-outline" id="saveDraftBtn">
+                                <i class="fas fa-save"></i>
+                                Save Draft
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStep1">
+                                Continue to Employment Details
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2: Employment Details -->
+                <div class="form-step" id="step2">
+                    <div class="step-header">
+                        <h2>Employment Details</h2>
+                        <p>Official employment information for government records</p>
+                    </div>
+
+                    <form class="registration-form" id="employmentForm">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="ministry" class="form-label">
+                                    Ministry/Department/Agency <span class="required">*</span>
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="ministry" name="ministry" class="form-control" required 
+                                            onchange="loadMinistrySpecificFields()">
+                                        <option value="">Select Ministry/MDA</option>
+                                        <optgroup label="Core Ministries">
+                                            <option value="education">Ministry of Education</option>
+                                            <option value="health">Ministry of Health</option>
+                                            <option value="finance">Ministry of Finance</option>
+                                            <option value="agriculture">Ministry of Agriculture</option>
+                                            <option value="works">Ministry of Works & Transport</option>
+                                            <option value="justice">Ministry of Justice</option>
+                                        </optgroup>
+                                        <optgroup label="Service Ministries">
+                                            <option value="local-govt">Ministry of Local Government</option>
+                                            <option value="women-affairs">Ministry of Women Affairs</option>
+                                            <option value="youth">Ministry of Youth Development</option>
+                                            <option value="environment">Ministry of Environment</option>
+                                            <option value="commerce">Ministry of Commerce & Industry</option>
+                                        </optgroup>
+                                        <optgroup label="Commissions & Agencies">
+                                            <option value="civil-service">Civil Service Commission</option>
+                                            <option value="zitda">Zamfara IT Development Agency (ZITDA)</option>
+                                            <option value="zagis">Zamfara Geographic Information System (ZAGIS)</option>
+                                            <option value="zspiu">Zamfara State Project Implementation Unit</option>
+                                        </optgroup>
+                                        <optgroup label="Other">
+                                            <option value="others">Other MDAs</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gradeLevel" class="form-label">
+                                    Grade Level <span class="required">*</span>
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="gradeLevel" name="gradeLevel" class="form-control" required
+                                            onchange="updateGradeBadge()">
+                                        <option value="">Select Grade Level</option>
+                                        <optgroup label="Entry Level (GL 01-03)">
+                                            <option value="01">Level 01</option>
+                                            <option value="02">Level 02</option>
+                                            <option value="03">Level 03</option>
+                                        </optgroup>
+                                        <optgroup label="Intermediate Level (GL 04-06)">
+                                            <option value="04">Level 04</option>
+                                            <option value="05">Level 05</option>
+                                            <option value="06">Level 06</option>
+                                        </optgroup>
+                                        <optgroup label="Senior Level (GL 07-10)">
+                                            <option value="07">Level 07</option>
+                                            <option value="08">Level 08</option>
+                                            <option value="09">Level 09</option>
+                                            <option value="10">Level 10</option>
+                                        </optgroup>
+                                        <optgroup label="Management Level (GL 12-14)">
+                                            <option value="12">Level 12</option>
+                                            <option value="13">Level 13</option>
+                                            <option value="14">Level 14</option>
+                                        </optgroup>
+                                        <optgroup label="Directorate Level (GL 15-17)">
+                                            <option value="15">Level 15</option>
+                                            <option value="16">Level 16</option>
+                                            <option value="17">Level 17</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div id="gradeBadge" class="grade-level-badge" style="display: none; margin-top: 0.5rem;">
+                                    <!-- Dynamic badge will appear here -->
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cadre" class="form-label">
+                                    Cadre/Position <span class="required">*</span>
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="cadre" name="cadre" class="form-control" required>
+                                        <option value="">Select Cadre</option>
+                                        <optgroup label="Administrative">
+                                            <option value="admin-officer">Administrative Officer</option>
+                                            <option value="executive-officer">Executive Officer</option>
+                                            <option value="higher-executive">Higher Executive Officer</option>
+                                            <option value="senior-executive">Senior Executive Officer</option>
+                                        </optgroup>
+                                        <optgroup label="Professional">
+                                            <option value="accountant">Accountant</option>
+                                            <option value="auditor">Auditor</option>
+                                            <option value="education-officer">Education Officer</option>
+                                            <option value="health-officer">Health Officer</option>
+                                            <option value="engineer">Engineer</option>
+                                            <option value="architect">Architect</option>
+                                            <option value="lawyer">Legal Officer</option>
+                                        </optgroup>
+                                        <optgroup label="Technical">
+                                            <option value="ict-officer">ICT Officer</option>
+                                            <option value="technical-officer">Technical Officer</option>
+                                            <option value="agric-officer">Agricultural Officer</option>
+                                        </optgroup>
+                                        <optgroup label="Directorship">
+                                            <option value="assistant-director">Assistant Director</option>
+                                            <option value="deputy-director">Deputy Director</option>
+                                            <option value="director">Director</option>
+                                            <option value="permanent-secretary">Permanent Secretary</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="staffId" class="form-label">
+                                    Staff ID Number <span class="required">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" id="staffId" name="staffId" class="form-control" 
+                                           placeholder="e.g., ZAM/EDU/2020/0456" required
+                                           pattern="ZAM\/[A-Z]+\/\d{4}\/\d{4}">
+                                    <div class="input-icon">
+                                        <i class="fas fa-id-card"></i>
+                                    </div>
+                                </div>
+                                <div class="form-helper">
+                                    Format: ZAM/[Ministry Code]/[Year]/[Number]
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="firstAppointment" class="form-label">
+                                    Date of First Appointment <span class="required">*</span>
+                                </label>
+                                <input type="date" id="firstAppointment" name="firstAppointment" 
+                                       class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="currentAppointment" class="form-label">
+                                    Current Appointment Date
+                                </label>
+                                <input type="date" id="currentAppointment" name="currentAppointment" 
+                                       class="form-control">
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="station" class="form-label">
+                                    Current Station/Location <span class="required">*</span>
+                                </label>
+                                <input type="text" id="station" name="station" class="form-control" 
+                                       placeholder="e.g., Ministry Headquarters, Gusau" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="step" class="form-label">
+                                    Current Step
+                                </label>
+                                <select id="step" name="step" class="form-control">
+                                    <option value="">Select Step</option>
+                                    <option value="1">Step 1</option>
+                                    <option value="2">Step 2</option>
+                                    <option value="3">Step 3</option>
+                                    <option value="4">Step 4</option>
+                                    <option value="5">Step 5</option>
+                                    <option value="6">Step 6</option>
+                                    <option value="7">Step 7</option>
+                                    <option value="8">Step 8</option>
+                                    <option value="9">Step 9</option>
+                                    <option value="10">Step 10</option>
+                                    <option value="11">Step 11</option>
+                                    <option value="12">Step 12</option>
+                                    <option value="13">Step 13</option>
+                                    <option value="14">Step 14</option>
+                                    <option value="15">Step 15</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Ministry Specific Fields -->
+                        <div class="ministry-specific-fields" id="ministrySpecificFields" style="display: none;">
+                            <h4>
+                                <i class="fas fa-info-circle"></i>
+                                <span id="ministryTitle">Additional Ministry Information</span>
+                            </h4>
+                            <div id="ministryFieldsContent">
+                                <!-- Dynamic content loaded here -->
+                            </div>
+                        </div>
+
+                        <div class="hr-integration">
+                            <h4>
+                                <i class="fas fa-link"></i>
+                                HR System Integration
+                            </h4>
+                            <div class="form-group full-width" style="margin-top: 1rem;">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="hrSync" name="hrSync" checked>
+                                    <label for="hrSync">
+                                        Synchronize with Human Resources Management System (HRMS)
+                                    </label>
+                                </div>
+                                <div class="form-helper">
+                                    Enables automatic updates of promotions, transfers, and training records
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevStep2">
+                                <i class="fas fa-arrow-left"></i>
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStep2">
+                                Continue to Skills Assessment
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 3: Digital Skills Assessment -->
+                <div class="form-step" id="step3">
+                    <div class="step-header">
+                        <h2>Digital Skills Assessment</h2>
+                        <p>Help us understand your current digital skills level for personalized training</p>
+                    </div>
+
+                    <form class="registration-form" id="skillsForm">
+                        <div class="training-assessment">
+                            <h4>
+                                <i class="fas fa-laptop-medical"></i>
+                                Digital Literacy Self-Assessment
+                            </h4>
+                            <p class="form-helper">
+                                Rate your proficiency in each area (1 = No experience, 5 = Expert)
+                            </p>
+                            
+                            <div class="skills-meter">
+                                <div class="skill-item">
+                                    <div class="skill-name">Basic Computer Operation</div>
+                                    <div class="skill-level">
+                                        <div class="skill-fill" data-skill="computer" style="width: 0%"></div>
+                                    </div>
+                                    <div class="skill-percent">0%</div>
+                                </div>
+                                
+                                <div class="skill-item">
+                                    <div class="skill-name">Microsoft Office Suite</div>
+                                    <div class="skill-level">
+                                        <div class="skill-fill" data-skill="office" style="width: 0%"></div>
+                                    </div>
+                                    <div class="skill-percent">0%</div>
+                                </div>
+                                
+                                <div class="skill-item">
+                                    <div class="skill-name">Email & Internet Usage</div>
+                                    <div class="skill-level">
+                                        <div class="skill-fill" data-skill="internet" style="width: 0%"></div>
+                                    </div>
+                                    <div class="skill-percent">0%</div>
+                                </div>
+                                
+                                <div class="skill-item">
+                                    <div class="skill-name">e-GovConnect Platform</div>
+                                    <div class="skill-level">
+                                        <div class="skill-fill" data-skill="egovconnect" style="width: 0%"></div>
+                                    </div>
+                                    <div class="skill-percent">0%</div>
+                                </div>
+                                
+                                <div class="skill-item">
+                                    <div class="skill-name">Government Software Tools</div>
+                                    <div class="skill-level">
+                                        <div class="skill-fill" data-skill="govtools" style="width: 0%"></div>
+                                    </div>
+                                    <div class="skill-percent">0%</div>
+                                </div>
+                                
+                                <div class="skill-item">
+                                    <div class="skill-name">Data Management & Analysis</div>
+                                    <div class="skill-level">
+                                        <div class="skill-fill" data-skill="data" style="width: 0%"></div>
+                                    </div>
+                                    <div class="skill-percent">0%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label class="form-label">
+                                    Training Needs <span class="required">*</span>
+                                    <span class="form-helper">Select areas where you need training</span>
+                                </label>
+                                <div class="checkbox-grid">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="needBasicComputer" name="trainingNeeds[]" value="basic-computer">
+                                        <label for="needBasicComputer">Basic Computer Literacy</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="needOffice" name="trainingNeeds[]" value="office">
+                                        <label for="needOffice">Microsoft Office (Word, Excel, PowerPoint)</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="needEmail" name="trainingNeeds[]" value="email">
+                                        <label for="needEmail">Email & Internet Skills</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="needEGov" name="trainingNeeds[]" value="egov">
+                                        <label for="needEGov">e-GovConnect Platform Training</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="needData" name="trainingNeeds[]" value="data">
+                                        <label for="needData">Data Management & Analysis</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="needLeadership" name="trainingNeeds[]" value="leadership">
+                                        <label for="needLeadership">Digital Leadership</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="needCyber" name="trainingNeeds[]" value="cyber">
+                                        <label for="needCyber">Cybersecurity Awareness</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="needProject" name="trainingNeeds[]" value="project">
+                                        <label for="needProject">Project Management Tools</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="preferredTrainingMode" class="form-label">
+                                    Preferred Training Mode
+                                </label>
+                                <div class="radio-group">
+                                    <div class="radio-item">
+                                        <input type="radio" id="modeOnline" name="trainingMode" value="online" checked>
+                                        <label for="modeOnline">Online Self-paced</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="modeInPerson" name="trainingMode" value="in-person">
+                                        <label for="modeInPerson">In-person Workshops</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="modeHybrid" name="trainingMode" value="hybrid">
+                                        <label for="modeHybrid">Hybrid (Online + In-person)</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="trainingAvailability" class="form-label">
+                                    Training Availability
+                                </label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="availWeekdays" name="availability[]" value="weekdays">
+                                        <label for="availWeekdays">Weekdays (During work hours)</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="availWeekends" name="availability[]" value="weekends">
+                                        <label for="availWeekends">Weekends</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="availEvenings" name="availability[]" value="evenings">
+                                        <label for="availEvenings">Evenings</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="promotion-timeline">
+                            <h4>
+                                <i class="fas fa-trophy"></i>
+                                Career Development Goals
+                            </h4>
+                            <div class="form-group full-width" style="margin-top: 1rem;">
+                                <label for="careerGoals" class="form-label">
+                                    What are your career development goals in the next 2-3 years?
+                                </label>
+                                <textarea id="careerGoals" name="careerGoals" class="form-control" rows="3"
+                                          placeholder="e.g., Promotion to next grade level, acquire digital leadership skills, etc."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevStep3">
+                                <i class="fas fa-arrow-left"></i>
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStep3">
+                                Continue to Account Setup
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 4: Account Setup -->
+                <div class="form-step" id="step4">
+                    <div class="step-header">
+                        <h2>Account Setup</h2>
+                        <p>Create your digital platform login credentials and security settings</p>
+                    </div>
+
+                    <form class="registration-form" id="accountForm">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="username" class="form-label">
+                                    Username <span class="required">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" id="username" name="username" class="form-control" 
+                                           placeholder="Auto-generated from your details" readonly>
+                                    <div class="input-icon">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                </div>
+                                <div class="form-helper">
+                                    This will be your unique identifier for all government digital services
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password" class="form-label">
+                                    Create Password <span class="required">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="password" id="password" name="password" class="form-control" 
+                                           placeholder="Enter strong password" required
+                                           onkeyup="checkPasswordStrength()">
+                                    <div class="input-icon">
+                                        <i class="fas fa-lock"></i>
+                                    </div>
+                                </div>
+                                <div class="password-strength">
+                                    <div class="strength-bar">
+                                        <div class="strength-fill" id="strengthFill"></div>
+                                    </div>
+                                    <div class="strength-text" id="strengthText">Password strength: None</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmPassword" class="form-label">
+                                    Confirm Password <span class="required">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="password" id="confirmPassword" name="confirmPassword" 
+                                           class="form-control" placeholder="Confirm password" required
+                                           onkeyup="checkPasswordMatch()">
+                                    <div class="input-icon">
+                                        <i class="fas fa-lock"></i>
+                                    </div>
+                                </div>
+                                <div class="form-helper" id="passwordMatchText"></div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="securityQuestion1" class="form-label">
+                                    Security Question 1 <span class="required">*</span>
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="securityQuestion1" name="securityQuestion1" class="form-control" required>
+                                        <option value="">Select security question</option>
+                                        <option value="mother-maiden">What is your mother's maiden name?</option>
+                                        <option value="first-school">What was the name of your first school?</option>
+                                        <option value="childhood-friend">What is the name of your childhood best friend?</option>
+                                        <option value="first-pet">What was the name of your first pet?</option>
+                                        <option value="birth-city">In what city were you born?</option>
+                                    </select>
+                                </div>
+                                <input type="text" id="securityAnswer1" name="securityAnswer1" 
+                                       class="form-control" placeholder="Your answer" required
+                                       style="margin-top: 0.75rem;">
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="securityQuestion2" class="form-label">
+                                    Security Question 2 <span class="required">*</span>
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="securityQuestion2" name="securityQuestion2" class="form-control" required>
+                                        <option value="">Select security question</option>
+                                        <option value="mother-maiden">What is your mother's maiden name?</option>
+                                        <option value="first-school">What was the name of your first school?</option>
+                                        <option value="childhood-friend">What is the name of your childhood best friend?</option>
+                                        <option value="first-pet">What was the name of your first pet?</option>
+                                        <option value="birth-city">In what city were you born?</option>
+                                    </select>
+                                </div>
+                                <input type="text" id="securityAnswer2" name="securityAnswer2" 
+                                       class="form-control" placeholder="Your answer" required
+                                       style="margin-top: 0.75rem;">
+                            </div>
+
+                            <div class="form-group full-width">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="twoFactor" name="twoFactor" checked>
+                                    <label for="twoFactor">
+                                        <strong>Enable Two-Factor Authentication</strong> (Recommended)
+                                    </label>
+                                </div>
+                                <div class="form-helper">
+                                    Adds an extra layer of security. You'll receive OTP via SMS for each login.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="verification-badges">
+                            <div class="verification-badge">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>OTP via SMS</span>
+                            </div>
+                            <div class="verification-badge">
+                                <i class="fas fa-envelope"></i>
+                                <span>Email Verification</span>
+                            </div>
+                            <div class="verification-badge verified">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Government-Grade Encryption</span>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevStep4">
+                                <i class="fas fa-arrow-left"></i>
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStep4">
+                                Continue to Document Upload
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 5: Document Upload -->
+                <div class="form-step" id="step5">
+                    <div class="step-header">
+                        <h2>Document Upload</h2>
+                        <p>Upload required verification documents (PDF, JPG, PNG up to 5MB each)</p>
+                    </div>
+
+                    <form class="registration-form" id="documentForm">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label class="form-label">
+                                    Appointment/Confirmation Letter <span class="required">*</span>
+                                    <span class="form-helper">Scanned copy of your appointment letter</span>
+                                </label>
+                                <div class="file-upload" id="appointmentUpload">
+                                    <div class="file-upload-icon">
+                                        <i class="fas fa-file-contract"></i>
+                                    </div>
+                                    <div class="file-upload-text">
+                                        <h4>Click to upload Appointment Letter</h4>
+                                        <p>or drag and drop PDF or image file</p>
+                                        <p><small>Maximum file size: 5MB</small></p>
+                                    </div>
+                                    <input type="file" id="appointmentFile" name="appointmentFile" 
+                                           accept=".pdf,.jpg,.jpeg,.png" hidden required>
+                                </div>
+                                <div class="file-preview" id="appointmentPreview"></div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="form-label">
+                                    Staff ID Card <span class="required">*</span>
+                                    <span class="form-helper">Front and back of your staff ID card</span>
+                                </label>
+                                <div class="file-upload" id="idCardUpload">
+                                    <div class="file-upload-icon">
+                                        <i class="fas fa-id-card"></i>
+                                    </div>
+                                    <div class="file-upload-text">
+                                        <h4>Click to upload Staff ID Card</h4>
+                                        <p>or drag and drop image files (can upload multiple)</p>
+                                        <p><small>Maximum 2 files, 5MB each</small></p>
+                                    </div>
+                                    <input type="file" id="idCardFile" name="idCardFile" 
+                                           accept=".jpg,.jpeg,.png" hidden multiple required>
+                                </div>
+                                <div class="file-preview" id="idCardPreview"></div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="form-label">
+                                    Recent Passport Photograph
+                                    <span class="form-helper">Recent passport photo with white background</span>
+                                </label>
+                                <div class="file-upload" id="passportUpload">
+                                    <div class="file-upload-icon">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="file-upload-text">
+                                        <h4>Click to upload Passport Photograph</h4>
+                                        <p>or drag and drop image file</p>
+                                        <p><small>JPG or PNG, maximum 2MB</small></p>
+                                    </div>
+                                    <input type="file" id="passportFile" name="passportFile" 
+                                           accept=".jpg,.jpeg,.png" hidden>
+                                </div>
+                                <div class="file-preview" id="passportPreview"></div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="form-label">
+                                    Additional Documents (Optional)
+                                    <span class="form-helper">Promotion letters, certificates, etc.</span>
+                                </label>
+                                <div class="file-upload" id="additionalUpload">
+                                    <div class="file-upload-icon">
+                                        <i class="fas fa-folder-plus"></i>
+                                    </div>
+                                    <div class="file-upload-text">
+                                        <h4>Click to upload Additional Documents</h4>
+                                        <p>Multiple files allowed (ZIP for multiple documents)</p>
+                                        <p><small>Maximum file size: 10MB</small></p>
+                                    </div>
+                                    <input type="file" id="additionalFile" name="additionalFile" 
+                                           accept=".pdf,.jpg,.jpeg,.png,.zip" hidden multiple>
+                                </div>
+                                <div class="file-preview" id="additionalPreview"></div>
+                            </div>
+                        </div>
+
+                        <div class="verification-badges">
+                            <div class="verification-badge verified">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Documents Encrypted</span>
+                            </div>
+                            <div class="verification-badge verified">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Secure Upload</span>
+                            </div>
+                            <div class="verification-badge">
+                                <i class="fas fa-user-shield"></i>
+                                <span>GDPR/NDPR Compliant</span>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevStep5">
+                                <i class="fas fa-arrow-left"></i>
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStep5">
+                                Review & Submit
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 6: Review & Submit -->
+                <div class="form-step" id="step6">
+                    <div class="step-header">
+                        <h2>Review & Submit</h2>
+                        <p>Review your information before final submission to the government database</p>
+                    </div>
+
+                    <div class="review-section">
+                        <div class="review-card ministry-card">
+                            <h3><i class="fas fa-user"></i> Personal Information</h3>
+                            <div id="reviewPersonalInfo">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+
+                        <div class="review-card ministry-card">
+                            <h3><i class="fas fa-briefcase"></i> Employment Details</h3>
+                            <div id="reviewEmploymentInfo">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+
+                        <div class="review-card ministry-card">
+                            <h3><i class="fas fa-laptop-code"></i> Digital Skills Profile</h3>
+                            <div id="reviewSkillsInfo">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+
+                        <div class="review-card ministry-card">
+                            <h3><i class="fas fa-file-contract"></i> Documents</h3>
+                            <div id="reviewDocumentsInfo">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+
+                        <div class="form-grid" style="margin-top: 2rem;">
+                            <div class="form-group full-width">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="terms" name="terms" required>
+                                    <label for="terms">
+                                        I agree to the <a href="terms.html" target="_blank">Civil Service Terms of Service</a> and 
+                                        <a href="privacy.html" target="_blank">Government Data Protection Policy</a>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="consent" name="consent" required>
+                                    <label for="consent">
+                                        I consent to the processing of my personal data for civil service administration,
+                                        digital platform access, and government service delivery
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="declaration" name="declaration" required>
+                                    <label for="declaration">
+                                        I declare that all information provided is true and accurate to the best of my knowledge
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="updates" name="updates" checked>
+                                    <label for="updates">
+                                        I wish to receive updates on training, promotions, and important government announcements
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="verification-badges">
+                        <div class="verification-badge">
+                            <i class="fas fa-clock"></i>
+                            <span>Verification: 24-48 hours</span>
+                        </div>
+                        <div class="verification-badge">
+                            <i class="fas fa-database"></i>
+                            <span>Integrated with HR Database</span>
+                        </div>
+                        <div class="verification-badge verified">
+                            <i class="fas fa-user-shield"></i>
+                            <span>Official Government Record</span>
+                        </div>
+                    </div>
+
+                    <div class="form-navigation">
+                        <button type="button" class="btn btn-secondary" id="prevStep6">
+                            <i class="fas fa-arrow-left"></i>
+                            Back
+                        </button>
+                        <button type="button" class="btn btn-primary" id="submitRegistration">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit to Government Database
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="registration-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://zamfara.gov.ng" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> State Portal
+                </a>
+                <a href="civil-service-handbook.html">
+                    <i class="fas fa-book"></i> Service Rules
+                </a>
+                <a href="training-catalog.html">
+                    <i class="fas fa-graduation-cap"></i> Training Catalog
+                </a>
+                <a href="faq-civil-service.html">
+                    <i class="fas fa-question-circle"></i> FAQs
+                </a>
+                <a href="contact-hr.html">
+                    <i class="fas fa-headset"></i> HR Support
+                </a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Zamfara State Civil Service Commission - Digital Transformation Unit</p>
+                <p style="font-size: 0.75rem; margin-top: 0.5rem;">
+                    In partnership with: ZITDA • Office of the Head of Service • Ministry of Finance
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Processing your registration with government systems...</div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Registration Submitted Successfully!</h2>
+            <p>
+                Your registration has been submitted to the Zamfara State Civil Service database.
+                Your information will be verified within 24-48 hours.
+            </p>
+            <p><strong>Your Government Digital ID:</strong> <span id="govDigitalId">Loading...</span></p>
+            <div class="modal-actions">
+                <button class="btn btn-primary" onclick="window.location.href='civil-servant-dashboard.html'">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Go to Dashboard
+                </button>
+                <button class="btn btn-outline" onclick="printConfirmation()">
+                    <i class="fas fa-print"></i>
+                    Print Confirmation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/registration-framework.js"></script>
+    <script>
+        // Civil Servant Specific JavaScript
+        const civilServantConfig = {
+            type: 'civil-servant',
+            storageKey: 'zamfaraCivilServantDraft',
+            steps: 6,
+            ministryFields: {
+                'education': {
+                    title: 'Ministry of Education - Additional Information',
+                    fields: `
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">School/Institution</label>
+                                <input type="text" class="form-control" name="school" placeholder="School name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Teaching Subject</label>
+                                <input type="text" class="form-control" name="subject" placeholder="e.g., Mathematics">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">TRCN Number</label>
+                                <input type="text" class="form-control" name="trcn" placeholder="TRCN registration">
+                            </div>
+                        </div>
+                    `
+                },
+                'health': {
+                    title: 'Ministry of Health - Additional Information',
+                    fields: `
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Health Facility</label>
+                                <input type="text" class="form-control" name="facility" placeholder="Hospital/Clinic">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Professional License</label>
+                                <input type="text" class="form-control" name="license" placeholder="License number">
+                            </div>
+                        </div>
+                    `
+                },
+                'zitda': {
+                    title: 'ZITDA - Additional Information',
+                    fields: `
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Technical Certifications</label>
+                                <textarea class="form-control" name="certifications" placeholder="List certifications" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">ICT Projects Experience</label>
+                                <textarea class="form-control" name="projects" placeholder="Describe projects" rows="3"></textarea>
+                            </div>
+                        </div>
+                    `
+                }
+            },
+            gradeLevels: {
+                '01-03': { class: 'grade-entry', label: 'Entry Level' },
+                '04-06': { class: 'grade-intermediate', label: 'Intermediate' },
+                '07-10': { class: 'grade-senior', label: 'Senior Level' },
+                '12-14': { class: 'grade-management', label: 'Management' },
+                '15-17': { class: 'grade-directorate', label: 'Directorate' }
+            }
+        };
+
+        // Initialize Civil Servant Registration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize framework
+            RegistrationFramework.init(civilServantConfig);
+            
+            // Generate username from name
+            generateGovernmentUsername();
+            
+            // Set up ministry-specific fields
+            document.getElementById('ministry').addEventListener('change', loadMinistrySpecificFields);
+            
+            // Set up grade level badge
+            document.getElementById('gradeLevel').addEventListener('change', updateGradeBadge);
+            
+            // Set up skills assessment sliders
+            setupSkillsAssessment();
+            
+            // Auto-fill demo data for presentation
+            if (window.location.search.includes('demo=true')) {
+                autoFillGovernmentData();
+            }
+            
+            // Load Hausa translations if selected
+            if (localStorage.getItem('preferredLanguage') === 'ha') {
+                loadHausaTranslations();
+            }
+        });
+
+        // Generate government username
+        function generateGovernmentUsername() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const staffId = document.getElementById('staffId').value;
+            
+            if (firstName && lastName && staffId) {
+                const username = `zam${firstName.charAt(0).toLowerCase()}${lastName.toLowerCase().substring(0, 3)}${staffId.substring(staffId.length - 4)}`.toLowerCase();
+                document.getElementById('username').value = username;
+            }
+        }
+
+        // Load ministry-specific fields
+        function loadMinistrySpecificFields() {
+            const ministry = document.getElementById('ministry').value;
+            const fieldsDiv = document.getElementById('ministrySpecificFields');
+            const titleSpan = document.getElementById('ministryTitle');
+            const contentDiv = document.getElementById('ministryFieldsContent');
+            
+            if (civilServantConfig.ministryFields[ministry]) {
+                fieldsDiv.style.display = 'block';
+                titleSpan.textContent = civilServantConfig.ministryFields[ministry].title;
+                contentDiv.innerHTML = civilServantConfig.ministryFields[ministry].fields;
+            } else {
+                fieldsDiv.style.display = 'none';
+            }
+        }
+
+        // Update grade level badge
+        function updateGradeBadge() {
+            const grade = document.getElementById('gradeLevel').value;
+            const badgeDiv = document.getElementById('gradeBadge');
+            
+            if (grade) {
+                let badgeClass = '';
+                let badgeLabel = '';
+                
+                if (grade >= '01' && grade <= '03') {
+                    badgeClass = 'grade-entry';
+                    badgeLabel = 'Entry Level';
+                } else if (grade >= '04' && grade <= '06') {
+                    badgeClass = 'grade-intermediate';
+                    badgeLabel = 'Intermediate Level';
+                } else if (grade >= '07' && grade <= '10') {
+                    badgeClass = 'grade-senior';
+                    badgeLabel = 'Senior Level';
+                } else if (grade >= '12' && grade <= '14') {
+                    badgeClass = 'grade-management';
+                    badgeLabel = 'Management Level';
+                } else if (grade >= '15' && grade <= '17') {
+                    badgeClass = 'grade-directorate';
+                    badgeLabel = 'Directorate Level';
+                }
+                
+                badgeDiv.className = `grade-level-badge ${badgeClass}`;
+                badgeDiv.innerHTML = `<i class="fas fa-level-up-alt"></i> ${badgeLabel} (GL ${grade})`;
+                badgeDiv.style.display = 'flex';
+            } else {
+                badgeDiv.style.display = 'none';
+            }
+        }
+
+        // Setup skills assessment
+        function setupSkillsAssessment() {
+            const skillItems = document.querySelectorAll('.skill-item');
+            
+            skillItems.forEach(item => {
+                const skillFill = item.querySelector('.skill-fill');
+                const skillPercent = item.querySelector('.skill-percent');
+                const skillName = item.querySelector('.skill-name').textContent.toLowerCase();
+                
+                // Add rating buttons
+                const ratingDiv = document.createElement('div');
+                ratingDiv.className = 'skill-rating';
+                ratingDiv.style.display = 'flex';
+                ratingDiv.style.gap = '0.5rem';
+                ratingDiv.style.marginTop = '0.5rem';
+                
+                for (let i = 1; i <= 5; i++) {
+                    const ratingBtn = document.createElement('button');
+                    ratingBtn.type = 'button';
+                    ratingBtn.className = 'rating-btn';
+                    ratingBtn.textContent = i;
+                    ratingBtn.dataset.rating = i;
+                    ratingBtn.style.width = '30px';
+                    ratingBtn.style.height = '30px';
+                    ratingBtn.style.borderRadius = '50%';
+                    ratingBtn.style.border = '2px solid var(--border-color)';
+                    ratingBtn.style.background = 'var(--bg-secondary)';
+                    ratingBtn.style.cursor = 'pointer';
+                    ratingBtn.style.transition = 'var(--transition-fast)';
+                    
+                    ratingBtn.addEventListener('click', function() {
+                        const rating = parseInt(this.dataset.rating);
+                        const percent = (rating / 5) * 100;
+                        
+                        // Update skill meter
+                        skillFill.style.width = `${percent}%`;
+                        skillPercent.textContent = `${percent}%`;
+                        
+                        // Update button states
+                        ratingDiv.querySelectorAll('.rating-btn').forEach(btn => {
+                            const btnRating = parseInt(btn.dataset.rating);
+                            if (btnRating <= rating) {
+                                btn.style.background = 'var(--gradient-tech)';
+                                btn.style.color = 'white';
+                                btn.style.borderColor = 'var(--professional-blue)';
+                            } else {
+                                btn.style.background = 'var(--bg-secondary)';
+                                btn.style.color = 'var(--text-secondary)';
+                                btn.style.borderColor = 'var(--border-color)';
+                            }
+                        });
+                    });
+                    
+                    ratingDiv.appendChild(ratingBtn);
+                }
+                
+                item.appendChild(ratingDiv);
+            });
+        }
+
+        // Password strength checker
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthFill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+            
+            let strength = 0;
+            let color = '#ef4444';
+            let text = 'Very Weak';
+            
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            
+            switch(strength) {
+                case 1:
+                    color = '#f97316';
+                    text = 'Weak';
+                    break;
+                case 2:
+                    color = '#eab308';
+                    text = 'Fair';
+                    break;
+                case 3:
+                    color = '#84cc16';
+                    text = 'Good';
+                    break;
+                case 4:
+                    color = '#10b981';
+                    text = 'Strong';
+                    break;
+            }
+            
+            const percent = (strength / 4) * 100;
+            strengthFill.style.width = `${percent}%`;
+            strengthFill.style.background = color;
+            strengthText.textContent = `Password strength: ${text}`;
+            strengthText.style.color = color;
+        }
+
+        // Check password match
+        function checkPasswordMatch() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const matchText = document.getElementById('passwordMatchText');
+            
+            if (confirmPassword) {
+                if (password === confirmPassword) {
+                    matchText.textContent = 'Passwords match';
+                    matchText.style.color = '#10b981';
+                } else {
+                    matchText.textContent = 'Passwords do not match';
+                    matchText.style.color = '#ef4444';
+                }
+            }
+        }
+
+        // Generate review data
+        function generateReview() {
+            const formData = RegistrationFramework.getFormData();
+            
+            // Personal Info
+            const personalHtml = `
+                <p><strong>Full Name:</strong> ${formData.firstName} ${formData.lastName}</p>
+                <p><strong>Staff ID:</strong> ${formData.staffId}</p>
+                <p><strong>Ministry:</strong> ${document.getElementById('ministry').options[document.getElementById('ministry').selectedIndex].text}</p>
+            `;
+            document.getElementById('reviewPersonalInfo').innerHTML = personalHtml;
+            
+            // Employment Info
+            const employmentHtml = `
+                <p><strong>Grade Level:</strong> GL ${formData.gradeLevel}</p>
+                <p><strong>Cadre:</strong> ${document.getElementById('cadre').options[document.getElementById('cadre').selectedIndex].text}</p>
+                <p><strong>Station:</strong> ${formData.station}</p>
+            `;
+            document.getElementById('reviewEmploymentInfo').innerHTML = employmentHtml;
+            
+            // Generate government digital ID
+            const govId = `ZAM-GOV-${formData.staffId.replace(/\//g, '-')}-${Date.now().toString().slice(-6)}`;
+            document.getElementById('govDigitalId').textContent = govId;
+        }
+
+        // Submit registration
+        function submitRegistration() {
+            if (RegistrationFramework.validateStep(6)) {
+                generateReview();
+                
+                // Show loading
+                RegistrationFramework.showLoading(true);
+                
+                // Simulate API call to government database
+                setTimeout(() => {
+                    RegistrationFramework.showLoading(false);
+                    document.getElementById('successModal').classList.add('active');
+                    
+                    // Clear draft
+                    localStorage.removeItem(civilServantConfig.storageKey);
+                    
+                    // Track registration in analytics
+                    trackGovernmentRegistration();
+                }, 3000);
+            }
+        }
+
+        // Auto-fill government data for demo
+        function autoFillGovernmentData() {
+            document.getElementById('firstName').value = 'Ahmad';
+            document.getElementById('lastName').value = 'Sani';
+            document.getElementById('dateOfBirth').value = '1985-05-15';
+            document.getElementById('genderMale').checked = true;
+            document.getElementById('phone').value = '08031234567';
+            document.getElementById('email').value = 'ahmad.sani@zamfara.gov.ng';
+            document.getElementById('residentialAddress').value = '123 Civil Service Quarters, Gusau';
+            document.getElementById('lga').value = 'gusau';
+            
+            document.getElementById('ministry').value = 'education';
+            loadMinistrySpecificFields();
+            document.getElementById('gradeLevel').value = '07';
+            updateGradeBadge();
+            document.getElementById('cadre').value = 'education-officer';
+            document.getElementById('staffId').value = 'ZAM/EDU/2010/0456';
+            document.getElementById('firstAppointment').value = '2010-03-15';
+            document.getElementById('station').value = 'Ministry of Education Headquarters';
+            
+            generateGovernmentUsername();
+        }
+
+        // Load Hausa translations
+        function loadHausaTranslations() {
+            const translations = {
+                'Personal Information': 'Bayanin Sirri',
+                'Continue to Employment Details': 'Ci gaba zuwa Bayanin Aiki',
+                'Submit to Government Database': 'Aika zuwa Bayanan Gwamnati'
+            };
+            
+            // Apply translations to key elements
+            Object.keys(translations).forEach(key => {
+                const elements = document.querySelectorAll(`:contains("${key}")`);
+                elements.forEach(el => {
+                    if (el.textContent.includes(key)) {
+                        el.textContent = el.textContent.replace(key, translations[key]);
+                    }
+                });
+            });
+        }
+
+        // Track registration in analytics
+        function trackGovernmentRegistration() {
+            const formData = RegistrationFramework.getFormData();
+            const analyticsData = {
+                event: 'civil_servant_registration_complete',
+                ministry: formData.ministry,
+                gradeLevel: formData.gradeLevel,
+                timestamp: new Date().toISOString()
+            };
+            
+            console.log('Registration Analytics:', analyticsData);
+            // In production, send to analytics endpoint
+        }
+
+        // Print confirmation
+        function printConfirmation() {
+            const printContent = `
+                <div style="padding: 2rem; font-family: Arial, sans-serif;">
+                    <h1 style="color: #006837;">Zamfara State Government</h1>
+                    <h2>Civil Servant Registration Confirmation</h2>
+                    <hr>
+                    <p><strong>Registration Date:</strong> ${new Date().toLocaleDateString()}</p>
+                    <p><strong>Government Digital ID:</strong> ${document.getElementById('govDigitalId').textContent}</p>
+                    <p><strong>Status:</strong> Pending Verification</p>
+                    <p><strong>Verification Timeline:</strong> 24-48 hours</p>
+                    <hr>
+                    <p style="margin-top: 2rem; font-size: 0.875rem;">
+                        This is a computer-generated confirmation. Please keep this for your records.
+                    </p>
+                </div>
+            `;
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        // Service Worker Registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw-civil-servant.js')
+                    .then(registration => {
+                        console.log('Service Worker registered for civil servants:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Offline capability check
+        window.addEventListener('online', function() {
+            RegistrationFramework.showNotification('Back online. Syncing data...', 'info');
+            // Sync any pending data
+        });
+
+        window.addEventListener('offline', function() {
+            RegistrationFramework.showNotification('You are offline. Data will sync when back online.', 'warning');
+        });
+    </script>
+</body>
+</html>

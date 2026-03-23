@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZamLearn Student Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #7c3aed;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --gray-color: #94a3b8;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark-color);
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 25px 20px;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo i {
+            font-size: 28px;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .user-info h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .menu-item i {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h2 {
+            font-size: 28px;
+            color: var(--dark-color);
+        }
+
+        .date-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: white;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .stat-info h3 {
+            font-size: 14px;
+            color: var(--gray-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-info .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .feature-desc {
+            color: var(--gray-color);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .feature-progress {
+            margin-top: 15px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        .exam-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .exam-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            border-left: 5px solid;
+            transition: transform 0.3s ease;
+        }
+
+        .exam-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .exam-card.jamb {
+            border-left-color: var(--primary-color);
+        }
+
+        .exam-card.waec {
+            border-left-color: var(--warning-color);
+        }
+
+        .exam-card.neco {
+            border-left-color: var(--success-color);
+        }
+
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .exam-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .exam-stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .exam-stat {
+            text-align: center;
+        }
+
+        .exam-stat .value {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .exam-stat .label {
+            font-size: 12px;
+            color: var(--gray-color);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #0da271;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-primary {
+            background-color: #dbeafe;
+            color: var(--primary-color);
+        }
+
+        .badge-success {
+            background-color: #d1fae5;
+            color: var(--success-color);
+        }
+
+        .badge-warning {
+            background-color: #fef3c7;
+            color: var(--warning-color);
+        }
+
+        .lab-simulations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .lab-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .lab-card:hover {
+            transform: scale(1.05);
+        }
+
+        .lab-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .lab-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .avatar-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+
+        .avatar-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .avatar-items {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .avatar-item {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f1f5f9;
+            font-size: 18px;
+        }
+
+        .avatar-item.unlocked {
+            background-color: #dbeafe;
+            color: var(--primary-color);
+        }
+
+        .avatar-item.locked {
+            background-color: #e2e8f0;
+            color: var(--gray-color);
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid, .features-grid, .exam-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h1>ZamLearn</h1>
+            </div>
+            
+            <div class="user-profile">
+                <div class="avatar">AS</div>
+                <div class="user-info">
+                    <h3>Aisha Suleiman</h3>
+                    <p>SSS 3 Student</p>
+                    <p>Government Girls College, Gusau</p>
+                </div>
+            </div>
+            
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-book-open"></i>
+                    <span>My Courses</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Exams</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-flask"></i>
+                    <span>Lab Simulations</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-keyboard"></i>
+                    <span>Typing Tutor</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Learning Games</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Progress Analytics</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Career Guidance</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-trophy"></i>
+                    <span>Achievements</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <h2>Student Dashboard</h2>
+                <div class="date-display">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span id="current-date">Loading...</span>
+                </div>
+            </div>
+            
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: var(--primary-color);">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Study Time This Week</h3>
+                        <div class="value">14h 30m</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: var(--success-color);">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Modules Completed</h3>
+                        <div class="value">24/40</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: var(--warning-color);">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Current Rank</h3>
+                        <div class="value">#3 in School</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: var(--secondary-color);">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Learning Points</h3>
+                        <div class="value">1,850</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Digital Literacy Progress -->
+            <h3 class="section-title">
+                <i class="fas fa-laptop-code"></i>
+                Digital Literacy Journey
+            </h3>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon" style="background-color: var(--primary-color);">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <div class="feature-title">Computer Basics</div>
+                    </div>
+                    <p class="feature-desc">Master fundamental computer operations, file management, and system navigation.</p>
+                    <div class="feature-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%; background-color: var(--success-color);"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>Completed</span>
+                            <span>100%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon" style="background-color: var(--success-color);">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="feature-title">Internet Safety</div>
+                    </div>
+                    <p class="feature-desc">Learn to protect yourself online, recognize scams, and practice digital citizenship.</p>
+                    <div class="feature-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 80%; background-color: var(--success-color);"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>In Progress</span>
+                            <span>80%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon" style="background-color: var(--warning-color);">
+                            <i class="fas fa-file-excel"></i>
+                        </div>
+                        <div class="feature-title">Office Software</div>
+                    </div>
+                    <p class="feature-desc">Master Word, Excel, and PowerPoint for academic and professional use.</p>
+                    <div class="feature-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%; background-color: var(--warning-color);"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>In Progress</span>
+                            <span>60%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Exam Practice Section -->
+            <h3 class="section-title">
+                <i class="fas fa-file-alt"></i>
+                Exam Practice Center
+            </h3>
+            
+            <div class="exam-cards">
+                <div class="exam-card jamb">
+                    <div class="exam-header">
+                        <div class="exam-title">JAMB CBT Simulator</div>
+                        <span class="badge badge-primary">Live Mock</span>
+                    </div>
+                    <p>Practice with real JAMB interface and past questions (2010-2026). Adaptive difficulty based on your performance.</p>
+                    <div class="exam-stats">
+                        <div class="exam-stat">
+                            <div class="value">78%</div>
+                            <div class="label">Average Score</div>
+                        </div>
+                        <div class="exam-stat">
+                            <div class="value">12</div>
+                            <div class="label">Tests Taken</div>
+                        </div>
+                        <div class="exam-stat">
+                            <div class="value">#42</div>
+                            <div class="label">State Rank</div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-play"></i>
+                            Start Practice
+                        </button>
+                        <span class="badge badge-success">Recommend: Mathematics</span>
+                    </div>
+                </div>
+                
+                <div class="exam-card waec">
+                    <div class="exam-header">
+                        <div class="exam-title">WAEC Practice Platform</div>
+                        <span class="badge badge-warning">New</span>
+                    </div>
+                    <p>Subject-specific question banks with AI essay grading. Practical exam simulations for sciences.</p>
+                    <div class="exam-stats">
+                        <div class="exam-stat">
+                            <div class="value">85%</div>
+                            <div class="label">English Score</div>
+                        </div>
+                        <div class="exam-stat">
+                            <div class="value">72%</div>
+                            <div class="label">Mathematics</div>
+                        </div>
+                        <div class="exam-stat">
+                            <div class="value">3</div>
+                            <div class="label">Essays Graded</div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-outline">
+                            <i class="fas fa-eye"></i>
+                            View Results
+                        </button>
+                        <span class="badge badge-primary">Physics Lab Available</span>
+                    </div>
+                </div>
+                
+                <div class="exam-card neco">
+                    <div class="exam-header">
+                        <div class="exam-title">NECO Mock Exams</div>
+                        <span class="badge badge-success">Updated</span>
+                    </div>
+                    <p>Full NECO exam simulations with instant scoring and detailed explanations for every answer.</p>
+                    <div class="exam-stats">
+                        <div class="exam-stat">
+                            <div class="value">91%</div>
+                            <div class="label">Biology</div>
+                        </div>
+                        <div class="exam-stat">
+                            <div class="value">67%</div>
+                            <div class="label">Chemistry</div>
+                        </div>
+                        <div class="exam-stat">
+                            <div class="value">5</div>
+                            <div class="label">Exams Completed</div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-vial"></i>
+                            Start Chemistry Lab
+                        </button>
+                        <span class="badge badge-warning">Improve Chemistry</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lab Simulations -->
+            <h3 class="section-title">
+                <i class="fas fa-flask"></i>
+                Virtual Lab Simulations
+            </h3>
+            
+            <div class="lab-simulations">
+                <div class="lab-card">
+                    <div class="lab-icon" style="background-color: #3b82f6;">
+                        <i class="fas fa-vial"></i>
+                    </div>
+                    <div class="lab-title">Chemistry Lab</div>
+                    <p>Virtual experiments with reactive elements</p>
+                    <button class="btn btn-primary" style="margin-top: 10px; padding: 8px 16px; font-size: 14px;">
+                        Enter Lab
+                    </button>
+                </div>
+                
+                <div class="lab-card">
+                    <div class="lab-icon" style="background-color: #10b981;">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="lab-title">Biology Lab</div>
+                    <p>Microscope simulations & dissections</p>
+                    <button class="btn btn-primary" style="margin-top: 10px; padding: 8px 16px; font-size: 14px;">
+                        Enter Lab
+                    </button>
+                </div>
+                
+                <div class="lab-card">
+                    <div class="lab-icon" style="background-color: #8b5cf6;">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <div class="lab-title">Physics Lab</div>
+                    <p>Mechanics & electricity experiments</p>
+                    <button class="btn btn-primary" style="margin-top: 10px; padding: 8px 16px; font-size: 14px;">
+                        Enter Lab
+                    </button>
+                </div>
+                
+                <div class="lab-card">
+                    <div class="lab-icon" style="background-color: #f59e0b;">
+                        <i class="fas fa-keyboard"></i>
+                    </div>
+                    <div class="lab-title">Typing Lab</div>
+                    <p>Mavis Beacon-style typing tutor</p>
+                    <button class="btn btn-primary" style="margin-top: 10px; padding: 8px 16px; font-size: 14px;">
+                        Start Practice
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Gamification & Avatar -->
+            <h3 class="section-title">
+                <i class="fas fa-gamepad"></i>
+                Gaming & Achievements
+            </h3>
+            
+            <div class="avatar-container">
+                <div class="avatar-large">AS</div>
+                <div style="flex: 1;">
+                    <h3>Digital Warrior: Level 7</h3>
+                    <p>You've earned 15 badges and unlocked 8 avatar items this month!</p>
+                    <div class="avatar-items">
+                        <div class="avatar-item unlocked">
+                            <i class="fas fa-chess-queen"></i>
+                        </div>
+                        <div class="avatar-item unlocked">
+                            <i class="fas fa-glasses"></i>
+                        </div>
+                        <div class="avatar-item unlocked">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="avatar-item locked">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="avatar-item locked">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="avatar-item unlocked">
+                            <i class="fas fa-hat-wizard"></i>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-success">
+                        <i class="fas fa-store"></i>
+                        Avatar Store
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div style="display: flex; gap: 15px; margin-top: 30px;">
+                <button class="btn btn-primary">
+                    <i class="fas fa-video"></i>
+                    Join Live Session
+                </button>
+                <button class="btn btn-outline">
+                    <i class="fas fa-download"></i>
+                    Download Offline Content
+                </button>
+                <button class="btn btn-outline">
+                    <i class="fas fa-chart-bar"></i>
+                    View Detailed Analytics
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', options);
+        
+        // Interactive elements
+        document.querySelectorAll('.feature-card, .exam-card, .lab-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (!e.target.closest('button')) {
+                    const title = this.querySelector('.feature-title, .exam-title, .lab-title')?.textContent;
+                    if (title) {
+                        alert(`Opening: ${title}`);
+                    }
+                }
+            });
+        });
+        
+        // Simulate progress updates
+        function simulateProgress() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const currentWidth = parseInt(bar.style.width);
+                if (currentWidth < 100) {
+                    const newWidth = Math.min(currentWidth + Math.random() * 5, 100);
+                    bar.style.width = `${newWidth}%`;
+                    
+                    // Update percentage text
+                    const progressText = bar.closest('.feature-progress').querySelector('.progress-text span:last-child');
+                    if (progressText) {
+                        progressText.textContent = `${Math.round(newWidth)}%`;
+                    }
+                }
+            });
+        }
+        
+        // Update stats every 30 seconds
+        setInterval(() => {
+            const studyTime = document.querySelector('.stat-card:nth-child(1) .value');
+            if (studyTime) {
+                const currentTime = studyTime.textContent;
+                const [hours, minutes] = currentTime.split('h ');
+                const newMinutes = parseInt(minutes) + 1;
+                if (newMinutes >= 60) {
+                    const newHours = parseInt(hours) + 1;
+                    studyTime.textContent = `${newHours}h 0m`;
+                } else {
+                    studyTime.textContent = `${hours}h ${newMinutes}m`;
+                }
+            }
+            
+            // Update learning points
+            const pointsElement = document.querySelector('.stat-card:nth-child(4) .value');
+            if (pointsElement) {
+                const currentPoints = parseInt(pointsElement.textContent.replace(',', ''));
+                pointsElement.textContent = (currentPoints + 10).toLocaleString();
+            }
+            
+            simulateProgress();
+        }, 30000);
+        
+        // Initialize tooltips
+        document.querySelectorAll('.badge').forEach(badge => {
+            badge.title = badge.textContent;
+        });
+        
+        // Menu item activation
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                const menuText = this.querySelector('span').textContent;
+                document.querySelector('.header h2').textContent = `${menuText} Dashboard`;
+            });
+        });
+        
+        // Start typing test button
+        document.querySelector('.btn-primary').addEventListener('click', function(e) {
+            if (this.innerHTML.includes('Start Practice')) {
+                alert('Starting JAMB CBT Simulation...\n\nInstructions:\n1. You have 2 hours for 4 subjects\n2. Answer all questions\n3. Use "Next" button to navigate\n4. Click "Submit" when done\n\nGood luck!');
+            }
+        });
+    </script>
+</body>
+</html>

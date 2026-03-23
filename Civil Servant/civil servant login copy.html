@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="z7x9w2v4u6s3p1o5k8j0h2g4f6d8s0a2">
+    <meta name="description" content="Login to Zamfara Digital Platform for Civil Servants - Access e-governance tools, digital training, and government services">
+    <meta name="keywords" content="Zamfara, Civil Servant, Login, e-Governance, Government Portal, Digital Platform">
+    <title>Civil Servant Login | Zamfara Digital Platform</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#006837">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Zamfara Government Theme */
+            --primary-green: #006837;
+            --secondary-green: #00A859;
+            --accent-green: #4CD964;
+            --dark-green: #004225;
+            --gold-accent: #FFD700;
+            --professional-blue: #1a5f7a;
+            --government-purple: #4a1e5c;
+            
+            /* UI Colors */
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.1);
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Skip to Main Content */
+        .skip-to-main {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            background: var(--primary-green);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            z-index: 1000;
+            transition: var(--transition-fast);
+        }
+
+        .skip-to-main:focus {
+            top: 20px;
+            left: 20px;
+            outline: 3px solid var(--gold-accent);
+            outline-offset: 2px;
+        }
+
+        /* Header */
+        .login-header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-green), var(--professional-blue));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .logo-text h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-green), var(--professional-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.125rem;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .header-back {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+            border: 2px solid transparent;
+        }
+
+        .header-back:hover {
+            color: var(--primary-green);
+            background: rgba(0, 104, 55, 0.05);
+            transform: translateX(-3px);
+        }
+
+        .header-back:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(0, 104, 55, 0.2);
+        }
+
+        /* Main Content */
+        .login-container {
+            display: flex;
+            flex: 1;
+            min-height: calc(100vh - 82px); /* Subtract header height */
+        }
+
+        /* Left Panel - Welcome */
+        .welcome-panel {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-green), var(--professional-blue));
+            color: white;
+            padding: 4rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+            max-width: 500px;
+        }
+
+        .welcome-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .welcome-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 3rem;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+        }
+
+        .features-list i {
+            color: var(--gold-accent);
+            font-size: 1.25rem;
+            margin-top: 0.125rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-text p {
+            opacity: 0.8;
+            font-size: 0.875rem;
+        }
+
+        /* Right Panel - Login Form */
+        .login-panel {
+            flex: 1;
+            background: var(--bg-secondary);
+            padding: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-form-container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .login-header-form {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .login-header-form h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header-form p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Form Styles */
+        .login-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .required {
+            color: var(--danger-color);
+            margin-left: 2px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            padding-right: 45px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(0, 104, 55, 0.1);
+        }
+
+        .form-input.error {
+            border-color: var(--danger-color);
+        }
+
+        .form-input.success {
+            border-color: var(--success-color);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-green);
+        }
+
+        .password-toggle:focus {
+            outline: none;
+            color: var(--primary-green);
+        }
+
+        /* Error Messages */
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: var(--transition-fast);
+        }
+
+        .error-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Form Options */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .remember-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+
+        .remember-checkbox.checked {
+            background: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+
+        .remember-checkbox.checked i {
+            color: white;
+            font-size: 0.75rem;
+        }
+
+        .forgot-password {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-fast);
+        }
+
+        .forgot-password:hover {
+            color: var(--dark-green);
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 2rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+            min-height: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-green), var(--professional-blue));
+            color: white !important;
+            box-shadow: 0 10px 30px rgba(0, 104, 55, 0.2);
+            border: 2px solid transparent;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 104, 55, 0.3);
+        }
+
+        .btn-primary:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 104, 55, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .btn-loading .btn-text {
+            visibility: hidden;
+        }
+
+        .btn-loading::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Alternative Login */
+        .alternative-login {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .divider span {
+            padding: 0 1rem;
+        }
+
+        .gov-login-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .gov-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .gov-btn:hover {
+            border-color: var(--primary-green);
+            background: rgba(0, 104, 55, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .gov-btn i {
+            font-size: 1.25rem;
+            color: var(--primary-green);
+        }
+
+        /* Registration Link */
+        .registration-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .registration-link a {
+            color: var(--primary-green);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .registration-link a:hover {
+            color: var(--dark-green);
+            text-decoration: underline;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--success-color), var(--accent-green));
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+            max-width: 350px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, var(--danger-color), #f87171);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, var(--warning-color), #fbbf24);
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-normal);
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--primary-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Footer */
+        .login-footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-green);
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .login-container {
+                flex-direction: column;
+            }
+            
+            .welcome-panel {
+                padding: 3rem 2rem;
+            }
+            
+            .login-panel {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .login-header {
+                padding: 1rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .logo-text h2 {
+                font-size: 1rem;
+            }
+            
+            .welcome-panel {
+                padding: 2rem 1.5rem;
+            }
+            
+            .welcome-title {
+                font-size: 1.75rem;
+            }
+            
+            .login-panel {
+                padding: 1.5rem;
+            }
+            
+            .login-form-container {
+                max-width: 100%;
+            }
+            
+            .form-options {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-title {
+                font-size: 1.5rem;
+            }
+            
+            .welcome-subtitle {
+                font-size: 1rem;
+            }
+            
+            .login-header-form h2 {
+                font-size: 1.5rem;
+            }
+            
+            .gov-login-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #0f172a;
+                --bg-secondary: #1e293b;
+                --text-primary: #f1f5f9;
+                --text-secondary: #cbd5e1;
+                --text-muted: #94a3b8;
+                --border-color: #334155;
+            }
+            
+            .login-header,
+            .login-panel,
+            .login-footer {
+                background: var(--bg-secondary);
+            }
+            
+            .form-input {
+                background: var(--bg-primary);
+                color: var(--text-primary);
+            }
+            
+            .btn-secondary {
+                background: var(--bg-primary);
+            }
+            
+            .gov-btn {
+                background: var(--bg-primary);
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .login-header,
+            .welcome-panel,
+            .footer-links,
+            .btn,
+            .notification {
+                display: none !important;
+            }
+            
+            .login-panel {
+                padding: 0;
+                background: white !important;
+            }
+            
+            .login-form-container {
+                max-width: 100%;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- Accessibility: Skip to Main Content -->
+    <a href="#login-form" class="skip-to-main sr-only-focusable">
+        Skip to login form
+    </a>
+
+    <!-- Header -->
+    <header class="login-header" role="banner">
+        <a href="index.html" class="header-logo" aria-label="Zamfara Digital Platform Home">
+            <div class="logo-icon" aria-hidden="true">
+                <i class="fas fa-university"></i>
+            </div>
+            <div class="logo-text">
+                <h2>Zamfara Digital Platform</h2>
+                <p>Government Employee Portal</p>
+            </div>
+        </a>
+        
+        <a href="user-selection.html" class="header-back" aria-label="Go back to profile selection">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            Back to Profiles
+        </a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="login-container" role="main">
+        <!-- Welcome Panel -->
+        <section class="welcome-panel" aria-labelledby="welcome-title">
+            <div class="welcome-content">
+                <div class="welcome-badge" role="status">
+                    <i class="fas fa-user-tie" aria-hidden="true"></i>
+                    Civil Servant Portal
+                </div>
+                
+                <h1 id="welcome-title" class="welcome-title">
+                    Welcome Back,<br>
+                    Government Employee
+                </h1>
+                
+                <p class="welcome-subtitle">
+                    Access your personalized dashboard with e-governance tools, digital training modules, 
+                    and essential government services designed to enhance your productivity and career growth.
+                </p>
+                
+                <ul class="features-list" role="list">
+                    <li role="listitem">
+                        <i class="fas fa-lock" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Secure Access</h4>
+                            <p>Multi-factor authentication and encrypted connections for maximum security</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Digital Training</h4>
+                            <p>Access mandatory and optional digital skills training modules</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-chart-line" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Performance Tracking</h4>
+                            <p>Monitor your KPIs, training progress, and career development</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-file-contract" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Government Services</h4>
+                            <p>Access HR services, leave applications, and official documentation</p>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="system-status" role="status" aria-live="polite">
+                    <p><i class="fas fa-check-circle" aria-hidden="true"></i> System Status: Operational</p>
+                    <p><i class="fas fa-users" aria-hidden="true"></i> 8,500+ Civil Servants Active</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Form Panel -->
+        <section class="login-panel" aria-labelledby="login-title">
+            <div class="login-form-container">
+                <div class="login-header-form">
+                    <h2 id="login-title">Sign In to Your Account</h2>
+                    <p>Enter your credentials to access government services</p>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="login-form" novalidate aria-label="Civil servant login form">
+                    <!-- Employee ID -->
+                    <div class="form-group">
+                        <label for="employeeId" class="form-label">
+                            Employee ID / Username
+                            <span class="required" aria-hidden="true">*</span>
+                        </label>
+                        <div class="input-group">
+                            <input type="text" 
+                                   id="employeeId" 
+                                   name="employeeId" 
+                                   class="form-input" 
+                                   placeholder="Enter your employee ID" 
+                                   required
+                                   autocomplete="username"
+                                   aria-required="true"
+                                   aria-describedby="employeeId-error">
+                            <div class="input-icon">
+                                <i class="fas fa-id-card" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div id="employeeId-error" class="error-message" role="alert">
+                            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                            <span>Please enter a valid employee ID</span>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                            Password
+                            <span class="required" aria-hidden="true">*</span>
+                        </label>
+                        <div class="input-group">
+                            <input type="password" 
+                                   id="password" 
+                                   name="password" 
+                                   class="form-input" 
+                                   placeholder="Enter your password" 
+                                   required
+                                   autocomplete="current-password"
+                                   aria-required="true"
+                                   aria-describedby="password-error password-strength">
+                            <button type="button" 
+                                    class="password-toggle" 
+                                    id="togglePassword"
+                                    aria-label="Show password"
+                                    aria-controls="password">
+                                <i class="fas fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div id="password-error" class="error-message" role="alert">
+                            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                            <span>Password is required</span>
+                        </div>
+                        <div id="password-strength" class="sr-only" role="status">
+                            Password strength indicator
+                        </div>
+                    </div>
+
+                    <!-- Form Options -->
+                    <div class="form-options">
+                        <div class="remember-me" id="rememberMe">
+                            <div class="remember-checkbox" role="checkbox" 
+                                 aria-checked="false" 
+                                 tabindex="0"
+                                 aria-label="Remember me">
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                            </div>
+                            <span>Remember me for 30 days</span>
+                        </div>
+                        <a href="forgot-password.html" class="forgot-password">
+                            Forgot Password?
+                        </a>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary" id="loginButton">
+                        <span class="btn-text">
+                            <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                            Sign In
+                        </span>
+                    </button>
+                </form>
+
+                <!-- Alternative Login Options -->
+                <div class="alternative-login">
+                    <div class="divider">
+                        <span>Or sign in with</span>
+                    </div>
+                    
+                    <div class="gov-login-options">
+                        <a href="#" class="gov-btn" aria-label="Sign in with IPPIS">
+                            <i class="fas fa-fingerprint" aria-hidden="true"></i>
+                            <span>IPPIS</span>
+                        </a>
+                        <a href="#" class="gov-btn" aria-label="Sign in with State Payroll">
+                            <i class="fas fa-money-check-alt" aria-hidden="true"></i>
+                            <span>State Payroll System</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Registration Link -->
+                <div class="registration-link">
+                    <p>New to the platform? <a href="registration-civil-servant.html">Register as Civil Servant</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="login-footer" role="contentinfo">
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-of-service.html">Terms of Service</a>
+            <a href="help.html">Help Center</a>
+            <a href="contact.html">Contact Support</a>
+        </div>
+        <p>&copy; 2026 Zamfara State Government - Civil Service Commission. All rights reserved.</p>
+        <p>For official government use only.</p>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" role="alert" aria-live="polite">
+        <div class="loading-spinner" aria-label="Loading"></div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // DOM Elements
+        const loginForm = document.getElementById('login-form');
+        const employeeIdInput = document.getElementById('employeeId');
+        const passwordInput = document.getElementById('password');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const rememberMe = document.getElementById('rememberMe');
+        const rememberCheckbox = rememberMe.querySelector('.remember-checkbox');
+        const loginButton = document.getElementById('loginButton');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+        // Session Manager
+        const sessionManager = {
+            saveCredentials: (employeeId, remember) => {
+                if (remember) {
+                    localStorage.setItem('rememberedEmployeeId', employeeId);
+                    localStorage.setItem('rememberMe', 'true');
+                } else {
+                    localStorage.removeItem('rememberedEmployeeId');
+                    localStorage.removeItem('rememberMe');
+                }
+            },
+            getRememberedCredentials: () => {
+                const remembered = localStorage.getItem('rememberMe') === 'true';
+                const employeeId = localStorage.getItem('rememberedEmployeeId');
+                return { remembered, employeeId };
+            },
+            clearSession: () => {
+                sessionStorage.clear();
+                localStorage.removeItem('rememberedEmployeeId');
+                localStorage.removeItem('rememberMe');
+            }
+        };
+
+        // Initialize form with remembered credentials
+        function initializeForm() {
+            const { remembered, employeeId } = sessionManager.getRememberedCredentials();
+            if (remembered && employeeId) {
+                employeeIdInput.value = employeeId;
+                rememberCheckbox.classList.add('checked');
+                rememberCheckbox.setAttribute('aria-checked', 'true');
+                passwordInput.focus();
+            } else {
+                employeeIdInput.focus();
+            }
+        }
+
+        // Password Visibility Toggle
+        function togglePasswordVisibility() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            const icon = togglePasswordBtn.querySelector('i');
+            const label = type === 'password' ? 'Show password' : 'Hide password';
+            
+            icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+            togglePasswordBtn.setAttribute('aria-label', label);
+        }
+
+        // Remember Me Toggle
+        function toggleRememberMe() {
+            const isChecked = rememberCheckbox.classList.toggle('checked');
+            rememberCheckbox.setAttribute('aria-checked', isChecked.toString());
+        }
+
+        // Form Validation
+        function validateForm() {
+            let isValid = true;
+            const errors = {
+                employeeId: false,
+                password: false
+            };
+
+            // Reset errors
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.classList.remove('show');
+            });
+            document.querySelectorAll('.form-input').forEach(el => {
+                el.classList.remove('error');
+            });
+
+            // Validate Employee ID
+            if (!employeeIdInput.value.trim()) {
+                showError(employeeIdInput, 'employeeId-error', 'Employee ID is required');
+                isValid = false;
+                errors.employeeId = true;
+            } else if (!/^[A-Z0-9]{6,12}$/i.test(employeeIdInput.value.trim())) {
+                showError(employeeIdInput, 'employeeId-error', 'Invalid employee ID format');
+                isValid = false;
+                errors.employeeId = true;
+            }
+
+            // Validate Password
+            if (!passwordInput.value) {
+                showError(passwordInput, 'password-error', 'Password is required');
+                isValid = false;
+                errors.password = true;
+            } else if (passwordInput.value.length < 8) {
+                showError(passwordInput, 'password-error', 'Password must be at least 8 characters');
+                isValid = false;
+                errors.password = true;
+            }
+
+            return { isValid, errors };
+        }
+
+        // Show Error Function
+        function showError(inputElement, errorId, message) {
+            const errorElement = document.getElementById(errorId);
+            errorElement.querySelector('span').textContent = message;
+            errorElement.classList.add('show');
+            inputElement.classList.add('error');
+            inputElement.classList.add('shake');
+            
+            setTimeout(() => {
+                inputElement.classList.remove('shake');
+            }, 500);
+        }
+
+        // Show Loading State
+        function showLoading(show) {
+            if (show) {
+                loadingOverlay.classList.add('active');
+                loadingOverlay.setAttribute('aria-hidden', 'false');
+                loginButton.classList.add('btn-loading');
+            } else {
+                loadingOverlay.classList.remove('active');
+                loadingOverlay.setAttribute('aria-hidden', 'true');
+                loginButton.classList.remove('btn-loading');
+            }
+        }
+
+        // Show Notification
+        function showNotification(message, type = 'info') {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(n => n.remove());
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.setAttribute('role', 'alert');
+            notification.setAttribute('aria-live', 'assertive');
+            
+            const icon = type === 'success' ? 'check-circle' : 
+                         type === 'error' ? 'exclamation-circle' : 
+                         type === 'warning' ? 'exclamation-triangle' : 'info-circle';
+            
+            notification.innerHTML = `
+                <i class="fas fa-${icon}" aria-hidden="true"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 5000);
+        }
+
+        // Simulate Login API Call
+        async function simulateLogin(employeeId, password) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    // Mock authentication logic
+                    const validCredentials = {
+                        'EMP12345': 'Password123!',
+                        'CS00001': 'Zamfara2026!',
+                        'ADMIN01': 'Admin@2026'
+                    };
+
+                    if (validCredentials[employeeId] === password) {
+                        resolve({
+                            success: true,
+                            data: {
+                                employeeId,
+                                name: 'John Musa',
+                                department: 'Ministry of Education',
+                                role: 'Senior Officer',
+                                lastLogin: new Date().toISOString()
+                            }
+                        });
+                    } else {
+                        reject({
+                            success: false,
+                            error: 'Invalid credentials. Please try again.'
+                        });
+                    }
+                }, 1500); // Simulate network delay
+            });
+        }
+
+        // Form Submission Handler
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            // Validate form
+            const { isValid, errors } = validateForm();
+            if (!isValid) {
+                // Focus on first error
+                if (errors.employeeId) {
+                    employeeIdInput.focus();
+                } else if (errors.password) {
+                    passwordInput.focus();
+                }
+                return;
+            }
+
+            const employeeId = employeeIdInput.value.trim();
+            const password = passwordInput.value;
+            const remember = rememberCheckbox.classList.contains('checked');
+
+            showLoading(true);
+
+            try {
+                // Save credentials if "Remember me" is checked
+                sessionManager.saveCredentials(employeeId, remember);
+
+                // Simulate API call
+                const response = await simulateLogin(employeeId, password);
+                
+                if (response.success) {
+                    // Save user data to session storage
+                    sessionStorage.setItem('userData', JSON.stringify(response.data));
+                    sessionStorage.setItem('isAuthenticated', 'true');
+                    sessionStorage.setItem('loginTime', Date.now());
+
+                    // Track login in analytics
+                    trackLoginEvent(response.data);
+
+                    showNotification('Login successful! Redirecting to dashboard...', 'success');
+
+                    // Redirect to dashboard after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'civil-servant-dashboard.html';
+                    }, 2000);
+
+                } else {
+                    throw new Error('Authentication failed');
+                }
+
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                // Show appropriate error message
+                let errorMessage = 'Login failed. Please try again.';
+                if (error.error) {
+                    errorMessage = error.error;
+                }
+                
+                showNotification(errorMessage, 'error');
+                
+                // Clear password field on error
+                passwordInput.value = '';
+                passwordInput.focus();
+                
+                // Increment failed attempts
+                const failedAttempts = parseInt(sessionStorage.getItem('failedAttempts') || '0') + 1;
+                sessionStorage.setItem('failedAttempts', failedAttempts.toString());
+                
+                // Show CAPTCHA after 3 failed attempts
+                if (failedAttempts >= 3) {
+                    showNotification('Multiple failed attempts. Please verify you are human.', 'warning');
+                    // In a real app, you would show a CAPTCHA here
+                }
+
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Analytics Tracking
+        function trackLoginEvent(userData) {
+            // Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'login', {
+                    'event_category': 'authentication',
+                    'event_label': 'civil_servant',
+                    'value': 1
+                });
+            }
+
+            // Data Layer for GTM
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'userLogin',
+                'userType': 'civil_servant',
+                'department': userData.department,
+                'role': userData.role,
+                'timestamp': Date.now()
+            });
+
+            // Local storage for analytics
+            const loginHistory = JSON.parse(localStorage.getItem('loginHistory') || '[]');
+            loginHistory.push({
+                employeeId: userData.employeeId,
+                timestamp: Date.now(),
+                device: navigator.userAgent
+            });
+            localStorage.setItem('loginHistory', JSON.stringify(loginHistory.slice(-50))); // Keep last 50 logins
+        }
+
+        // Password Strength Indicator (optional enhancement)
+        function checkPasswordStrength(password) {
+            const strength = {
+                0: 'Very Weak',
+                1: 'Weak',
+                2: 'Fair',
+                3: 'Good',
+                4: 'Strong'
+            };
+            
+            let score = 0;
+            if (password.length >= 8) score++;
+            if (/[a-z]/.test(password)) score++;
+            if (/[A-Z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++;
+            if (/[^A-Za-z0-9]/.test(password)) score++;
+            
+            return {
+                score,
+                text: strength[score]
+            };
+        }
+
+        // Event Listeners
+        togglePasswordBtn.addEventListener('click', togglePasswordVisibility);
+        togglePasswordBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                togglePasswordVisibility();
+            }
+        });
+
+        rememberCheckbox.addEventListener('click', toggleRememberMe);
+        rememberCheckbox.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleRememberMe();
+            }
+        });
+
+        loginForm.addEventListener('submit', handleLogin);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+Enter to submit form
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                loginForm.requestSubmit();
+            }
+            
+            // Escape to clear form
+            if (e.key === 'Escape') {
+                employeeIdInput.value = '';
+                passwordInput.value = '';
+                employeeIdInput.focus();
+            }
+        });
+
+        // Real-time validation
+        employeeIdInput.addEventListener('blur', () => {
+            if (employeeIdInput.value.trim()) {
+                if (!/^[A-Z0-9]{6,12}$/i.test(employeeIdInput.value.trim())) {
+                    showError(employeeIdInput, 'employeeId-error', 'Invalid employee ID format');
+                }
+            }
+        });
+
+        passwordInput.addEventListener('input', () => {
+            // Remove error when user starts typing
+            const errorElement = document.getElementById('password-error');
+            if (passwordInput.value && errorElement.classList.contains('show')) {
+                errorElement.classList.remove('show');
+                passwordInput.classList.remove('error');
+            }
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeForm();
+            
+            // Check for expired session
+            const loginTime = sessionStorage.getItem('loginTime');
+            if (loginTime && (Date.now() - parseInt(loginTime)) > 3600000) { // 1 hour
+                sessionManager.clearSession();
+                showNotification('Your session has expired. Please login again.', 'warning');
+            }
+
+            // Check URL parameters for messages
+            const urlParams = new URLSearchParams(window.location.search);
+            const message = urlParams.get('message');
+            if (message === 'session_expired') {
+                showNotification('Your session has expired. Please login again.', 'warning');
+            } else if (message === 'logged_out') {
+                showNotification('You have been successfully logged out.', 'success');
+            } else if (message === 'password_changed') {
+                showNotification('Password changed successfully. Please login with your new password.', 'success');
+            }
+        });
+
+        // Error handling
+        window.addEventListener('error', (event) => {
+            console.error('JavaScript Error:', event.error);
+            showNotification('An error occurred. Please try again.', 'error');
+        });
+
+        window.addEventListener('unhandledrejection', (event) => {
+            console.error('Unhandled Promise Rejection:', event.reason);
+            showNotification('An unexpected error occurred.', 'error');
+        });
+
+        // Accessibility improvements
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-navigation');
+            }
+        });
+
+        document.addEventListener('mousedown', () => {
+            document.body.classList.remove('keyboard-navigation');
+        });
+
+        // Password visibility for screen readers
+        togglePasswordBtn.addEventListener('focus', () => {
+            togglePasswordBtn.setAttribute('aria-describedby', 'password-visibility-help');
+            const helpText = document.createElement('div');
+            helpText.id = 'password-visibility-help';
+            helpText.className = 'sr-only';
+            helpText.textContent = 'Press Enter or Space to toggle password visibility';
+            togglePasswordBtn.parentNode.insertBefore(helpText, togglePasswordBtn.nextSibling);
+        });
+
+        togglePasswordBtn.addEventListener('blur', () => {
+            const helpText = document.getElementById('password-visibility-help');
+            if (helpText) {
+                helpText.remove();
+            }
+        });
+
+        // Demo mode: Auto-fill demo credentials on double-click
+        document.addEventListener('dblclick', (e) => {
+            if (e.target === employeeIdInput || e.target === passwordInput) {
+                employeeIdInput.value = 'EMP12345';
+                passwordInput.value = 'Password123!';
+                showNotification('Demo credentials loaded. Click Login to continue.', 'info');
+            }
+        });
+    </script>
+</body>
+</html>

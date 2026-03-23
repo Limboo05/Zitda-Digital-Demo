@@ -1,0 +1,2488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zamfara SME Hub | Business Management Platform</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- AOS Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* SME Professional Theme */
+            --primary-green: #006837;
+            --secondary-green: #00A859;
+            --accent-green: #4CD964;
+            --dark-green: #004225;
+            --business-blue: #1a5f7a;
+            --entrepreneur-orange: #f4a261;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #3b82f6;
+            
+            /* Dashboard Colors */
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-sidebar: #1e293b;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --sidebar-text: #f1f5f9;
+            
+            /* Industry Colors */
+            --retail-color: #8b5cf6;
+            --agriculture-color: #22c55e;
+            --service-color: #06b6d4;
+            --manufacturing-color: #f59e0b;
+            --hospitality-color: #ec4899;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--primary-green), var(--business-blue));
+            --gradient-success: linear-gradient(135deg, var(--success-color), var(--accent-green));
+            --gradient-warning: linear-gradient(135deg, var(--warning-color), var(--entrepreneur-orange));
+            --gradient-retail: linear-gradient(135deg, var(--retail-color), #a855f7);
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --shadow-green: 0 10px 30px rgba(0, 104, 55, 0.2);
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-logo {
+            width: 120px;
+            height: 120px;
+            background: var(--gradient-primary);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .loading-logo i {
+            font-size: 3rem;
+            color: white;
+        }
+
+        .loading-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .loading-subtext {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            text-align: center;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Enhanced Sidebar with Scroll */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-sidebar);
+            padding: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .brand-text h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--sidebar-text);
+        }
+
+        .brand-text p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Scrollable Navigation Area */
+        .sidebar-scrollable {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem 0;
+        }
+
+        /* Custom scrollbar for sidebar */
+        .sidebar-scrollable::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar-scrollable::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-scrollable::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 2px;
+        }
+
+        /* Business Profile */
+        .business-profile {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 1rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .business-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-warning);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 2rem;
+            position: relative;
+        }
+
+        .business-badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--accent-green);
+            color: var(--dark-green);
+            font-size: 0.75rem;
+            font-weight: 700;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--bg-sidebar);
+        }
+
+        .business-profile h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--sidebar-text);
+            margin-bottom: 0.25rem;
+        }
+
+        .business-profile p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .business-status {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Navigation Sections */
+        .nav-section {
+            margin-bottom: 1.5rem;
+            padding: 0 1.5rem;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-count {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--sidebar-text);
+            padding: 0.125rem 0.5rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+        }
+
+        .nav-items {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.875rem 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+            position: relative;
+            border: 1px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--sidebar-text);
+            transform: translateX(5px);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-green);
+            border-color: var(--primary-green);
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 60%;
+            background: var(--accent-green);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 1.125rem;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--accent-green);
+            color: var(--dark-green);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-full);
+            min-width: 24px;
+            text-align: center;
+        }
+
+        /* Business Stats Sidebar */
+        .business-stats {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 1rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-value {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: var(--sidebar-text);
+            font-size: 1.125rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 0;
+            padding: 1.5rem;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar.active ~ .main-content {
+            margin-left: 280px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .menu-toggle {
+            background: var(--gradient-primary);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-green);
+        }
+
+        .menu-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Business Quick Actions */
+        .business-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            margin: 0 2rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: var(--transition-fast);
+        }
+
+        .action-btn:hover {
+            background: var(--primary-green);
+            color: white;
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-green);
+        }
+
+        .action-btn i {
+            font-size: 1rem;
+        }
+
+        /* Search & Notifications */
+        .business-tools {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            transition: var(--transition-fast);
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--accent-green);
+            box-shadow: 0 0 0 3px rgba(76, 217, 100, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .notification-btn {
+            position: relative;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: var(--transition-fast);
+        }
+
+        .notification-btn:hover {
+            color: var(--primary-green);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--danger-color);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Business Profile Button */
+        .business-profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding-right: 1rem;
+        }
+
+        .business-profile-btn:hover {
+            background: rgba(0, 104, 55, 0.05);
+            border-color: var(--primary-green);
+        }
+
+        .business-avatar-small {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-warning);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .business-info-small h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.125rem;
+        }
+
+        .business-info-small p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Welcome Hero for SMEs */
+        .welcome-hero {
+            background: linear-gradient(135deg, rgba(0, 104, 55, 0.1), rgba(26, 95, 122, 0.1));
+            border-radius: var(--radius-xl);
+            padding: 3rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 104, 55, 0.2);
+        }
+
+        .welcome-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300A859' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .welcome-content h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.75rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .welcome-content h1 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-content p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .hero-stat {
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            min-width: 120px;
+        }
+
+        .hero-stat .number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .hero-stat .label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .hero-illustration {
+            width: 250px;
+            height: 250px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-left: 2rem;
+        }
+
+        .hero-illustration::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .hero-illustration i {
+            font-size: 6rem;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Dashboard Sections */
+        .dashboard-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .dashboard-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 2rem 0 1.5rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .section-header h2 i {
+            margin-right: 0.75rem;
+            color: var(--primary-green);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition-normal);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-green);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0;
+        }
+
+        .card-category {
+            display: inline-block;
+            background: rgba(0, 104, 55, 0.1);
+            color: var(--primary-green);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-footer {
+            padding: 1rem 1.5rem;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Business Intelligence Cards */
+        .metric-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .metric-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .metric-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .metric-trend {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .trend-up {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .trend-down {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+
+        /* Inventory Cards */
+        .inventory-card .card-header {
+            background: linear-gradient(135deg, var(--business-blue), var(--primary-green));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .inventory-card .card-title {
+            color: white;
+        }
+
+        .stock-level {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 1rem 0;
+        }
+
+        .stock-item {
+            text-align: center;
+        }
+
+        .stock-count {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stock-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Financial Cards */
+        .financial-card {
+            text-align: center;
+        }
+
+        .financial-chart {
+            height: 150px;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        /* Market Intelligence Cards */
+        .market-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .market-map {
+            height: 200px;
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .map-point {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+
+        .map-point::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: pulse 2s infinite;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-green);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-success {
+            background: var(--gradient-success);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--gradient-warning);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        /* Charts Container */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chart-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Inventory Management */
+        .inventory-manager {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .inventory-item {
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Financial Dashboard */
+        .financial-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Market Intelligence Dashboard */
+        .market-intel {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Compliance Tracker */
+        .compliance-tracker {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .compliance-list {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .compliance-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0 !important;
+            }
+            
+            .cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .welcome-hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+            }
+            
+            .hero-illustration {
+                margin: 2rem 0 0;
+                width: 200px;
+                height: 200px;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .business-actions {
+                display: none;
+            }
+            
+            .search-container {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .search-container {
+                order: 3;
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .welcome-content h1 {
+                font-size: 2rem;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-container {
+                padding: 1rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .top-nav {
+                padding: 1rem;
+            }
+            
+            .welcome-hero {
+                padding: 1.5rem;
+            }
+            
+            .hero-illustration {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .hero-illustration i {
+                font-size: 4rem;
+            }
+            
+            .chart-card {
+                padding: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">
+            <i class="fas fa-store"></i>
+        </div>
+        <div class="loading-text">Zamfara SME Hub</div>
+        <div class="loading-subtext">
+            Empowering Small & Medium Businesses in Zamfara State
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div class="dashboard-container" id="dashboardContainer">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <a href="#" class="brand-logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="brand-text">
+                        <h2>Zamfara SME</h2>
+                        <p>Business Management Hub</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Scrollable Navigation Area -->
+            <div class="sidebar-scrollable">
+                <!-- Business Profile -->
+                <div class="business-profile">
+                    <div class="business-avatar">
+                        AS
+                        <div class="business-badge">SME</div>
+                    </div>
+                    <h4>Amina Stores</h4>
+                    <p>Retail Business | Gusau</p>
+                    <span class="business-status">Growing</span>
+                </div>
+
+                <!-- Navigation Sections -->
+                <div class="nav-section">
+                    <div class="section-title">
+                        Business Intelligence
+                        <span class="section-count">4</span>
+                    </div>
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard')">
+                                <i class="fas fa-tachometer-alt nav-icon"></i>
+                                <span>Executive Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#financial" class="nav-link" onclick="showSection('financial')">
+                                <i class="fas fa-chart-line nav-icon"></i>
+                                <span>Financial Management</span>
+                                <span class="nav-badge">3</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#inventory" class="nav-link" onclick="showSection('inventory')">
+                                <i class="fas fa-boxes nav-icon"></i>
+                                <span>Inventory Control</span>
+                                <span class="nav-badge">2</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#analytics" class="nav-link" onclick="showSection('analytics')">
+                                <i class="fas fa-chart-bar nav-icon"></i>
+                                <span>Performance Analytics</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="section-title">
+                        Digital Transformation
+                        <span class="section-count">5</span>
+                    </div>
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a href="#ecommerce" class="nav-link" onclick="showSection('ecommerce')">
+                                <i class="fas fa-shopping-cart nav-icon"></i>
+                                <span>E-commerce Setup</span>
+                                <span class="nav-badge">New</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#marketing" class="nav-link" onclick="showSection('marketing')">
+                                <i class="fas fa-bullhorn nav-icon"></i>
+                                <span>Digital Marketing</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#automation" class="nav-link" onclick="showSection('automation')">
+                                <i class="fas fa-robot nav-icon"></i>
+                                <span>Business Automation</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#payments" class="nav-link" onclick="showSection('payments')">
+                                <i class="fas fa-credit-card nav-icon"></i>
+                                <span>Payment Solutions</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#website" class="nav-link" onclick="showSection('website')">
+                                <i class="fas fa-globe nav-icon"></i>
+                                <span>Website Builder</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="section-title">
+                        Market Intelligence
+                        <span class="section-count">3</span>
+                    </div>
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a href="#market" class="nav-link" onclick="showSection('market')">
+                                <i class="fas fa-map-marked-alt nav-icon"></i>
+                                <span>Local Market Map</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#competitors" class="nav-link" onclick="showSection('competitors')">
+                                <i class="fas fa-users nav-icon"></i>
+                                <span>Competitor Analysis</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#pricing" class="nav-link" onclick="showSection('pricing')">
+                                <i class="fas fa-tags nav-icon"></i>
+                                <span>Price Optimization</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="section-title">
+                        Funding & Compliance
+                        <span class="section-count">4</span>
+                    </div>
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a href="#funding" class="nav-link" onclick="showSection('funding')">
+                                <i class="fas fa-hand-holding-usd nav-icon"></i>
+                                <span>Access Funding</span>
+                                <span class="nav-badge">5</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#compliance" class="nav-link" onclick="showSection('compliance')">
+                                <i class="fas fa-file-contract nav-icon"></i>
+                                <span>Compliance Center</span>
+                                <span class="nav-badge">2</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#tax" class="nav-link" onclick="showSection('tax')">
+                                <i class="fas fa-calculator nav-icon"></i>
+                                <span>Tax Management</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#licenses" class="nav-link" onclick="showSection('licenses')">
+                                <i class="fas fa-id-card nav-icon"></i>
+                                <span>License Tracker</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="section-title">
+                        Supply Chain
+                        <span class="section-count">3</span>
+                    </div>
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a href="#suppliers" class="nav-link" onclick="showSection('suppliers')">
+                                <i class="fas fa-truck-loading nav-icon"></i>
+                                <span>Supplier Network</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#logistics" class="nav-link" onclick="showSection('logistics')">
+                                <i class="fas fa-shipping-fast nav-icon"></i>
+                                <span>Logistics Management</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#orders" class="nav-link" onclick="showSection('orders')">
+                                <i class="fas fa-clipboard-list nav-icon"></i>
+                                <span>Order Processing</span>
+                                <span class="nav-badge">8</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="section-title">
+                        Skills & Training
+                        <span class="section-count">3</span>
+                    </div>
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a href="#academy" class="nav-link" onclick="showSection('academy')">
+                                <i class="fas fa-graduation-cap nav-icon"></i>
+                                <span>SME Academy</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#mentorship" class="nav-link" onclick="showSection('mentorship')">
+                                <i class="fas fa-hands-helping nav-icon"></i>
+                                <span>Mentorship Program</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#community" class="nav-link" onclick="showSection('community')">
+                                <i class="fas fa-users nav-icon"></i>
+                                <span>Business Community</span>
+                                <span class="nav-badge">12</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="section-title">
+                        Growth & Scaling
+                        <span class="section-count">3</span>
+                    </div>
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a href="#planning" class="nav-link" onclick="showSection('planning')">
+                                <i class="fas fa-road nav-icon"></i>
+                                <span>Growth Planning</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#team" class="nav-link" onclick="showSection('team')">
+                                <i class="fas fa-user-friends nav-icon"></i>
+                                <span>Team Management</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#innovation" class="nav-link" onclick="showSection('innovation')">
+                                <i class="fas fa-lightbulb nav-icon"></i>
+                                <span>Innovation Lab</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Business Stats -->
+                <div class="business-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">
+                            <i class="fas fa-money-bill-wave"></i>
+                            Monthly Revenue
+                        </span>
+                        <span class="stat-value">₦850K</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">
+                            <i class="fas fa-chart-line"></i>
+                            Growth Rate
+                        </span>
+                        <span class="stat-value">+15%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">
+                            <i class="fas fa-box"></i>
+                            Inventory Value
+                        </span>
+                        <span class="stat-value">₦320K</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">
+                            <i class="fas fa-users"></i>
+                            Customers
+                        </span>
+                        <span class="stat-value">450</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navigation -->
+            <div class="top-nav">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="business-actions">
+                    <a href="#inventory" class="action-btn" onclick="showSection('inventory')">
+                        <i class="fas fa-box"></i>
+                        Manage Inventory
+                    </a>
+                    <a href="#ecommerce" class="action-btn" onclick="showSection('ecommerce')">
+                        <i class="fas fa-shopping-cart"></i>
+                        Online Store
+                    </a>
+                    <a href="#funding" class="action-btn" onclick="showSection('funding')">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        Get Funding
+                    </a>
+                    <a href="#compliance" class="action-btn" onclick="showSection('compliance')">
+                        <i class="fas fa-file-contract"></i>
+                        Compliance
+                    </a>
+                </div>
+                
+                <div class="business-tools">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" placeholder="Search products, customers, reports...">
+                    </div>
+                    
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">5</span>
+                    </button>
+                    
+                    <div class="business-profile-btn" onclick="showSection('settings')">
+                        <div class="business-avatar-small">AS</div>
+                        <div class="business-info-small">
+                            <h4>Amina Stores</h4>
+                            <p>SME Business</p>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Overview Section -->
+            <section class="dashboard-section active" id="dashboardSection">
+                <!-- Welcome Hero -->
+                <div class="welcome-hero">
+                    <div class="welcome-content">
+                        <h1>Welcome to your <span>Business Command Center</span> 👑</h1>
+                        <p>Monitor, manage, and grow your business in Zamfara. Today's insights: Your inventory needs restocking and 3 new funding opportunities are available.</p>
+                        
+                        <div class="hero-stats">
+                            <div class="hero-stat">
+                                <div class="number">₦850K</div>
+                                <div class="label">Monthly Revenue</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="number">
+                                    15%
+                                    <i class="fas fa-chart-line" style="color: var(--success-color);"></i>
+                                </div>
+                                <div class="label">Growth Rate</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="number">₦320K</div>
+                                <div class="label">Inventory Value</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="number">450</div>
+                                <div class="label">Customers</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-illustration">
+                        <i class="fas fa-store"></i>
+                    </div>
+                </div>
+
+                <!-- Business Health Dashboard -->
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <h3>Revenue Performance</h3>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Business Health Score</h3>
+                        <div class="chart-container">
+                            <canvas id="healthChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Metrics -->
+                <div class="section-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Business Health Dashboard</h2>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        Export Report
+                    </button>
+                </div>
+
+                <div class="cards-grid">
+                    <!-- Financial Health Card -->
+                    <div class="card metric-card">
+                        <div class="metric-icon" style="background: var(--gradient-success);">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="metric-value">₦850,430</div>
+                        <div class="metric-label">Monthly Revenue</div>
+                        <div class="metric-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            15% increase
+                        </div>
+                    </div>
+
+                    <!-- Inventory Health Card -->
+                    <div class="card metric-card">
+                        <div class="metric-icon" style="background: var(--gradient-warning);">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <div class="metric-value">68%</div>
+                        <div class="metric-label">Stock Availability</div>
+                        <div class="metric-trend trend-down">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            12 items low
+                        </div>
+                    </div>
+
+                    <!-- Customer Health Card -->
+                    <div class="card metric-card">
+                        <div class="metric-icon" style="background: var(--gradient-retail);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="metric-value">92%</div>
+                        <div class="metric-label">Customer Satisfaction</div>
+                        <div class="metric-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            8% increase
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Critical Alerts -->
+                <div class="section-header">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Critical Alerts & Actions</h2>
+                    <a href="#" class="btn btn-outline">
+                        View All Alerts
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="cards-grid">
+                    <!-- Inventory Alert -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-category" style="background: rgba(239, 68, 68, 0.1); color: var(--danger-color);">
+                                <i class="fas fa-exclamation-circle"></i>
+                                URGENT
+                            </span>
+                            <h3 class="card-title">Low Stock Alert</h3>
+                            <p class="card-description">12 items need immediate restocking to avoid stockouts.</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="margin: 1rem 0;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="font-size: 0.875rem; color: var(--text-secondary);">Rice (50kg)</span>
+                                    <span style="font-weight: 600; color: var(--danger-color);">5 bags left</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 20%; background: var(--danger-color);"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-sync-alt"></i>
+                                Reorder Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tax Deadline -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-category" style="background: rgba(245, 158, 11, 0.1); color: var(--warning-color);">
+                                <i class="fas fa-clock"></i>
+                                DEADLINE
+                            </span>
+                            <h3 class="card-title">Tax Filing Due</h3>
+                            <p class="card-description">Monthly tax filing due in 3 days. Prepare your documents.</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="margin: 1rem 0;">
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem; font-weight: 700; color: var(--warning-color);">3</div>
+                                        <div style="font-size: 0.75rem; color: var(--text-secondary);">Days Left</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-weight: 600; margin-bottom: 0.25rem;">Estimated Tax: ₦45,000</div>
+                                        <div style="font-size: 0.875rem; color: var(--text-secondary);">Zamfara IRS Filing</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-warning">
+                                <i class="fas fa-file-invoice"></i>
+                                File Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Funding Opportunity -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-category" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color);">
+                                <i class="fas fa-bolt"></i>
+                                OPPORTUNITY
+                            </span>
+                            <h3 class="card-title">SME Growth Grant</h3>
+                            <p class="card-description">₦500,000 grant for retail businesses in Gusau. Deadline: Nov 15.</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="margin: 1rem 0;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                                    <div>
+                                        <div style="font-weight: 600;">Grant Amount</div>
+                                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--success-color);">₦500,000</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-weight: 600;">Your Eligibility</div>
+                                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-green);">85%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-success" onclick="showSection('funding')">
+                                <i class="fas fa-rocket"></i>
+                                Apply Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Intelligence -->
+                <div class="section-header">
+                    <h2><i class="fas fa-map-marked-alt"></i> Zamfara Market Intelligence</h2>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh Data
+                    </button>
+                </div>
+
+                <div class="market-intel">
+                    <div class="market-map" id="zamfaraMarketMap">
+                        <div class="map-point" style="top: 30%; left: 40%;" title="Gusau Central Market"></div>
+                        <div class="map-point" style="top: 45%; left: 60%;" title="Kaura Namoda Market"></div>
+                        <div class="map-point" style="top: 60%; left: 35%;" title="Anka Market"></div>
+                        <div class="map-point" style="top: 40%; left: 25%;" title="Talata Mafara Market"></div>
+                        <div style="text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;">
+                            <i class="fas fa-map-marked-alt" style="font-size: 4rem; color: var(--primary-green);"></i>
+                            <h3 style="margin-top: 1rem;">Zamfara Market Network</h3>
+                            <p style="color: var(--text-secondary);">Click on market points for insights</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 2rem;">
+                        <div style="padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md);">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem;">Top Selling Products</div>
+                            <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                                Rice, Cooking Oil, Flour, Sugar, Milk
+                            </div>
+                        </div>
+                        <div style="padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md);">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem;">Price Trends</div>
+                            <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                                Rice: +5%, Oil: -2%, Flour: +3%
+                            </div>
+                        </div>
+                        <div style="padding: 1rem; background: var(--bg-primary); border-radius: var(--radius-md);">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem;">Market Demand</div>
+                            <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                                High in Gusau, Medium in Anka
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Financial Management Section -->
+            <section class="dashboard-section" id="financialSection">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Financial Management</h2>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add Transaction
+                        </button>
+                        <button class="btn btn-success">
+                            <i class="fas fa-file-invoice"></i>
+                            Generate Report
+                        </button>
+                    </div>
+                </div>
+
+                <div class="financial-dashboard">
+                    <!-- Cash Flow Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Cash Flow Overview</h3>
+                            <p class="card-description">30-day cash flow projection</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="financial-chart">
+                                <canvas id="cashFlowChart"></canvas>
+                            </div>
+                            <div style="margin-top: 1rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="font-size: 0.875rem; color: var(--text-secondary);">Projected Balance</span>
+                                    <span style="font-weight: 600; color: var(--success-color);">₦1,250,000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expense Breakdown -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Expense Breakdown</h3>
+                            <p class="card-description">Monthly spending by category</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="financial-chart">
+                                <canvas id="expenseChart"></canvas>
+                            </div>
+                            <div style="margin-top: 1rem;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="font-size: 0.875rem; color: var(--text-secondary);">Total Expenses</span>
+                                    <span style="font-weight: 600;">₦450,000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profit & Loss -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Profit & Loss Statement</h3>
+                            <p class="card-description">Monthly performance</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="margin: 1rem 0;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                    <span>Revenue</span>
+                                    <span style="font-weight: 600; color: var(--success-color);">₦850,000</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                    <span>Cost of Goods</span>
+                                    <span style="font-weight: 600; color: var(--danger-color);">₦420,000</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                    <span>Gross Profit</span>
+                                    <span style="font-weight: 600;">₦430,000</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                    <span>Expenses</span>
+                                    <span style="font-weight: 600; color: var(--danger-color);">₦185,000</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding-top: 0.75rem; border-top: 2px solid var(--border-color);">
+                                    <span style="font-weight: 700;">Net Profit</span>
+                                    <span style="font-weight: 700; color: var(--success-color);">₦245,000</span>
+                                </div>
+                            </div>
+                            <div class="metric-trend trend-up" style="margin-top: 1rem;">
+                                <i class="fas fa-arrow-up"></i>
+                                28% profit margin
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inventory Management Section -->
+            <section class="dashboard-section" id="inventorySection">
+                <div class="section-header">
+                    <h2><i class="fas fa-boxes"></i> Inventory Control</h2>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add Product
+                        </button>
+                        <button class="btn btn-warning">
+                            <i class="fas fa-sync-alt"></i>
+                            Sync Inventory
+                        </button>
+                    </div>
+                </div>
+
+                <div class="inventory-manager">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3>Current Inventory Status</h3>
+                        <div style="display: flex; gap: 1rem;">
+                            <select class="btn btn-secondary" style="padding: 0.5rem 1rem;">
+                                <option>All Categories</option>
+                                <option>Food Items</option>
+                                <option>Beverages</option>
+                                <option>Household</option>
+                                <option>Personal Care</option>
+                            </select>
+                            <input type="text" placeholder="Search products..." style="padding: 0.5rem 1rem; border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+                        </div>
+                    </div>
+
+                    <div class="inventory-grid">
+                        <div class="inventory-item">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <div style="font-weight: 600;">Rice (50kg)</div>
+                                <div style="font-size: 0.875rem; color: var(--danger-color); font-weight: 600;">Low</div>
+                            </div>
+                            <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                                SKU: RICE-50KG
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">Stock</div>
+                                    <div style="font-weight: 600;">5 bags</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">Value</div>
+                                    <div style="font-weight: 600;">₦45,000</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="inventory-item">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <div style="font-weight: 600;">Cooking Oil</div>
+                                <div style="font-size: 0.875rem; color: var(--warning-color); font-weight: 600;">Medium</div>
+                            </div>
+                            <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                                SKU: OIL-5L
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">Stock</div>
+                                    <div style="font-weight: 600;">18 cans</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.75rem; color: var(--text-secondary);">Value</div>
+                                    <div style="font-weight: 600;">₦72,000</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="inventory-item">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <div style="font-weight: 600;">Flour</div>
+                                                              <div style="font-size: 0.875rem; color: var(--text-secondary);">Gusau LGA</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-weight: 600; color: var(--warning-color);">Due in 15 days</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Nov 10, 2026</div>
+                            </div>
+                        </div>
+
+                        <div class="compliance-item">
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">NAFDAC Registration</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Food Products License</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-weight: 600; color: var(--success-color);">Valid until Dec 2026</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Expires Dec 31</div>
+                            </div>
+                        </div>
+
+                        <div class="compliance-item">
+                            <div>
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">Fire Safety Inspection</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Annual Requirement</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-weight: 600; color: var(--success-color);">Completed</div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">Valid until Jan 2025</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Add remaining sections similarly -->
+        </main>
+    </div>
+
+    <!-- AOS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loadingScreen');
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    document.getElementById('dashboardContainer').style.opacity = '1';
+                    
+                    // Initialize charts
+                    initializeCharts();
+                    
+                    // Animate progress bars
+                    document.querySelectorAll('.progress-fill').forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 500);
+                    });
+                }, 500);
+            }, 2000);
+        });
+
+        // Sidebar toggle with enhanced functionality
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.getElementById('menuToggle');
+
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+            menuToggle.innerHTML = sidebar.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>'
+                : '<i class="fas fa-bars"></i>';
+            
+            // Update sidebar scroll position
+            if (sidebar.classList.contains('active')) {
+                sidebar.querySelector('.sidebar-scrollable').scrollTop = 0;
+            }
+        });
+
+        // Section navigation
+        function showSection(sectionId) {
+            // Close sidebar on mobile
+            if (window.innerWidth <= 1200) {
+                sidebar.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+
+            // Hide all sections
+            document.querySelectorAll('.dashboard-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected section
+            const targetSection = document.getElementById(sectionId + 'Section');
+            if (targetSection) {
+                targetSection.classList.add('active');
+                
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                document.querySelector(`[onclick="showSection('${sectionId}')"]`).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Show notification
+                showNotification(`Switched to ${getSectionName(sectionId)}`);
+            }
+        }
+
+        function getSectionName(sectionId) {
+            const names = {
+                'dashboard': 'Executive Dashboard',
+                'financial': 'Financial Management',
+                'inventory': 'Inventory Control',
+                'ecommerce': 'E-commerce Setup',
+                'funding': 'Funding Access',
+                'compliance': 'Compliance Center'
+            };
+            return names[sectionId] || sectionId;
+        }
+
+        // Notification system
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--gradient-primary);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: var(--radius-md);
+                box-shadow: var(--shadow-lg);
+                z-index: 1000;
+                animation: slideIn 0.3s ease-out;
+                max-width: 300px;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            `;
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Add notification animation keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize Charts
+        function initializeCharts() {
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(revenueCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                    datasets: [{
+                        label: 'Revenue (₦)',
+                        data: [450000, 520000, 480000, 550000, 620000, 580000, 650000, 720000, 680000, 850000],
+                        borderColor: 'rgb(0, 104, 55)',
+                        backgroundColor: 'rgba(0, 104, 55, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Monthly Revenue Trend'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₦' + (value / 1000) + 'K';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Health Chart
+            const healthCtx = document.getElementById('healthChart').getContext('2d');
+            new Chart(healthCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['Financial', 'Inventory', 'Marketing', 'Operations', 'Compliance', 'Growth'],
+                    datasets: [{
+                        label: 'Business Health',
+                        data: [85, 68, 75, 82, 90, 78],
+                        backgroundColor: 'rgba(0, 168, 89, 0.2)',
+                        borderColor: 'rgb(0, 168, 89)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                stepSize: 20
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Business Health Score'
+                        }
+                    }
+                }
+            });
+
+            // Cash Flow Chart
+            const cashFlowCtx = document.getElementById('cashFlowChart').getContext('2d');
+            new Chart(cashFlowCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'Cash Flow',
+                        data: [1200000, 1150000, 1250000, 1300000],
+                        backgroundColor: [
+                            'rgba(0, 104, 55, 0.8)',
+                            'rgba(0, 168, 89, 0.8)',
+                            'rgba(76, 217, 100, 0.8)',
+                            'rgba(26, 95, 122, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgb(0, 104, 55)',
+                            'rgb(0, 168, 89)',
+                            'rgb(76, 217, 100)',
+                            'rgb(26, 95, 122)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₦' + (value / 1000) + 'K';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Expense Chart
+            const expenseCtx = document.getElementById('expenseChart').getContext('2d');
+            new Chart(expenseCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Inventory', 'Rent', 'Salaries', 'Utilities', 'Marketing', 'Other'],
+                    datasets: [{
+                        data: [45, 20, 15, 8, 7, 5],
+                        backgroundColor: [
+                            'rgba(0, 104, 55, 0.8)',
+                            'rgba(26, 95, 122, 0.8)',
+                            'rgba(245, 158, 11, 0.8)',
+                            'rgba(6, 182, 212, 0.8)',
+                            'rgba(139, 92, 246, 0.8)',
+                            'rgba(239, 68, 68, 0.8)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Expense Breakdown'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Market map point interactions
+        document.querySelectorAll('.map-point').forEach(point => {
+            point.addEventListener('click', function() {
+                const location = this.getAttribute('title');
+                showNotification(`Showing market insights for ${location}`);
+                
+                // Simulate loading market data
+                setTimeout(() => {
+                    showNotification(`Loaded market data for ${location}. 15 suppliers, 8 competitors found.`);
+                }, 1000);
+            });
+        });
+
+        // Initialize button interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers for all action buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.btn-primary')) {
+                    const btn = e.target.closest('.btn-primary');
+                    
+                    if (btn.textContent.includes('Apply Now') || btn.textContent.includes('Apply for Loan')) {
+                        const card = btn.closest('.card');
+                        const title = card.querySelector('.card-title').textContent;
+                        showNotification(`Starting application for: ${title}`);
+                    }
+                    
+                    if (btn.textContent.includes('Reorder Now') || btn.textContent.includes('Order from Supplier')) {
+                        showNotification('Opening supplier network...');
+                        setTimeout(() => {
+                            showNotification('Connected to 8 local suppliers in Zamfara');
+                        }, 1500);
+                    }
+                    
+                    if (btn.textContent.includes('Customize Store')) {
+                        showNotification('Opening store builder...');
+                        showSection('ecommerce');
+                    }
+                    
+                    if (btn.textContent.includes('File Now')) {
+                        showNotification('Opening tax filing portal...');
+                        setTimeout(() => {
+                            showNotification('Connected to Zamfara IRS portal');
+                        }, 1000);
+                    }
+                }
+                
+                if (e.target.closest('.btn-success')) {
+                    const btn = e.target.closest('.btn-success');
+                    if (btn.textContent.includes('Launch Store')) {
+                        showNotification('Launching your online store...');
+                        setTimeout(() => {
+                            showNotification('Store launched successfully! Available at aminastores.zamfara.shop');
+                        }, 2000);
+                    }
+                }
+            });
+
+            // Initialize sidebar scroll position
+            const sidebarScrollable = document.querySelector('.sidebar-scrollable');
+            if (sidebarScrollable) {
+                sidebarScrollable.scrollTop = 0;
+            }
+        });
+
+        // Demo data initialization
+        function initializeDemoData() {
+            // Set current date for deadlines
+            const today = new Date();
+            const threeDays = new Date(today);
+            threeDays.setDate(today.getDate() + 3);
+            const fifteenDays = new Date(today);
+            fifteenDays.setDate(today.getDate() + 15);
+            
+            // Format dates
+            const formatDate = (date) => {
+                return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            };
+            
+            // Update deadline elements
+            document.querySelectorAll('.compliance-item').forEach((item, index) => {
+                const dateElement = item.querySelector('div:nth-child(2) div:nth-child(2)');
+                if (dateElement && index === 0) {
+                    dateElement.textContent = formatDate(threeDays);
+                } else if (dateElement && index === 1) {
+                    dateElement.textContent = formatDate(fifteenDays);
+                }
+            });
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDemoData();
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 1200) {
+                sidebar.classList.add('active');
+                menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                sidebar.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+    </script>
+</body>
+</html>

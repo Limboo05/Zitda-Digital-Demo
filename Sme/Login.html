@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="s5m3l0g1n8t0k3n2v7x4">
+    <meta name="description" content="Login to Zamfara Business Platform - Access grants, digital tools, government contracts, and business support services">
+    <meta name="keywords" content="Zamfara, SME, Business Login, Grants, Loans, Government Contracts, Digital Business">
+    <title>SME Login | Zamfara Business Platform</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest-sme-login.json">
+    <meta name="theme-color" content="#8B4513">
+    <link rel="icon" type="image/x-icon" href="favicon-sme.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon-sme.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* SME Business Theme */
+            --primary-brown: #8B4513;
+            --secondary-brown: #D2691E;
+            --accent-gold: #FFD700;
+            --success-green: #228B22;
+            --enterprise-purple: #6A0DAD;
+            --finance-blue: #1E90FF;
+            --warning-orange: #FF8C00;
+            
+            /* UI Colors */
+            --bg-primary: #f9f5f0;
+            --bg-secondary: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #f9f5f0 0%, #fff8f0 100%);
+            --text-primary: #2c1810;
+            --text-secondary: #5D4037;
+            --text-muted: #795548;
+            --border-color: #D7CCC8;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --info-color: #3498db;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(139, 69, 19, 0.08);
+            --shadow-md: 0 4px 6px rgba(139, 69, 19, 0.1);
+            --shadow-lg: 0 10px 25px rgba(139, 69, 19, 0.1);
+            --shadow-xl: 0 20px 40px rgba(139, 69, 19, 0.15);
+            --shadow-card: 0 10px 30px rgba(139, 69, 19, 0.08);
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+            
+            /* Animation */
+            --float-animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Skip to Main Content */
+        .skip-to-main {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            background: var(--primary-brown);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            z-index: 1000;
+            transition: var(--transition-fast);
+        }
+
+        .skip-to-main:focus {
+            top: 20px;
+            left: 20px;
+            outline: 3px solid var(--accent-gold);
+            outline-offset: 2px;
+        }
+
+        /* Header */
+        .login-header {
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--border-color);
+            padding: 1.25rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-brown), var(--warning-orange));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            animation: var(--float-animation);
+        }
+
+        .logo-icon i {
+            font-size: 1.75rem;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-brown), var(--warning-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.25rem;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .header-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+            border: 2px solid transparent;
+            font-size: 0.95rem;
+        }
+
+        .header-btn:hover {
+            color: var(--primary-brown);
+            background: rgba(139, 69, 19, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .header-btn:focus {
+            outline: none;
+            border-color: var(--primary-brown);
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.2);
+        }
+
+        .header-btn.primary {
+            background: linear-gradient(135deg, var(--primary-brown), var(--warning-orange));
+            color: white !important;
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.25);
+        }
+
+        .header-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(139, 69, 19, 0.35);
+        }
+
+        /* Main Content */
+        .login-container {
+            display: flex;
+            flex: 1;
+            min-height: calc(100vh - 92px);
+        }
+
+        /* Left Panel - Business Benefits */
+        .benefits-panel {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-brown), #5D4037);
+            color: white;
+            padding: 4rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 140, 0, 0.1) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M50 50c0-8.284 6.716-15 15-15s15 6.716 15 15-6.716 15-15 15c0 8.284-6.716 15-15 15s-15-6.716-15-15 6.716-15 15-15zM15 15C15 6.716 21.716 0 30 0s15 6.716 15 15-6.716 15-15 15c0 8.284-6.716 15-15 15S0 38.284 0 30s6.716-15 15-15zm15 20c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm40 40c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            animation: var(--float-animation);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+            background: rgba(255, 215, 0, 0.15);
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 1s;
+            background: rgba(30, 144, 255, 0.15);
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 2s;
+            background: rgba(106, 13, 173, 0.15);
+        }
+
+        .benefits-content {
+            position: relative;
+            z-index: 2;
+            max-width: 550px;
+        }
+
+        .benefits-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--accent-gold);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-full);
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            animation: pulse-glow 2s infinite;
+        }
+
+        .benefits-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(2rem, 4vw, 3.25rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .benefits-subtitle {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 3rem;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            margin-bottom: 1.75rem;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-gold);
+            transition: var(--transition-fast);
+        }
+
+        .features-list li:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .features-list i {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            margin-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text h4 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent-gold);
+        }
+
+        .feature-text p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        /* Grant Opportunities Section */
+        .grants-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .grants-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .grants-header h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+        }
+
+        .grants-count {
+            background: var(--accent-gold);
+            color: var(--primary-brown);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .grants-list {
+            list-style: none;
+        }
+
+        .grants-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .grants-list li:last-child {
+            border-bottom: none;
+        }
+
+        .grant-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+        }
+
+        .grant-info h5 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            font-size: 0.95rem;
+        }
+
+        .grant-info p {
+            opacity: 0.8;
+            font-size: 0.8rem;
+        }
+
+        .grant-amount {
+            margin-left: auto;
+            font-weight: 700;
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+        }
+
+        /* Right Panel - Login Form */
+        .login-panel {
+            flex: 1;
+            background: var(--bg-secondary);
+            padding: 3rem 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .login-form-container {
+            width: 100%;
+            max-width: 500px;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .login-header-form {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .login-header-form h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-brown), var(--warning-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header-form p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Quick Stats */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .stat-value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary-brown);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Form Styles */
+        .login-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.75rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .required {
+            color: var(--danger-color);
+            margin-left: 2px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            padding-right: 45px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-brown);
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+        }
+
+        .form-input.error {
+            border-color: var(--danger-color);
+        }
+
+        .form-input.success {
+            border-color: var(--success-color);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-brown);
+        }
+
+        .password-toggle:focus {
+            outline: none;
+            color: var(--primary-brown);
+        }
+
+        /* Error Messages */
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: var(--transition-fast);
+        }
+
+        .error-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Form Options */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .remember-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+
+        .remember-checkbox.checked {
+            background: var(--primary-brown);
+            border-color: var(--primary-brown);
+        }
+
+        .remember-checkbox.checked i {
+            color: white;
+            font-size: 0.75rem;
+        }
+
+        .forgot-password {
+            color: var(--primary-brown);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        .forgot-password:hover {
+            color: var(--secondary-brown);
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 0.875rem 2rem;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-brown), var(--warning-orange));
+            color: white !important;
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.25);
+            border: 2px solid transparent;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(139, 69, 19, 0.35);
+        }
+
+        .btn-primary:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.3);
+        }
+
+        .btn-grant {
+            background: linear-gradient(135deg, var(--enterprise-purple), #9b59b6);
+            color: white !important;
+            box-shadow: 0 10px 30px rgba(106, 13, 173, 0.25);
+            margin-top: 1rem;
+        }
+
+        .btn-grant:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(106, 13, 173, 0.35);
+        }
+
+        .btn-secondary {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .btn-loading .btn-text {
+            visibility: hidden;
+        }
+
+        .btn-loading::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Business Type Quick Login */
+        .business-type-login {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .divider span {
+            padding: 0 1rem;
+        }
+
+        .business-login-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .business-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1.25rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            text-align: center;
+        }
+
+        .business-option:hover {
+            border-color: var(--primary-brown);
+            background: rgba(139, 69, 19, 0.05);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .business-option i {
+            font-size: 2rem;
+            color: var(--primary-brown);
+        }
+
+        .business-option span {
+            font-size: 0.9rem;
+        }
+
+        /* Registration Link */
+        .registration-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .registration-link a {
+            color: var(--primary-brown);
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .registration-link a:hover {
+            color: var(--secondary-brown);
+            text-decoration: underline;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--success-green), var(--accent-gold));
+            color: white;
+            padding: 1.25rem 1.75rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            animation: slideInRight 0.3s ease-out;
+            max-width: 400px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, var(--danger-color), #ff6b6b);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, var(--warning-color), #ffd93d);
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-normal);
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--primary-brown);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        .loading-text {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        /* Footer */
+        .login-footer {
+            background: var(--bg-secondary);
+            border-top: 2px solid var(--border-color);
+            padding: 2rem 2.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-brown);
+        }
+
+        /* Animations */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .login-container {
+                flex-direction: column;
+            }
+            
+            .benefits-panel {
+                padding: 3rem 2.5rem;
+            }
+            
+            .login-panel {
+                padding: 2.5rem 3rem;
+            }
+            
+            .quick-stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .login-header {
+                padding: 1rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .benefits-panel {
+                padding: 2.5rem 2rem;
+            }
+            
+            .benefits-title {
+                font-size: 1.75rem;
+            }
+            
+            .login-panel {
+                padding: 2rem;
+            }
+            
+            .login-form-container {
+                max-width: 100%;
+            }
+            
+            .login-header-form h2 {
+                font-size: 1.75rem;
+            }
+            
+            .quick-stats {
+                grid-template-columns: repeat(3, 1fr);
+                padding: 1rem;
+            }
+            
+            .stat-value {
+                font-size: 1.5rem;
+            }
+            
+            .form-options {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .business-login-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .grants-section {
+                padding: 1.25rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .benefits-title {
+                font-size: 1.5rem;
+            }
+            
+            .benefits-subtitle {
+                font-size: 1rem;
+            }
+            
+            .login-header-form h2 {
+                font-size: 1.5rem;
+            }
+            
+            .quick-stats {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .floating-element {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+            
+            .stat-value {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #1a120b;
+                --bg-secondary: #2c1810;
+                --text-primary: #f0e6dc;
+                --text-secondary: #d7ccc8;
+                --text-muted: #a1887f;
+                --border-color: #5D4037;
+                --bg-gradient: linear-gradient(135deg, #1a120b 0%, #2c1810 100%);
+            }
+            
+            .login-header,
+            .login-panel,
+            .login-footer {
+                background: var(--bg-secondary);
+            }
+            
+            .form-input {
+                background: var(--bg-primary);
+                color: var(--text-primary);
+            }
+            
+            .btn-secondary {
+                background: var(--bg-primary);
+            }
+            
+            .business-option {
+                background: var(--bg-primary);
+            }
+            
+            .quick-stats {
+                background: var(--bg-primary);
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .login-header,
+            .benefits-panel,
+            .footer-links,
+            .btn,
+            .notification,
+            .quick-stats,
+            .business-type-login {
+                display: none !important;
+            }
+            
+            .login-panel {
+                padding: 0;
+                background: white !important;
+            }
+            
+            .login-form-container {
+                max-width: 100%;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-brown), var(--warning-orange));
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary-brown), var(--warning-orange));
+        }
+
+        /* Selection */
+        ::selection {
+            background-color: rgba(139, 69, 19, 0.3);
+            color: white;
+        }
+
+        /* Focus Styles */
+        .keyboard-navigation *:focus {
+            outline: 3px solid var(--accent-gold);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Accessibility: Skip to Main Content -->
+    <a href="#login-form" class="skip-to-main sr-only-focusable">
+        Skip to login form
+    </a>
+
+    <!-- Header -->
+    <header class="login-header" role="banner">
+        <a href="index.html" class="header-logo" aria-label="Zamfara Business Platform Home">
+            <div class="logo-icon" aria-hidden="true">
+                <i class="fas fa-store"></i>
+            </div>
+            <div class="logo-text">
+                <h1>Zamfara Business Platform</h1>
+                <p>SME Portal & Grant Management</p>
+            </div>
+        </a>
+        
+        <div class="header-actions">
+            <a href="sme-registration.html" class="header-btn">
+                <i class="fas fa-user-plus" aria-hidden="true"></i>
+                Register Business
+            </a>
+            <a href="grants.html" class="header-btn">
+                <i class="fas fa-hand-holding-usd" aria-hidden="true"></i>
+                View Grants
+            </a>
+            <a href="help.html" class="header-btn primary">
+                <i class="fas fa-headset" aria-hidden="true"></i>
+                Business Support
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="login-container" role="main">
+        <!-- Benefits Panel -->
+        <aside class="benefits-panel" aria-label="SME platform benefits">
+            <!-- Floating Elements -->
+            <div class="floating-elements">
+                <div class="floating-element">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <div class="floating-element">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <div class="floating-element">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+            </div>
+            
+            <div class="benefits-content">
+                <div class="benefits-badge" role="status">
+                    <i class="fas fa-crown" aria-hidden="true"></i>
+                    Exclusive for Registered Businesses
+                </div>
+                
+                <h1 class="benefits-title">
+                    Grow Your Business<br>
+                    with Government Support
+                </h1>
+                
+                <p class="benefits-subtitle">
+                    Access grants, government contracts, digital tools, and business support 
+                    services designed specifically for Zamfara SMEs.
+                </p>
+                
+                <ul class="features-list" role="list">
+                    <li role="listitem">
+                        <i class="fas fa-money-check-alt" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Grant & Loan Access</h4>
+                            <p>Apply for Zamfara SME Fund, BOI loans, and Federal Government grants</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-gavel" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Government Contracts</h4>
+                            <p>Access exclusive state and local government procurement opportunities</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Business Training</h4>
+                            <p>Free digital skills, financial management, and marketing courses</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-network-wired" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Business Networking</h4>
+                            <p>Connect with suppliers, buyers, and other entrepreneurs</p>
+                        </div>
+                    </li>
+                </ul>
+                
+                <!-- Grant Opportunities -->
+                <div class="grants-section" role="region" aria-label="Available grants">
+                    <div class="grants-header">
+                        <h4>
+                            <i class="fas fa-gift" aria-hidden="true"></i>
+                            Active Grant Opportunities
+                        </h4>
+                        <div class="grants-count" aria-live="polite">4</div>
+                    </div>
+                    
+                    <ul class="grants-list" role="list">
+                        <li role="listitem">
+                            <div class="grant-icon">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <div class="grant-info">
+                                <h5>Agribusiness Grant</h5>
+                                <p>Deadline: May 30, 2026</p>
+                            </div>
+                            <div class="grant-amount">₦5M</div>
+                        </li>
+                        <li role="listitem">
+                            <div class="grant-icon">
+                                <i class="fas fa-industry"></i>
+                            </div>
+                            <div class="grant-info">
+                                <h5>Manufacturing Support</h5>
+                                <p>Deadline: June 15, 2026</p>
+                            </div>
+                            <div class="grant-amount">₦10M</div>
+                        </li>
+                        <li role="listitem">
+                            <div class="grant-icon">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <div class="grant-info">
+                                <h5>Digital Business Grant</h5>
+                                <p>Deadline: July 1, 2026</p>
+                            </div>
+                            <div class="grant-amount">₦2.5M</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Login Form Panel -->
+        <section class="login-panel" aria-labelledby="login-title">
+            <div class="login-form-container">
+                <div class="login-header-form">
+                    <h2 id="login-title">Welcome Back, Business Owner</h2>
+                    <p>Sign in to manage your business profile and applications</p>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="quick-stats" role="status" aria-label="Platform statistics">
+                    <div class="stat-item">
+                        <div class="stat-value">2,847</div>
+                        <div class="stat-label">Active SMEs</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">₦1.2B</div>
+                        <div class="stat-label">Grants Disbursed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">98%</div>
+                        <div class="stat-label">Satisfaction Rate</div>
+                    </div>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="login-form" novalidate aria-label="SME login form">
+                    <!-- Business ID / Email -->
+                    <div class="form-group">
+                        <label for="businessId" class="form-label">
+                            Business ID / Email
+                            <span class="required" aria-hidden="true">*</span>
+                        </label>
+                        <div class="input-group">
+                            <input type="text" 
+                                   id="businessId" 
+                                   name="businessId" 
+                                   class="form-input" 
+                                   placeholder="Business ID or email address" 
+                                   required
+                                   autocomplete="username"
+                                   aria-required="true"
+                                   aria-describedby="businessId-error">
+                            <div class="input-icon">
+                                <i class="fas fa-building" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div id="businessId-error" class="error-message" role="alert">
+                            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                            <span>Please enter your Business ID or email</span>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                            Password
+                            <span class="required" aria-hidden="true">*</span>
+                        </label>
+                        <div class="input-group">
+                            <input type="password" 
+                                   id="password" 
+                                   name="password" 
+                                   class="form-input" 
+                                   placeholder="Enter your password" 
+                                   required
+                                   autocomplete="current-password"
+                                   aria-required="true"
+                                   aria-describedby="password-error">
+                            <button type="button" 
+                                    class="password-toggle" 
+                                    id="togglePassword"
+                                    aria-label="Show password"
+                                    aria-controls="password">
+                                <i class="fas fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div id="password-error" class="error-message" role="alert">
+                            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                            <span>Password is required</span>
+                        </div>
+                    </div>
+
+                    <!-- Form Options -->
+                    <div class="form-options">
+                        <div class="remember-me" id="rememberMe">
+                            <div class="remember-checkbox" role="checkbox" 
+                                 aria-checked="false" 
+                                 tabindex="0"
+                                 aria-label="Remember me for 30 days">
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                            </div>
+                            <span>Remember me</span>
+                        </div>
+                        <a href="forgot-password.html" class="forgot-password">
+                            Forgot Password?
+                        </a>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary" id="loginButton">
+                        <span class="btn-text">
+                            <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                            Sign In to Business Dashboard
+                        </span>
+                    </button>
+
+                    <!-- Quick Grant Access -->
+                    <button type="button" class="btn btn-grant" id="quickGrantBtn">
+                        <span class="btn-text">
+                            <i class="fas fa-bolt" aria-hidden="true"></i>
+                            Quick Grant Application
+                        </span>
+                    </button>
+                </form>
+
+                <!-- Business Type Quick Login -->
+                <div class="business-type-login">
+                    <div class="divider">
+                        <span>Or continue as</span>
+                    </div>
+                    
+                    <div class="business-login-options">
+                        <a href="#" class="business-option" aria-label="Login as Agriculture business">
+                            <i class="fas fa-tractor"></i>
+                            <span>Agriculture</span>
+                        </a>
+                        <a href="#" class="business-option" aria-label="Login as Manufacturing business">
+                            <i class="fas fa-industry"></i>
+                            <span>Manufacturing</span>
+                        </a>
+                        <a href="#" class="business-option" aria-label="Login as Retail business">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Retail</span>
+                        </a>
+                        <a href="#" class="business-option" aria-label="Login as Service business">
+                            <i class="fas fa-concierge-bell"></i>
+                            <span>Services</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Registration Link -->
+                <div class="registration-link">
+                    <p>New to the platform? <a href="reg sme.html">Register Your Business</a></p>
+                    <p style="margin-top: 0.5rem; font-size: 0.75rem;">
+                        Need business support? <a href="support.html">Contact Business Development Office</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="login-footer" role="contentinfo">
+        <div class="footer-links">
+            <a href="business-directory.html">Business Directory</a>
+            <a href="procurement.html">Government Procurement</a>
+            <a href="training.html">Business Training</a>
+            <a href="resources.html">Business Resources</a>
+            <a href="contact.html">Contact Support</a>
+        </div>
+        <p>&copy; 2026 Zamfara State Ministry of Commerce & Industry - SME Development Unit</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">
+            Partner Agencies: SMEDAN • BOI • CAC • NITDA • UNDP • World Bank
+        </p>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" role="alert" aria-live="polite">
+        <div class="loading-spinner" aria-label="Loading"></div>
+        <div class="loading-text" id="loadingText">Accessing business dashboard...</div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // DOM Elements
+        const loginForm = document.getElementById('login-form');
+        const businessIdInput = document.getElementById('businessId');
+        const passwordInput = document.getElementById('password');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const rememberMe = document.getElementById('rememberMe');
+        const rememberCheckbox = rememberMe.querySelector('.remember-checkbox');
+        const loginButton = document.getElementById('loginButton');
+        const quickGrantBtn = document.getElementById('quickGrantBtn');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const loadingText = document.getElementById('loadingText');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+        // Business Session Manager
+        const businessSession = {
+            saveCredentials: (businessId, remember) => {
+                if (remember) {
+                    localStorage.setItem('rememberedBusinessId', businessId);
+                    localStorage.setItem('rememberMeBusiness', 'true');
+                } else {
+                    localStorage.removeItem('rememberedBusinessId');
+                    localStorage.removeItem('rememberMeBusiness');
+                }
+            },
+            getRememberedCredentials: () => {
+                const remembered = localStorage.getItem('rememberMeBusiness') === 'true';
+                const businessId = localStorage.getItem('rememberedBusinessId');
+                return { remembered, businessId };
+            },
+            clearSession: () => {
+                sessionStorage.clear();
+                localStorage.removeItem('rememberedBusinessId');
+                localStorage.removeItem('rememberMeBusiness');
+                localStorage.removeItem('lastBusinessActivity');
+            },
+            trackActivity: () => {
+                localStorage.setItem('lastBusinessActivity', Date.now());
+            },
+            getBusinessType: () => {
+                return localStorage.getItem('businessType') || 'general';
+            }
+        };
+
+        // Initialize form with remembered credentials
+        function initializeForm() {
+            const { remembered, businessId } = businessSession.getRememberedCredentials();
+            if (remembered && businessId) {
+                businessIdInput.value = businessId;
+                rememberCheckbox.classList.add('checked');
+                rememberCheckbox.setAttribute('aria-checked', 'true');
+                passwordInput.focus();
+            } else {
+                businessIdInput.focus();
+            }
+        }
+
+        // Password Visibility Toggle
+        function togglePasswordVisibility() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            const icon = togglePasswordBtn.querySelector('i');
+            const label = type === 'password' ? 'Show password' : 'Hide password';
+            
+            icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+            togglePasswordBtn.setAttribute('aria-label', label);
+        }
+
+        // Remember Me Toggle
+        function toggleRememberMe() {
+            const isChecked = rememberCheckbox.classList.toggle('checked');
+            rememberCheckbox.setAttribute('aria-checked', isChecked.toString());
+        }
+
+        // Form Validation
+        function validateForm() {
+            let isValid = true;
+            const errors = {
+                businessId: false,
+                password: false
+            };
+
+            // Reset errors
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.classList.remove('show');
+            });
+            document.querySelectorAll('.form-input').forEach(el => {
+                el.classList.remove('error');
+            });
+
+            // Validate Business ID/Email
+            const businessId = businessIdInput.value.trim();
+            if (!businessId) {
+                showError(businessIdInput, 'businessId-error', 'Business ID or email is required');
+                isValid = false;
+                errors.businessId = true;
+            } else if (!isValidBusinessIdentifier(businessId)) {
+                showError(businessIdInput, 'businessId-error', 'Invalid Business ID or email format');
+                isValid = false;
+                errors.businessId = true;
+            }
+
+            // Validate Password
+            if (!passwordInput.value) {
+                showError(passwordInput, 'password-error', 'Password is required');
+                isValid = false;
+                errors.password = true;
+            } else if (passwordInput.value.length < 8) {
+                showError(passwordInput, 'password-error', 'Password must be at least 8 characters');
+                isValid = false;
+                errors.password = true;
+            }
+
+            return { isValid, errors };
+        }
+
+        function isValidBusinessIdentifier(identifier) {
+            // Check if it's an email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailRegex.test(identifier)) return true;
+            
+            // Check if it's a Business ID (ZAM-BIZ-XXXXX)
+            const bizIdRegex = /^ZAM-BIZ-[A-Z0-9]{5,10}$/i;
+            return bizIdRegex.test(identifier);
+        }
+
+        // Show Error Function
+        function showError(inputElement, errorId, message) {
+            const errorElement = document.getElementById(errorId);
+            errorElement.querySelector('span').textContent = message;
+            errorElement.classList.add('show');
+            inputElement.classList.add('error');
+            inputElement.classList.add('shake');
+            
+            setTimeout(() => {
+                inputElement.classList.remove('shake');
+            }, 500);
+        }
+
+        // Show Loading State
+        function showLoading(show, message = 'Accessing business dashboard...') {
+            if (show) {
+                loadingOverlay.classList.add('active');
+                loadingOverlay.setAttribute('aria-hidden', 'false');
+                loadingText.textContent = message;
+                loginButton.classList.add('btn-loading');
+            } else {
+                loadingOverlay.classList.remove('active');
+                loadingOverlay.setAttribute('aria-hidden', 'true');
+                loginButton.classList.remove('btn-loading');
+            }
+        }
+
+        // Show Notification
+        function showNotification(message, type = 'info') {
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(n => n.remove());
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.setAttribute('role', 'alert');
+            notification.setAttribute('aria-live', 'assertive');
+            
+            const icon = type === 'success' ? 'check-circle' : 
+                         type === 'error' ? 'exclamation-circle' : 
+                         type === 'warning' ? 'exclamation-triangle' : 'info-circle';
+            
+            notification.innerHTML = `
+                <i class="fas fa-${icon}" aria-hidden="true"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+
+        // Simulate Business Login
+        async function simulateBusinessLogin(businessId, password) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    // Mock business credentials
+                    const validBusinesses = {
+                        'ZAM-BIZ-001': 'business123',
+                        'ZAM-BIZ-002': 'enterprise456',
+                        'ZAM-BIZ-003': 'secure789',
+                        'agribiz@zamfara.com': 'agri2026',
+                        'manufacturing@zamfara.com': 'manufacture2026',
+                        'DEMOBIZ': 'demo123'  // Demo account
+                    };
+
+                    if (validBusinesses[businessId] === password) {
+                        const businessData = getBusinessData(businessId);
+                        resolve({
+                            success: true,
+                            data: businessData
+                        });
+                    } else {
+                        reject({
+                            success: false,
+                            error: 'Invalid Business ID or password'
+                        });
+                    }
+                }, 1500);
+            });
+        }
+
+        function getBusinessData(businessId) {
+            const businessTypes = {
+                'ZAM-BIZ-001': 'agriculture',
+                'ZAM-BIZ-002': 'manufacturing',
+                'ZAM-BIZ-003': 'retail',
+                'agribiz@zamfara.com': 'agriculture',
+                'manufacturing@zamfara.com': 'manufacturing',
+                'DEMOBIZ': 'general'
+            };
+
+            const type = businessTypes[businessId] || 'general';
+            
+            return {
+                businessId,
+                businessName: type === 'agriculture' ? 'Green Fields Agribusiness Ltd' :
+                             type === 'manufacturing' ? 'Zamfara Manufacturing Co.' :
+                             type === 'retail' ? 'Gusau Retail Hub' : 'Demo Business Ltd',
+                businessType: type,
+                ownerName: 'Musa Abdullahi',
+                registrationDate: '2023-05-15',
+                lastLogin: new Date().toISOString(),
+                grantApplications: 3,
+                activeContracts: 2,
+                trainingCompleted: 5,
+                businessRating: 4.5
+            };
+        }
+
+        // Form Submission Handler
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const { isValid, errors } = validateForm();
+            if (!isValid) {
+                if (errors.businessId) businessIdInput.focus();
+                else if (errors.password) passwordInput.focus();
+                return;
+            }
+
+            const businessId = businessIdInput.value.trim();
+            const password = passwordInput.value;
+            const remember = rememberCheckbox.classList.contains('checked');
+
+            showLoading(true);
+
+            try {
+                // Save credentials if "Remember me" is checked
+                businessSession.saveCredentials(businessId, remember);
+
+                // Simulate API call
+                const response = await simulateBusinessLogin(businessId, password);
+                
+                if (response.success) {
+                    // Save business data
+                    sessionStorage.setItem('businessData', JSON.stringify(response.data));
+                    sessionStorage.setItem('businessAuthenticated', 'true');
+                    sessionStorage.setItem('loginTime', Date.now());
+                    
+                    // Save business type for personalized experience
+                    localStorage.setItem('businessType', response.data.businessType);
+
+                    // Track activity
+                    businessSession.trackActivity();
+
+                    // Track login analytics
+                    trackBusinessLogin(response.data);
+
+                    showNotification('Accessing your business dashboard...', 'success');
+
+                    // Personalize welcome message based on business type
+                    const welcomeMessage = getWelcomeMessage(response.data.businessType);
+                    loadingText.textContent = welcomeMessage;
+
+                    setTimeout(() => {
+                        window.location.href = 'Sme Dashboard.html';
+                    }, 2000);
+
+                } else {
+                    throw new Error('Authentication failed');
+                }
+
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                let errorMessage = 'Login failed. Please try again.';
+                if (error.error) errorMessage = error.error;
+                
+                showNotification(errorMessage, 'error');
+                
+                // Clear password field on error
+                passwordInput.value = '';
+                passwordInput.focus();
+                
+                // Track failed attempts
+                const failedAttempts = parseInt(sessionStorage.getItem('failedLoginAttempts') || '0') + 1;
+                sessionStorage.setItem('failedLoginAttempts', failedAttempts.toString());
+                
+                if (failedAttempts >= 3) {
+                    showNotification('Multiple failed attempts. Try demo account: DEMOBIZ / demo123', 'warning');
+                }
+
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function getWelcomeMessage(businessType) {
+            const messages = {
+                'agriculture': 'Loading agribusiness tools and farm grants...',
+                'manufacturing': 'Accessing manufacturing support and equipment loans...',
+                'retail': 'Opening retail management and market access tools...',
+                'services': 'Loading service business resources and client management...',
+                'general': 'Accessing comprehensive business dashboard...'
+            };
+            return messages[businessType] || messages.general;
+        }
+
+        // Quick Grant Application
+        function startQuickGrant() {
+            const businessType = businessSession.getBusinessType();
+            
+            showLoading(true, 'Preparing grant application form...');
+            
+            setTimeout(() => {
+                // Determine appropriate grant based on business type
+                const grantType = businessType === 'agriculture' ? 'agribusiness' :
+                                 businessType === 'manufacturing' ? 'manufacturing' :
+                                 businessType === 'retail' ? 'retail' : 'general';
+                
+                showNotification(`Starting ${grantType} grant application...`, 'info');
+                
+                setTimeout(() => {
+                    window.location.href = `grant-application.html?type=${grantType}&quick=true`;
+                }, 1500);
+            }, 1000);
+        }
+
+        // Analytics Tracking
+        function trackBusinessLogin(businessData) {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'businessLogin',
+                'businessType': businessData.businessType,
+                'businessName': businessData.businessName,
+                'grantApplications': businessData.grantApplications,
+                'timestamp': Date.now()
+            });
+
+            // Save login history
+            const loginHistory = JSON.parse(localStorage.getItem('businessLoginHistory') || '[]');
+            loginHistory.push({
+                businessId: businessData.businessId,
+                businessType: businessData.businessType,
+                timestamp: Date.now(),
+                device: navigator.userAgent
+            });
+            localStorage.setItem('businessLoginHistory', JSON.stringify(loginHistory.slice(-50)));
+        }
+
+        // Business Type Quick Login
+        function setupBusinessQuickLogin() {
+            const businessOptions = document.querySelectorAll('.business-option');
+            
+            businessOptions.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    const businessType = option.querySelector('span').textContent.toLowerCase();
+                    localStorage.setItem('preferredBusinessType', businessType);
+                    
+                    showNotification(`Setting up ${businessType} business view...`, 'info');
+                    
+                    // Auto-fill demo credentials for quick access
+                    if (businessType === 'agriculture') {
+                        businessIdInput.value = 'agribiz@zamfara.com';
+                        showNotification('Demo agriculture account loaded. Enter password: agri2026', 'info');
+                    } else if (businessType === 'manufacturing') {
+                        businessIdInput.value = 'manufacturing@zamfara.com';
+                        showNotification('Demo manufacturing account loaded. Enter password: manufacture2026', 'info');
+                    }
+                    
+                    passwordInput.focus();
+                });
+            });
+        }
+
+        // Event Listeners
+        togglePasswordBtn.addEventListener('click', togglePasswordVisibility);
+        togglePasswordBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                togglePasswordVisibility();
+            }
+        });
+
+        rememberCheckbox.addEventListener('click', toggleRememberMe);
+        rememberCheckbox.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleRememberMe();
+            }
+        });
+
+        loginForm.addEventListener('submit', handleLogin);
+        quickGrantBtn.addEventListener('click', startQuickGrant);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+Enter to submit form
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                loginForm.requestSubmit();
+            }
+            
+            // Ctrl+G for quick grant
+            if (e.ctrlKey && e.key === 'g') {
+                e.preventDefault();
+                startQuickGrant();
+            }
+            
+            // Ctrl+D for demo account
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                businessIdInput.value = 'DEMOBIZ';
+                passwordInput.value = 'demo123';
+                showNotification('Demo account loaded. Press Ctrl+Enter to login.', 'info');
+            }
+            
+            // Escape to clear form
+            if (e.key === 'Escape') {
+                businessIdInput.value = '';
+                passwordInput.value = '';
+                businessIdInput.focus();
+            }
+        });
+
+        // Real-time validation
+        businessIdInput.addEventListener('blur', () => {
+            const value = businessIdInput.value.trim();
+            if (value && !isValidBusinessIdentifier(value)) {
+                showError(businessIdInput, 'businessId-error', 'Format: Business ID (ZAM-BIZ-XXXXX) or email');
+            }
+        });
+
+        passwordInput.addEventListener('input', () => {
+            const errorElement = document.getElementById('password-error');
+            if (passwordInput.value && errorElement.classList.contains('show')) {
+                errorElement.classList.remove('show');
+                passwordInput.classList.remove('error');
+            }
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeForm();
+            setupBusinessQuickLogin();
+            
+            // Check for session expiry
+            const loginTime = sessionStorage.getItem('loginTime');
+            if (loginTime && (Date.now() - parseInt(loginTime)) > 7200000) { // 2 hours
+                businessSession.clearSession();
+                showNotification('Your session has expired. Please login again.', 'warning');
+            }
+
+            // Check URL parameters for messages
+            const urlParams = new URLSearchParams(window.location.search);
+            const message = urlParams.get('message');
+            if (message === 'registered') {
+                showNotification('Business registration successful! Please login.', 'success');
+            } else if (message === 'grant_submitted') {
+                showNotification('Grant application submitted successfully!', 'success');
+            } else if (message === 'contract_awarded') {
+                showNotification('Congratulations! You have been awarded a government contract.', 'success');
+            }
+
+            // Auto-fill demo on triple click
+            businessIdInput.addEventListener('click', (e) => {
+                if (e.detail === 3) { // Triple click
+                    businessIdInput.value = 'DEMOBIZ';
+                    passwordInput.value = 'demo123';
+                    showNotification('Demo account loaded. Press Login to continue.', 'info');
+                }
+            });
+        });
+
+        // Network status detection
+        window.addEventListener('online', () => {
+            showNotification('Back online! Syncing your business data...', 'success');
+        });
+
+        window.addEventListener('offline', () => {
+            showNotification('You are offline. Some features may be limited.', 'warning');
+        });
+
+        // Error handling
+        window.addEventListener('error', (event) => {
+            console.error('Error:', event.error);
+            showNotification('An error occurred. Please refresh the page.', 'error');
+        });
+
+        window.addEventListener('unhandledrejection', (event) => {
+            console.error('Unhandled Promise Rejection:', event.reason);
+            showNotification('An unexpected error occurred.', 'error');
+        });
+
+        // Accessibility improvements
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-navigation');
+            }
+        });
+
+        document.addEventListener('mousedown', () => {
+            document.body.classList.remove('keyboard-navigation');
+        });
+
+        // Service Worker Registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw-sme-login.js')
+                    .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+
+        // Grant countdown timer
+        function updateGrantDeadlines() {
+            const deadlines = document.querySelectorAll('.grant-info p');
+            deadlines.forEach(deadline => {
+                const text = deadline.textContent;
+                if (text.includes('Deadline:')) {
+                    // In a real app, you would calculate days remaining
+                    // For demo, we'll just show the date
+                }
+            });
+        }
+
+        // Update platform stats periodically
+        function updatePlatformStats() {
+            // In a real app, this would fetch live data
+            // For demo, we'll simulate some changes
+            setTimeout(() => {
+                const statValue = document.querySelector('.stat-value');
+                if (statValue) {
+                    // Animate number increment
+                    animateNumber(statValue, 2847, 2850);
+                }
+            }, 5000);
+        }
+
+        function animateNumber(element, start, end) {
+            let current = start;
+            const increment = end > start ? 1 : -1;
+            const timer = setInterval(() => {
+                current += increment;
+                element.textContent = current.toLocaleString();
+                if (current === end) clearInterval(timer);
+            }, 50);
+        }
+
+        // Initialize updates
+        updateGrantDeadlines();
+        updatePlatformStats();
+    </script>
+</body>
+</html>

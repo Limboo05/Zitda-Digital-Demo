@@ -1,0 +1,2520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zamfara Youth Connect | Career & Skills Platform</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            /* Zamfara Professional Theme */
+            --primary-green: #006837;
+            --secondary-green: #00A859;
+            --accent-green: #4CD964;
+            --dark-green: #004225;
+            --gold-accent: #FFD700;
+            --professional-blue: #1a5f7a;
+            --entrepreneur-orange: #f4a261;
+            
+            /* Professional Dashboard Colors */
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-sidebar: #1e293b;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            
+            /* Status Colors */
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #3b82f6;
+            
+            /* Category Colors */
+            --tech-color: #06b6d4;
+            --agri-color: #22c55e;
+            --business-color: #8b5cf6;
+            --govt-color: #3b82f6;
+            --education-color: #f59e0b;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--primary-green), var(--professional-blue));
+            --gradient-success: linear-gradient(135deg, var(--success-color), var(--accent-green));
+            --gradient-warning: linear-gradient(135deg, var(--warning-color), var(--entrepreneur-orange));
+            --gradient-tech: linear-gradient(135deg, var(--tech-color), #6366f1);
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --shadow-green: 0 10px 30px rgba(0, 104, 55, 0.2);
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-logo {
+            width: 120px;
+            height: 120px;
+            background: var(--gradient-primary);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .loading-logo i {
+            font-size: 3rem;
+            color: white;
+        }
+
+        .loading-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .loading-subtext {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            text-align: center;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+    /* Sidebar */
+.sidebar {
+    width: 280px;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: var(--shadow-md);
+    overflow-y: auto; /* Enable scrolling */
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.active {
+    transform: translateX(0);
+}
+
+.sidebar-brand {
+    padding: 1.5rem 1.5rem 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+    flex-shrink: 0; /* Prevent brand from shrinking */
+}
+
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .brand-text h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-text p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* User Profile in Sidebar */
+.sidebar-profile {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(0, 104, 55, 0.1), rgba(26, 95, 122, 0.1));
+    border-radius: var(--radius-lg);
+    margin: 1rem 1.5rem;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0; /* Prevent profile from shrinking */
+}
+
+        .sidebar-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .user-level {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--gold-accent);
+            color: var(--dark-green);
+            font-size: 0.75rem;
+            font-weight: 700;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid white;
+        }
+
+        .sidebar-profile h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar-profile p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .profile-status {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Sidebar Navigation */
+.sidebar-nav {
+    flex: 1; /* Take up remaining space */
+    overflow-y: auto; /* Enable scrolling for nav */
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+}
+
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            padding: 0 1rem;
+        }
+
+        .nav-items {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.875rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+            position: relative;
+            border: 1px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: rgba(0, 104, 55, 0.05);
+            color: var(--primary-green);
+            transform: translateX(5px);
+            border-color: rgba(0, 104, 55, 0.1);
+        }
+
+        .nav-link.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-green);
+            border-color: var(--primary-green);
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 60%;
+            background: var(--gold-accent);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 1.125rem;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--accent-green);
+            color: var(--dark-green);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-full);
+            min-width: 24px;
+            text-align: center;
+        }
+* Quick Stats Sidebar */
+.sidebar-stats {
+    padding: 1.5rem;
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    margin: 0 1.5rem 1.5rem;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0; /* Prevent stats from shrinking */
+}
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stat-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-value {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.125rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 0;
+            padding: 1.5rem;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar.active ~ .main-content {
+            margin-left: 280px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .menu-toggle {
+            background: var(--gradient-primary);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            box-shadow: var(--shadow-green);
+        }
+
+        .menu-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            transition: var(--transition-fast);
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--accent-green);
+            box-shadow: 0 0 0 3px rgba(76, 217, 100, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: var(--transition-fast);
+        }
+
+        .action-btn:hover {
+            background: var(--primary-green);
+            color: white;
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-green);
+        }
+
+        .action-btn i {
+            font-size: 1rem;
+        }
+
+        /* Notification & Profile */
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-left: 2rem;
+        }
+
+        .notification-btn {
+            position: relative;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: var(--transition-fast);
+        }
+
+        .notification-btn:hover {
+            color: var(--primary-green);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--danger-color);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding-right: 1rem;
+        }
+
+        .user-profile-btn:hover {
+            background: rgba(0, 104, 55, 0.05);
+            border-color: var(--primary-green);
+        }
+
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .user-info-small h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.125rem;
+        }
+
+        .user-info-small p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Welcome Hero */
+        .welcome-hero {
+            background: linear-gradient(135deg, rgba(0, 104, 55, 0.1), rgba(26, 95, 122, 0.1));
+            border-radius: var(--radius-xl);
+            padding: 3rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 104, 55, 0.2);
+        }
+
+        .welcome-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300A859' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .welcome-content h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.75rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .welcome-content h1 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-content p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .hero-stat .label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .hero-illustration {
+            width: 250px;
+            height: 250px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-left: 2rem;
+        }
+
+        .hero-illustration::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .hero-illustration i {
+            font-size: 6rem;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Dashboard Sections */
+        .dashboard-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .dashboard-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 2rem 0 1.5rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .section-header h2 i {
+            margin-right: 0.75rem;
+            color: var(--primary-green);
+        }
+
+        .view-all {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: var(--transition-fast);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .view-all:hover {
+            background: var(--primary-green);
+            color: white;
+            border-color: var(--primary-green);
+            transform: translateX(5px);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition-normal);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-green);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            padding: 1.5rem 1.5rem 0;
+        }
+
+        .card-category {
+            display: inline-block;
+            background: rgba(0, 104, 55, 0.1);
+            color: var(--primary-green);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-footer {
+            padding: 1rem 1.5rem;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Job Cards */
+        .job-card .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .job-type {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .job-company {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .company-logo {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-tech);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .company-info h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.125rem;
+        }
+
+        .company-info p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .job-details {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Skill Cards */
+        .skill-card {
+            text-align: center;
+        }
+
+        .skill-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .skill-progress {
+            margin: 1rem 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-success);
+            border-radius: 4px;
+            width: 0;
+            transition: width 1s ease;
+        }
+
+        /* Course Cards */
+        .course-card .card-header {
+            min-height: 180px;
+            background: linear-gradient(135deg, var(--dark-green), var(--professional-blue));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        .course-level {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .course-card .card-title {
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .course-card .card-description {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .course-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 1rem 0;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Entrepreneur Cards */
+        .entrepreneur-card {
+            text-align: center;
+        }
+
+        .funding-badge {
+            background: var(--gradient-warning);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition-normal);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-green);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 104, 55, 0.05);
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--gradient-success);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--gradient-warning);
+            color: white;
+        }
+
+        /* Charts Container */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chart-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Skills Radar */
+        .skills-radar-container {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .radar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .radar-header h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .radar-container {
+            height: 400px;
+            position: relative;
+        }
+
+        /* Opportunity Map */
+        .opportunity-map {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            height: 500px;
+            position: relative;
+        }
+
+        .map-container {
+            height: 100%;
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .map-point {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .map-point:hover {
+            transform: translate(-50%, -50%) scale(1.5);
+            background: var(--accent-green);
+        }
+
+        .map-point::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: pulse 2s infinite;
+        }
+
+        /* Business Plan Builder */
+        .business-builder {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .builder-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .builder-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            transition: var(--transition-normal);
+        }
+
+        .step.active .step-number {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary-green);
+        }
+
+        .step-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .step.active .step-label {
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+
+        .builder-content {
+            padding: 2rem;
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0 !important;
+            }
+            
+            .cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .welcome-hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+            }
+            
+            .hero-illustration {
+                margin: 2rem 0 0;
+                width: 200px;
+                height: 200px;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .search-container {
+                order: 3;
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .quick-actions {
+                display: none;
+            }
+            
+            .user-actions {
+                margin-left: 0;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .welcome-content h1 {
+                font-size: 2rem;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-container {
+                padding: 1rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .top-nav {
+                padding: 1rem;
+            }
+            
+            .welcome-hero {
+                padding: 1.5rem;
+            }
+            
+            .hero-illustration {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .hero-illustration i {
+                font-size: 4rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">
+            <i class="fas fa-hands-helping"></i>
+        </div>
+        <div class="loading-text">Zamfara Youth Connect</div>
+        <div class="loading-subtext">
+            Empowering Zamfara's youth with skills, opportunities, and entrepreneurship
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div class="dashboard-container" id="dashboardContainer">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <a href="#" class="brand-logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="brand-text">
+                        <h2>Zamfara Youth</h2>
+                        <p>Career & Skills Platform</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- User Profile -->
+            <div class="sidebar-profile">
+                <div class="sidebar-avatar">
+                    AS
+                    <div class="user-level">12</div>
+                </div>
+                <h4>Ahmad Sani</h4>
+                <p>Graduate | Computer Science</p>
+                <span class="profile-status">Active Seeker</span>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3 class="section-title">Career Development</h3>
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard')">
+                                <i class="fas fa-home nav-icon"></i>
+                                <span>Dashboard Overview</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#skills" class="nav-link" onclick="showSection('skills')">
+                                <i class="fas fa-brain nav-icon"></i>
+                                <span>Skills Gap Analyzer</span>
+                                <span class="nav-badge">3</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#jobs" class="nav-link" onclick="showSection('jobs')">
+                                <i class="fas fa-briefcase nav-icon"></i>
+                                <span>Job Matching Engine</span>
+                                <span class="nav-badge">12</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#career" class="nav-link" onclick="showSection('career')">
+                                <i class="fas fa-road nav-icon"></i>
+                                <span>Career Path Explorer</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="section-title">Digital Skills</h3>
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a href="#certifications" class="nav-link" onclick="showSection('certifications')">
+                                <i class="fas fa-certificate nav-icon"></i>
+                                <span>Professional Certifications</span>
+                                <span class="nav-badge">4</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#entrepreneurship" class="nav-link" onclick="showSection('entrepreneurship')">
+                                <i class="fas fa-lightbulb nav-icon"></i>
+                                <span>Entrepreneurship Training</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#specialized" class="nav-link" onclick="showSection('specialized')">
+                                <i class="fas fa-laptop-code nav-icon"></i>
+                                <span>Specialized Tracks</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="section-title">Entrepreneurship</h3>
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a href="#incubator" class="nav-link" onclick="showSection('incubator')">
+                                <i class="fas fa-seedling nav-icon"></i>
+                                <span>Business Incubator</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#marketplace" class="nav-link" onclick="showSection('marketplace')">
+                                <i class="fas fa-store nav-icon"></i>
+                                <span>Market Access Platform</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#finance" class="nav-link" onclick="showSection('finance')">
+                                <i class="fas fa-chart-line nav-icon"></i>
+                                <span>Financial Management</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="section-title">Community</h3>
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a href="#networking" class="nav-link" onclick="showSection('networking')">
+                                <i class="fas fa-users nav-icon"></i>
+                                <span>Professional Networking</span>
+                                <span class="nav-badge">5</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#volunteer" class="nav-link" onclick="showSection('volunteer')">
+                                <i class="fas fa-hands-helping nav-icon"></i>
+                                <span>Volunteer Portal</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#challenges" class="nav-link" onclick="showSection('challenges')">
+                                <i class="fas fa-trophy nav-icon"></i>
+                                <span>Innovation Challenges</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">
+                            <i class="fas fa-bullseye"></i>
+                            Job Readiness
+                        </span>
+                        <span class="stat-value">85%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">
+                            <i class="fas fa-clock"></i>
+                            Learning Hours
+                        </span>
+                        <span class="stat-value">142h</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">
+                            <i class="fas fa-network-wired"></i>
+                            Network
+                        </span>
+                        <span class="stat-value">45</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">
+                            <i class="fas fa-coins"></i>
+                            Opportunities
+                        </span>
+                        <span class="stat-value">18</span>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navigation -->
+            <div class="top-nav">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="Search jobs, courses, mentors...">
+                </div>
+                
+                <div class="quick-actions">
+                    <a href="#jobs" class="action-btn" onclick="showSection('jobs')">
+                        <i class="fas fa-briefcase"></i>
+                        Find Jobs
+                    </a>
+                    <a href="#certifications" class="action-btn" onclick="showSection('certifications')">
+                        <i class="fas fa-graduation-cap"></i>
+                        Get Certified
+                    </a>
+                    <a href="#incubator" class="action-btn" onclick="showSection('incubator')">
+                        <i class="fas fa-lightbulb"></i>
+                        Start Business
+                    </a>
+                </div>
+                
+                <div class="user-actions">
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">5</span>
+                    </button>
+                    
+                    <div class="user-profile-btn" onclick="showSection('profile')">
+                        <div class="user-avatar-small">AS</div>
+                        <div class="user-info-small">
+                            <h4>Ahmad Sani</h4>
+                            <p>Graduate</p>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Overview Section -->
+            <section class="dashboard-section active" id="dashboardSection">
+                <!-- Welcome Hero -->
+                <div class="welcome-hero">
+                    <div class="welcome-content">
+                        <h1>Welcome back, <span>Ahmad!</span> 👋</h1>
+                        <p>Your journey to professional success in Zamfara continues. Today's focus: Complete your Digital Marketing certification and explore 3 new job opportunities.</p>
+                        
+                        <div class="hero-stats">
+                            <div class="hero-stat">
+                                <div class="number">85%</div>
+                                <div class="label">Job Readiness</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="number">
+                                    12
+                                    <i class="fas fa-fire" style="color: var(--warning-color);"></i>
+                                </div>
+                                <div class="label">Learning Streak</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="number">₦45k</div>
+                                <div class="label">Projected Income</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="number">#3</div>
+                                <div class="label">Local Ranking</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-illustration">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Job Matches Today</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: var(--gradient-tech);">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value">65%</div>
+                            <div class="stat-label">Digital Skills Progress</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: var(--gradient-warning);">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value">₦150k</div>
+                            <div class="stat-label">Business Funding Access</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: var(--gradient-success);">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">Mentor Connections</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <h3>Skills Demand in Zamfara</h3>
+                        <div class="chart-container">
+                            <canvas id="skillsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Monthly Opportunities</h3>
+                        <div class="chart-container">
+                            <canvas id="opportunitiesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Opportunities -->
+                <div class="section-header">
+                    <h2><i class="fas fa-bullseye"></i> Top Opportunities for You</h2>
+                    <a href="#jobs" class="view-all" onclick="showSection('jobs')">
+                        View All Opportunities
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="cards-grid">
+                    <!-- Job Card 1 -->
+                    <div class="card job-card">
+                        <div class="card-header">
+                            <span class="card-category">Technology</span>
+                            <span class="job-type">Full-time</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="job-company">
+                                <div class="company-logo">ZT</div>
+                                <div class="company-info">
+                                    <h4>Zamfara Tech Hub</h4>
+                                    <p>Gusau, Zamfara</p>
+                                </div>
+                            </div>
+                            <h3 class="card-title">Frontend Developer</h3>
+                            <p class="card-description">Build responsive web applications for local businesses. HTML, CSS, JavaScript required.</p>
+                            <div class="job-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <span>₦85,000/month</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Gusau</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Remote Options</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span style="font-size: 0.875rem; color: var(--text-secondary);">
+                                <i class="fas fa-bolt" style="color: var(--warning-color);"></i>
+                                Apply by: Oct 30
+                            </span>
+                            <button class="btn btn-primary">
+                                Apply Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Course Card -->
+                    <div class="card course-card">
+                        <div class="card-header">
+                            <span class="course-level">Beginner</span>
+                            <h3 class="card-title">Digital Marketing Certification</h3>
+                            <p class="card-description">Master social media, SEO, and content marketing for Zamfara businesses.</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="skill-progress">
+                                <div class="progress-label">
+                                    <span>Your Progress</span>
+                                    <span>65%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%"></div>
+                                </div>
+                            </div>
+                            <div class="course-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-play-circle"></i>
+                                    <span>8 Modules</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>20 hours</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Google Certified</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-success">
+                                <i class="fas fa-play"></i>
+                                Continue
+                            </button>
+                            <button class="btn btn-secondary">
+                                Share
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Entrepreneur Card -->
+                    <div class="card entrepreneur-card">
+                        <div class="card-header">
+                            <span class="funding-badge">Funding Available</span>
+                            <h3 class="card-title">AgriTech Business Grant</h3>
+                            <p class="card-description">₦500,000 grant for agricultural technology startups in Zamfara State.</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="skill-progress">
+                                <div class="progress-label">
+                                    <span>Application Progress</span>
+                                    <span>40%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 40%"></div>
+                                </div>
+                            </div>
+                            <div class="course-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Deadline: Nov 15</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>15 Awards</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="fas fa-handshake"></i>
+                                    <span>Mentorship</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-warning">
+                                <i class="fas fa-rocket"></i>
+                                Apply for Grant
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills Gap Analyzer Section -->
+            <section class="dashboard-section" id="skillsSection">
+                <div class="section-header">
+                    <h2><i class="fas fa-brain"></i> Skills Gap Analyzer</h2>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-sync-alt"></i>
+                        Update Assessment
+                    </button>
+                </div>
+
+                <div class="skills-radar-container">
+                    <div class="radar-header">
+                        <h3>Your Skills vs. Market Demand</h3>
+                        <div style="display: flex; gap: 1rem;">
+                            <select class="btn btn-secondary" style="padding: 0.75rem 1rem;">
+                                <option>Zamfara Market</option>
+                                <option>National Market</option>
+                                <option>Global Market</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="radar-container">
+                        <canvas id="skillsRadar"></canvas>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h3>Personalized Learning Roadmap</h3>
+                    <button class="btn btn-success">
+                        <i class="fas fa-download"></i>
+                        Download Plan
+                    </button>
+                </div>
+
+                <div class="cards-grid">
+                    <div class="card skill-card">
+                        <div class="skill-icon" style="background: var(--gradient-tech);">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Web Development</h3>
+                            <p class="card-description">High demand in Zamfara's growing tech sector</p>
+                            <div class="skill-progress">
+                                <div class="progress-label">
+                                    <span>Your Level</span>
+                                    <span>65%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%; background: var(--tech-color);"></div>
+                                </div>
+                            </div>
+                            <div class="course-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>40 hours needed</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-play"></i>
+                                Start Learning
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card skill-card">
+                        <div class="skill-icon" style="background: linear-gradient(135deg, var(--agri-color), #16a34a);">
+                            <i class="fas fa-tractor"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">AgriTech Skills</h3>
+                            <p class="card-description">Essential for Zamfara's agricultural sector</p>
+                            <div class="skill-progress">
+                                <div class="progress-label">
+                                    <span>Your Level</span>
+                                    <span>45%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 45%; background: var(--agri-color);"></div>
+                                </div>
+                            </div>
+                            <div class="course-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>25 hours needed</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-play"></i>
+                                Start Learning
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card skill-card">
+                        <div class="skill-icon" style="background: linear-gradient(135deg, var(--business-color), #a855f7);">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Business Management</h3>
+                            <p class="card-description">Critical for entrepreneurship success</p>
+                            <div class="skill-progress">
+                                <div class="progress-label">
+                                    <span>Your Level</span>
+                                    <span>70%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 70%; background: var(--business-color);"></div>
+                                </div>
+                            </div>
+                            <div class="course-meta">
+                                <div class="meta-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>15 hours needed</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-play"></i>
+                                Start Learning
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Job Matching Engine Section -->
+            <section class="dashboard-section" id="jobsSection">
+                <div class="section-header">
+                    <h2><i class="fas fa-briefcase"></i> Job Matching Engine</h2>
+                    <div style="display: flex; gap: 1rem;">
+                        <select class="btn btn-secondary" style="padding: 0.75rem 1rem;">
+                            <option>All Locations</option>
+                            <option>Gusau</option>
+                            <option>Kaura Namoda</option>
+                            <option>Anka</option>
+                            <option>Remote</option>
+                        </select>
+                        <select class="btn btn-secondary" style="padding: 0.75rem 1rem;">
+                            <option>All Categories</option>
+                            <option>Technology</option>
+                            <option>Agriculture</option>
+                            <option>Education</option>
+                            <option>Government</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Opportunity Map -->
+                <div class="opportunity-map">
+                    <div class="map-container" id="zamfaraMap">
+                        <div class="map-point" style="top: 30%; left: 40%;" title="Gusau - 8 Jobs"></div>
+                        <div class="map-point" style="top: 45%; left: 60%;" title="Kaura Namoda - 3 Jobs"></div>
+                        <div class="map-point" style="top: 60%; left: 35%;" title="Anka - 2 Jobs"></div>
+                        <div class="map-point" style="top: 40%; left: 25%;" title="Talata Mafara - 4 Jobs"></div>
+                        <div style="text-align: center; position: relative; z-index: 2;">
+                            <i class="fas fa-map-marked-alt" style="font-size: 4rem; color: var(--primary-green);"></i>
+                            <h3 style="margin-top: 1rem;">Zamfara Opportunity Map</h3>
+                            <p style="color: var(--text-secondary);">Click on locations to see opportunities</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cards-grid">
+                    <!-- More job cards would be loaded here -->
+                </div>
+            </section>
+
+            <!-- Entrepreneurship Training Section -->
+            <section class="dashboard-section" id="entrepreneurshipSection">
+                <div class="section-header">
+                    <h2><i class="fas fa-lightbulb"></i> Entrepreneurship Training</h2>
+                    <button class="btn btn-warning">
+                        <i class="fas fa-plus"></i>
+                        Start New Business Plan
+                    </button>
+                </div>
+
+                <div class="business-builder">
+                    <div class="builder-steps">
+                        <div class="step active">
+                            <div class="step-number">1</div>
+                            <div class="step-label">Idea Validation</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-label">Market Research</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Financial Plan</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-label">Funding Strategy</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-label">Launch Plan</div>
+                        </div>
+                    </div>
+
+                    <div class="builder-content">
+                        <h3 style="margin-bottom: 1rem;">Business Idea Validation</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                            Test your business idea with local market data from Zamfara State.
+                        </p>
+                        
+                        <div style="display: grid; gap: 1rem;">
+                            <div>
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Business Idea</label>
+                                <input type="text" class="search-container input" style="width: 100%;" 
+                                       placeholder="Describe your business idea...">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Target Market</label>
+                                <select class="search-container input" style="width: 100%;">
+                                    <option>Select target market in Zamfara</option>
+                                    <option>Agriculture & Farming</option>
+                                    <option>Technology & Digital Services</option>
+                                    <option>Retail & E-commerce</option>
+                                    <option>Education & Training</option>
+                                    <option>Healthcare Services</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Location</label>
+                                <select class="search-container input" style="width: 100%;">
+                                    <option>Select location in Zamfara</option>
+                                    <option>Gusau (Capital)</option>
+                                    <option>Kaura Namoda</option>
+                                    <option>Anka</option>
+                                    <option>Talata Mafara</option>
+                                    <option>Maru</option>
+                                    <option>Bukkuyum</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+                            <button class="btn btn-secondary">
+                                Save Draft
+                            </button>
+                            <button class="btn btn-primary">
+                                Validate Idea
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h3>Success Stories from Zamfara</h3>
+                    <a href="#" class="view-all">
+                        View All Stories
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="cards-grid">
+                    <!-- Success story cards would be loaded here -->
+                </div>
+            </section>
+
+            <!-- Professional Networking Section -->
+            <section class="dashboard-section" id="networkingSection">
+                <div class="section-header">
+                    <h2><i class="fas fa-users"></i> Professional Networking</h2>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i>
+                        Connect with Mentor
+                    </button>
+                </div>
+
+                <div class="cards-grid">
+                    <!-- Mentor cards would be loaded here -->
+                </div>
+            </section>
+
+            <!-- Add more sections similarly -->
+        </main>
+    </div>
+
+    <script>
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loadingScreen');
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    document.getElementById('dashboardContainer').style.opacity = '1';
+                    
+                    // Initialize charts
+                    initializeCharts();
+                    
+                    // Animate progress bars
+                    document.querySelectorAll('.progress-fill').forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 500);
+                    });
+                }, 500);
+            }, 2000);
+        });
+
+        // Sidebar toggle
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.getElementById('menuToggle');
+
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+            menuToggle.innerHTML = sidebar.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>'
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Section navigation
+        function showSection(sectionId) {
+            // Close sidebar on mobile
+            if (window.innerWidth <= 1200) {
+                sidebar.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+
+            // Hide all sections
+            document.querySelectorAll('.dashboard-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected section
+            const targetSection = document.getElementById(sectionId + 'Section');
+            if (targetSection) {
+                targetSection.classList.add('active');
+                
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                document.querySelector(`[onclick="showSection('${sectionId}')"]`).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Show notification
+                showNotification(`Switched to ${getSectionName(sectionId)}`);
+            }
+        }
+
+        function getSectionName(sectionId) {
+            const names = {
+                'dashboard': 'Dashboard',
+                'skills': 'Skills Analyzer',
+                'jobs': 'Job Matching',
+                'certifications': 'Certifications',
+                'entrepreneurship': 'Entrepreneurship',
+                'networking': 'Networking'
+            };
+            return names[sectionId] || sectionId;
+        }
+
+        // Notification system
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--gradient-primary);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: var(--radius-md);
+                box-shadow: var(--shadow-lg);
+                z-index: 1000;
+                animation: slideIn 0.3s ease-out;
+                max-width: 300px;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            `;
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Add notification animation keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize Charts
+        function initializeCharts() {
+            // Skills Demand Chart
+            const skillsCtx = document.getElementById('skillsChart').getContext('2d');
+            new Chart(skillsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Web Dev', 'Digital Marketing', 'AgriTech', 'Business Mgmt', 'Data Analysis', 'Project Mgmt'],
+                    datasets: [{
+                        label: 'Demand in Zamfara',
+                        data: [85, 78, 92, 65, 72, 68],
+                        backgroundColor: [
+                            'rgba(6, 182, 212, 0.8)',
+                            'rgba(139, 92, 246, 0.8)',
+                            'rgba(34, 197, 94, 0.8)',
+                            'rgba(245, 158, 11, 0.8)',
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(0, 104, 55, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgb(6, 182, 212)',
+                            'rgb(139, 92, 246)',
+                            'rgb(34, 197, 94)',
+                            'rgb(245, 158, 11)',
+                            'rgb(59, 130, 246)',
+                            'rgb(0, 104, 55)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Demand Score'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Top Skills Demand in Zamfara'
+                        }
+                    }
+                }
+            });
+
+            // Opportunities Chart
+            const oppCtx = document.getElementById('opportunitiesChart').getContext('2d');
+            new Chart(oppCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                    datasets: [{
+                        label: 'Job Opportunities',
+                        data: [45, 52, 48, 55, 62, 58, 65, 72, 68, 75],
+                        borderColor: 'rgb(0, 104, 55)',
+                        backgroundColor: 'rgba(0, 104, 55, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Training Programs',
+                        data: [28, 32, 35, 38, 42, 45, 48, 52, 55, 58],
+                        borderColor: 'rgb(26, 95, 122)',
+                        backgroundColor: 'rgba(26, 95, 122, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Opportunities'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Monthly Growth of Opportunities'
+                        }
+                    }
+                }
+            });
+
+            // Skills Radar Chart
+            const radarCtx = document.getElementById('skillsRadar').getContext('2d');
+            new Chart(radarCtx, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        'Technical Skills',
+                        'Digital Literacy',
+                        'Business Acumen',
+                        'Communication',
+                        'Problem Solving',
+                        'Leadership'
+                    ],
+                    datasets: [{
+                        label: 'Your Current Skills',
+                        data: [65, 80, 55, 75, 70, 60],
+                        backgroundColor: 'rgba(0, 168, 89, 0.2)',
+                        borderColor: 'rgb(0, 168, 89)',
+                        borderWidth: 2
+                    }, {
+                        label: 'Market Demand',
+                        data: [85, 75, 80, 85, 80, 75],
+                        backgroundColor: 'rgba(26, 95, 122, 0.2)',
+                        borderColor: 'rgb(26, 95, 122)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                stepSize: 20
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Skills Gap Analysis'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Map point interactions
+        document.querySelectorAll('.map-point').forEach(point => {
+            point.addEventListener('click', function() {
+                const location = this.getAttribute('title');
+                showNotification(`Showing opportunities in ${location}`);
+                showSection('jobs');
+            });
+        });
+
+        // Business builder step interactions
+        document.querySelectorAll('.step').forEach(step => {
+            step.addEventListener('click', function() {
+                document.querySelectorAll('.step').forEach(s => {
+                    s.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers for all buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.btn-primary')) {
+                    const btn = e.target.closest('.btn-primary');
+                    if (btn.textContent.includes('Apply Now') || btn.textContent.includes('Apply for Grant')) {
+                        const card = btn.closest('.card');
+                        const title = card.querySelector('.card-title').textContent;
+                        showNotification(`Application started for: ${title}`);
+                    }
+                    
+                    if (btn.textContent.includes('Continue') || btn.textContent.includes('Start Learning')) {
+                        const card = btn.closest('.card');
+                        const title = card.querySelector('.card-title').textContent;
+                        showNotification(`Starting: ${title}`);
+                    }
+                    
+                    if (btn.textContent.includes('Validate Idea')) {
+                        showNotification('Analyzing your business idea with Zamfara market data...');
+                        setTimeout(() => {
+                            showNotification('Idea validated! 85% market potential in Zamfara.');
+                        }, 2000);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

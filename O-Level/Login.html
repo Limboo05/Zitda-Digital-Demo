@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="s3c7r3t5t9k3n1z9x2v4">
+    <meta name="description" content="Login to Zamfara Student Learning Platform - Access study materials, exam prep, class schedules, and educational resources">
+    <meta name="keywords" content="Zamfara, Student, Login, O-Level, WAEC, NECO, JAMB, Learning Platform">
+    <title>Student Login | Zamfara Educational Platform</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest-student.json">
+    <meta name="theme-color" content="#1a5f7a">
+    <link rel="icon" type="image/x-icon" href="favicon-student.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon-student.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Student Theme - Vibrant Educational Colors */
+            --primary-blue: #1a5f7a;
+            --secondary-blue: #2d8fbd;
+            --accent-blue: #57c1eb;
+            --dark-blue: #0a3d62;
+            --success-green: #00b894;
+            --warning-orange: #fdcb6e;
+            --exam-red: #e17055;
+            --highlight-yellow: #ffeaa7;
+            
+            /* UI Colors */
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.1);
+            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.08);
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+            
+            /* Animation */
+            --float-animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Skip to Main Content */
+        .skip-to-main {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            background: var(--primary-blue);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            z-index: 1000;
+            transition: var(--transition-fast);
+        }
+
+        .skip-to-main:focus {
+            top: 20px;
+            left: 20px;
+            outline: 3px solid var(--highlight-yellow);
+            outline-offset: 2px;
+        }
+
+        /* Header */
+        .login-header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: var(--float-animation);
+        }
+
+        .logo-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .logo-text h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.125rem;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .header-back {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            transition: var(--transition-fast);
+            border: 2px solid transparent;
+        }
+
+        .header-back:hover {
+            color: var(--primary-blue);
+            background: rgba(26, 95, 122, 0.05);
+            transform: translateX(-3px);
+        }
+
+        .header-back:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.2);
+        }
+
+        /* Main Content */
+        .login-container {
+            display: flex;
+            flex: 1;
+            min-height: calc(100vh - 82px);
+        }
+
+        /* Left Panel - Welcome */
+        .welcome-panel {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: white;
+            padding: 4rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(87, 193, 235, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(253, 203, 110, 0.1) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            animation: var(--float-animation);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 1s;
+            background: rgba(253, 203, 110, 0.15);
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 2s;
+            background: rgba(0, 184, 148, 0.15);
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+            max-width: 500px;
+        }
+
+        .welcome-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: pulse-glow 2s infinite;
+        }
+
+        .welcome-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 3rem;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+        }
+
+        .features-list i {
+            color: var(--highlight-yellow);
+            font-size: 1.25rem;
+            margin-top: 0.125rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text h4 {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: var(--highlight-yellow);
+        }
+
+        .feature-text p {
+            opacity: 0.9;
+            font-size: 0.875rem;
+        }
+
+        .exam-countdown {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .exam-countdown h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--highlight-yellow);
+        }
+
+        .countdown-timer {
+            font-family: 'Poppins', monospace;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.75rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 0.5rem;
+        }
+
+        .exam-info {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            text-align: center;
+        }
+
+        /* Right Panel - Login Form */
+        .login-panel {
+            flex: 1;
+            background: var(--bg-secondary);
+            padding: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .login-form-container {
+            width: 100%;
+            max-width: 420px;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .login-header-form {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .login-header-form h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header-form p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Form Styles */
+        .login-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .required {
+            color: var(--danger-color);
+            margin-left: 2px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            padding-right: 45px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.1);
+        }
+
+        .form-input.error {
+            border-color: var(--danger-color);
+        }
+
+        .form-input.success {
+            border-color: var(--success-color);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-blue);
+        }
+
+        .password-toggle:focus {
+            outline: none;
+            color: var(--primary-blue);
+        }
+
+        /* Error Messages */
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: var(--transition-fast);
+        }
+
+        .error-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Form Options */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .remember-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+
+        .remember-checkbox.checked {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .remember-checkbox.checked i {
+            color: white;
+            font-size: 0.75rem;
+        }
+
+        .forgot-password {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        .forgot-password:hover {
+            color: var(--dark-blue);
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 2rem;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            font-family: 'Nunito', sans-serif;
+            width: 100%;
+            min-height: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: white !important;
+            box-shadow: 0 10px 30px rgba(26, 95, 122, 0.25);
+            border: 2px solid transparent;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(26, 95, 122, 0.35);
+        }
+
+        .btn-primary:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.3);
+        }
+
+        .btn-exam {
+            background: linear-gradient(135deg, var(--exam-red), #ff7675);
+            color: white !important;
+            box-shadow: 0 10px 30px rgba(225, 112, 85, 0.25);
+        }
+
+        .btn-exam:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(225, 112, 85, 0.35);
+        }
+
+        .btn-secondary {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .btn-loading .btn-text {
+            visibility: hidden;
+        }
+
+        .btn-loading::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Quick Access Cards */
+        .quick-access {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .quick-card {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            text-align: center;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .quick-card i {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-card span {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+
+        /* Alternative Login */
+        .alternative-login {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .divider span {
+            padding: 0 1rem;
+        }
+
+        .social-login-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .social-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            font-size: 0.75rem;
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary-blue);
+            background: rgba(26, 95, 122, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .social-btn i {
+            font-size: 1.25rem;
+        }
+
+        .social-btn.google i { color: #DB4437; }
+        .social-btn.microsoft i { color: #00A4EF; }
+        .social-btn.school i { color: var(--primary-blue); }
+
+        /* Registration Link */
+        .registration-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .registration-link a {
+            color: var(--primary-blue);
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .registration-link a:hover {
+            color: var(--dark-blue);
+            text-decoration: underline;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--success-green), var(--accent-blue));
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            animation: slideInRight 0.3s ease-out;
+            max-width: 350px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, var(--danger-color), #f87171);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, var(--warning-color), #fbbf24);
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-normal);
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        .loading-text {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .login-footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Animations */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .login-container {
+                flex-direction: column;
+            }
+            
+            .welcome-panel {
+                padding: 3rem 2rem;
+            }
+            
+            .login-panel {
+                padding: 2rem;
+            }
+            
+            .quick-access {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .login-header {
+                padding: 1rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .logo-text h2 {
+                font-size: 1rem;
+            }
+            
+            .welcome-panel {
+                padding: 2rem 1.5rem;
+            }
+            
+            .welcome-title {
+                font-size: 1.75rem;
+            }
+            
+            .login-panel {
+                padding: 1.5rem;
+            }
+            
+            .login-form-container {
+                max-width: 100%;
+            }
+            
+            .form-options {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .social-login-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-access {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-title {
+                font-size: 1.5rem;
+            }
+            
+            .welcome-subtitle {
+                font-size: 1rem;
+            }
+            
+            .login-header-form h2 {
+                font-size: 1.5rem;
+            }
+            
+            .countdown-timer {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #0f172a;
+                --bg-secondary: #1e293b;
+                --text-primary: #f1f5f9;
+                --text-secondary: #cbd5e1;
+                --text-muted: #94a3b8;
+                --border-color: #334155;
+                --bg-gradient: linear-gradient(135deg, #0c1a2d 0%, #1a365d 100%);
+            }
+            
+            .login-header,
+            .login-panel,
+            .login-footer {
+                background: var(--bg-secondary);
+            }
+            
+            .form-input {
+                background: var(--bg-primary);
+                color: var(--text-primary);
+            }
+            
+            .btn-secondary {
+                background: var(--bg-primary);
+            }
+            
+            .social-btn {
+                background: var(--bg-primary);
+            }
+            
+            .quick-card {
+                background: var(--bg-primary);
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .login-header,
+            .welcome-panel,
+            .footer-links,
+            .btn,
+            .notification,
+            .quick-access,
+            .social-login-options {
+                display: none !important;
+            }
+            
+            .login-panel {
+                padding: 0;
+                background: white !important;
+            }
+            
+            .login-form-container {
+                max-width: 100%;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary-blue), var(--accent-blue));
+        }
+
+        /* Selection */
+        ::selection {
+            background-color: rgba(26, 95, 122, 0.3);
+            color: white;
+        }
+
+        /* Focus Styles */
+        .keyboard-navigation *:focus {
+            outline: 3px solid var(--highlight-yellow);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Accessibility: Skip to Main Content -->
+    <a href="#login-form" class="skip-to-main sr-only-focusable">
+        Skip to login form
+    </a>
+
+    <!-- Header -->
+    <header class="login-header" role="banner">
+        <a href="index.html" class="header-logo" aria-label="Zamfara Student Platform Home">
+            <div class="logo-icon" aria-hidden="true">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="logo-text">
+                <h2>Zamfara Student Platform</h2>
+                <p>O-Level Learning & Exam Preparation</p>
+            </div>
+        </a>
+        
+        <a href="user-selection.html" class="header-back" aria-label="Go back to profile selection">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            Back to Profiles
+        </a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="login-container" role="main">
+        <!-- Welcome Panel -->
+        <section class="welcome-panel" aria-labelledby="welcome-title">
+            <!-- Floating Elements -->
+            <div class="floating-elements">
+                <div class="floating-element">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="floating-element">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <div class="floating-element">
+                    <i class="fas fa-calculator"></i>
+                </div>
+            </div>
+            
+            <div class="welcome-content">
+                <div class="welcome-badge" role="status">
+                    <i class="fas fa-user-graduate" aria-hidden="true"></i>
+                    O-Level Student Portal
+                </div>
+                
+                <h1 id="welcome-title" class="welcome-title">
+                    Unlock Your<br>
+                    Academic Potential
+                </h1>
+                
+                <p class="welcome-subtitle">
+                    Access personalized learning paths, interactive study materials, 
+                    and expert exam preparation for WAEC, NECO, and JAMB success.
+                </p>
+                
+                <ul class="features-list" role="list">
+                    <li role="listitem">
+                        <i class="fas fa-brain" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Smart Learning Paths</h4>
+                            <p>Personalized study plans based on your performance</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-chart-line" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Progress Tracking</h4>
+                            <p>Monitor your academic growth with detailed analytics</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-trophy" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Exam Excellence</h4>
+                            <p>Thousands of past questions and mock exams</p>
+                        </div>
+                    </li>
+                    <li role="listitem">
+                        <i class="fas fa-users" aria-hidden="true"></i>
+                        <div class="feature-text">
+                            <h4>Peer Learning</h4>
+                            <p>Study groups and collaborative learning spaces</p>
+                        </div>
+                    </li>
+                </ul>
+                
+                <!-- Exam Countdown -->
+                <div class="exam-countdown" role="region" aria-label="Exam countdown">
+                    <h4>
+                        <i class="fas fa-clock" aria-hidden="true"></i>
+                        Next WAEC Exam
+                    </h4>
+                    <div class="countdown-timer" id="countdownTimer" aria-live="polite">
+                        45 days, 12:30:15
+                    </div>
+                    <p class="exam-info">Mathematics Paper 2 - May 15, 2026</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Form Panel -->
+        <section class="login-panel" aria-labelledby="login-title">
+            <div class="login-form-container">
+                <div class="login-header-form">
+                    <h2 id="login-title">Welcome Back, Student!</h2>
+                    <p>Sign in to continue your learning journey</p>
+                </div>
+
+                <!-- Quick Access Cards -->
+                <div class="quick-access" role="navigation" aria-label="Quick access">
+                    <a href="exam-prep.html" class="quick-card" aria-label="Access exam preparation">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Exam Prep</span>
+                    </a>
+                    <a href="timetable.html" class="quick-card" aria-label="View class timetable">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Timetable</span>
+                    </a>
+                    <a href="study-materials.html" class="quick-card" aria-label="Access study materials">
+                        <i class="fas fa-book-open"></i>
+                        <span>Study Materials</span>
+                    </a>
+                    <a href="progress.html" class="quick-card" aria-label="Check academic progress">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>My Progress</span>
+                    </a>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="login-form" novalidate aria-label="Student login form">
+                    <!-- Student ID / Registration Number -->
+                    <div class="form-group">
+                        <label for="studentId" class="form-label">
+                            Student ID / Registration Number
+                            <span class="required" aria-hidden="true">*</span>
+                        </label>
+                        <div class="input-group">
+                            <input type="text" 
+                                   id="studentId" 
+                                   name="studentId" 
+                                   class="form-input" 
+                                   placeholder="e.g., ZAM/STD/2026/001" 
+                                   required
+                                   autocomplete="username"
+                                   aria-required="true"
+                                   aria-describedby="studentId-error">
+                            <div class="input-icon">
+                                <i class="fas fa-id-card-alt" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div id="studentId-error" class="error-message" role="alert">
+                            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                            <span>Please enter your student ID</span>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                            Password
+                            <span class="required" aria-hidden="true">*</span>
+                        </label>
+                        <div class="input-group">
+                            <input type="password" 
+                                   id="password" 
+                                   name="password" 
+                                   class="form-input" 
+                                   placeholder="Enter your password" 
+                                   required
+                                   autocomplete="current-password"
+                                   aria-required="true"
+                                   aria-describedby="password-error">
+                            <button type="button" 
+                                    class="password-toggle" 
+                                    id="togglePassword"
+                                    aria-label="Show password"
+                                    aria-controls="password">
+                                <i class="fas fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div id="password-error" class="error-message" role="alert">
+                            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                            <span>Password is required</span>
+                        </div>
+                    </div>
+
+                    <!-- Form Options -->
+                    <div class="form-options">
+                        <div class="remember-me" id="rememberMe">
+                            <div class="remember-checkbox" role="checkbox" 
+                                 aria-checked="false" 
+                                 tabindex="0"
+                                 aria-label="Remember me on this device">
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                            </div>
+                            <span>Remember me</span>
+                        </div>
+                        <a href="forgot-password.html" class="forgot-password">
+                            Forgot Password?
+                        </a>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary" id="loginButton">
+                        <span class="btn-text">
+                            <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                            Sign In to Dashboard
+                        </span>
+                    </button>
+
+                    <!-- Quick Exam Access -->
+                    <button type="button" class="btn btn-exam" id="quickExam" style="margin-top: 1rem;">
+                        <span class="btn-text">
+                            <i class="fas fa-bolt" aria-hidden="true"></i>
+                            Quick Mock Test
+                        </span>
+                    </button>
+                </form>
+
+                <!-- Alternative Login -->
+                <div class="alternative-login">
+                    <div class="divider">
+                        <span>Or continue with</span>
+                    </div>
+                    
+                    <div class="social-login-options">
+                        <a href="#" class="social-btn google" aria-label="Sign in with Google">
+                            <i class="fab fa-google"></i>
+                            <span>Google</span>
+                        </a>
+                        <a href="#" class="social-btn microsoft" aria-label="Sign in with Microsoft">
+                            <i class="fab fa-microsoft"></i>
+                            <span>Microsoft</span>
+                        </a>
+                        <a href="#" class="social-btn school" aria-label="Sign in with School Account">
+                            <i class="fas fa-school"></i>
+                            <span>School</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Registration Link -->
+                <div class="registration-link">
+                    <p>New student? <a href="registration-student.html">Create Student Account</a></p>
+                    <p style="margin-top: 0.5rem; font-size: 0.75rem;">
+                        Need help? <a href="help.html">Contact School Administrator</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="login-footer" role="contentinfo">
+        <div class="footer-links">
+            <a href="academic-calendar.html">Academic Calendar</a>
+            <a href="exam-schedule.html">Exam Schedule</a>
+            <a href="library.html">Digital Library</a>
+            <a href="support.html">Student Support</a>
+            <a href="faq.html">FAQs</a>
+        </div>
+        <p>&copy; 2026 Zamfara State Ministry of Education - Student Learning Platform</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">
+            Powered by Passionview Solutions | Partnership with WAEC & NECO
+        </p>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" role="alert" aria-live="polite">
+        <div class="loading-spinner" aria-label="Loading"></div>
+        <div class="loading-text">Preparing your learning dashboard...</div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // DOM Elements
+        const loginForm = document.getElementById('login-form');
+        const studentIdInput = document.getElementById('studentId');
+        const passwordInput = document.getElementById('password');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const rememberMe = document.getElementById('rememberMe');
+        const rememberCheckbox = rememberMe.querySelector('.remember-checkbox');
+        const loginButton = document.getElementById('loginButton');
+        const quickExamBtn = document.getElementById('quickExam');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const countdownTimer = document.getElementById('countdownTimer');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+        // Student Session Manager
+        const studentSession = {
+            saveCredentials: (studentId, remember) => {
+                if (remember) {
+                    localStorage.setItem('rememberedStudentId', studentId);
+                    localStorage.setItem('rememberMeStudent', 'true');
+                } else {
+                    localStorage.removeItem('rememberedStudentId');
+                    localStorage.removeItem('rememberMeStudent');
+                }
+            },
+            getRememberedCredentials: () => {
+                const remembered = localStorage.getItem('rememberMeStudent') === 'true';
+                const studentId = localStorage.getItem('rememberedStudentId');
+                return { remembered, studentId };
+            },
+            clearSession: () => {
+                sessionStorage.clear();
+                localStorage.removeItem('rememberedStudentId');
+                localStorage.removeItem('rememberMeStudent');
+                localStorage.removeItem('studentStudyTime');
+            },
+            saveStudyTime: (minutes) => {
+                const today = new Date().toDateString();
+                const studyData = JSON.parse(localStorage.getItem('studentStudyTime') || '{}');
+                studyData[today] = (studyData[today] || 0) + minutes;
+                localStorage.setItem('studentStudyTime', JSON.stringify(studyData));
+            }
+        };
+
+        // Initialize form with remembered credentials
+        function initializeForm() {
+            const { remembered, studentId } = studentSession.getRememberedCredentials();
+            if (remembered && studentId) {
+                studentIdInput.value = studentId;
+                rememberCheckbox.classList.add('checked');
+                rememberCheckbox.setAttribute('aria-checked', 'true');
+                passwordInput.focus();
+            } else {
+                studentIdInput.focus();
+            }
+        }
+
+        // Password Visibility Toggle
+        function togglePasswordVisibility() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            const icon = togglePasswordBtn.querySelector('i');
+            const label = type === 'password' ? 'Show password' : 'Hide password';
+            
+            icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+            togglePasswordBtn.setAttribute('aria-label', label);
+        }
+
+        // Remember Me Toggle
+        function toggleRememberMe() {
+            const isChecked = rememberCheckbox.classList.toggle('checked');
+            rememberCheckbox.setAttribute('aria-checked', isChecked.toString());
+        }
+
+        // Form Validation
+        function validateForm() {
+            let isValid = true;
+            const errors = {
+                studentId: false,
+                password: false
+            };
+
+            // Reset errors
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.classList.remove('show');
+            });
+            document.querySelectorAll('.form-input').forEach(el => {
+                el.classList.remove('error');
+            });
+
+            // Validate Student ID
+            const studentId = studentIdInput.value.trim();
+            if (!studentId) {
+                showError(studentIdInput, 'studentId-error', 'Student ID is required');
+                isValid = false;
+                errors.studentId = true;
+            } else if (!/^[A-Z0-9\/]{10,20}$/i.test(studentId)) {
+                showError(studentIdInput, 'studentId-error', 'Invalid student ID format');
+                isValid = false;
+                errors.studentId = true;
+            }
+
+            // Validate Password
+            if (!passwordInput.value) {
+                showError(passwordInput, 'password-error', 'Password is required');
+                isValid = false;
+                errors.password = true;
+            } else if (passwordInput.value.length < 6) {
+                showError(passwordInput, 'password-error', 'Password must be at least 6 characters');
+                isValid = false;
+                errors.password = true;
+            }
+
+            return { isValid, errors };
+        }
+
+        // Show Error Function
+        function showError(inputElement, errorId, message) {
+            const errorElement = document.getElementById(errorId);
+            errorElement.querySelector('span').textContent = message;
+            errorElement.classList.add('show');
+            inputElement.classList.add('error');
+            inputElement.classList.add('shake');
+            
+            setTimeout(() => {
+                inputElement.classList.remove('shake');
+            }, 500);
+        }
+
+        // Show Loading State
+        function showLoading(show, message = 'Preparing your learning dashboard...') {
+            if (show) {
+                loadingOverlay.classList.add('active');
+                loadingOverlay.setAttribute('aria-hidden', 'false');
+                loadingOverlay.querySelector('.loading-text').textContent = message;
+                loginButton.classList.add('btn-loading');
+            } else {
+                loadingOverlay.classList.remove('active');
+                loadingOverlay.setAttribute('aria-hidden', 'true');
+                loginButton.classList.remove('btn-loading');
+            }
+        }
+
+        // Show Notification
+        function showNotification(message, type = 'info') {
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(n => n.remove());
+
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.setAttribute('role', 'alert');
+            notification.setAttribute('aria-live', 'assertive');
+            
+            const icon = type === 'success' ? 'check-circle' : 
+                         type === 'error' ? 'exclamation-circle' : 
+                         type === 'warning' ? 'exclamation-triangle' : 'info-circle';
+            
+            notification.innerHTML = `
+                <i class="fas fa-${icon}" aria-hidden="true"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+
+        // Exam Countdown Timer
+        function updateCountdown() {
+            const examDate = new Date('2026-05-15T09:00:00').getTime();
+            const now = new Date().getTime();
+            const timeLeft = examDate - now;
+            
+            if (timeLeft > 0) {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                countdownTimer.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                countdownTimer.setAttribute('aria-label', 
+                    `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds until WAEC Mathematics exam`);
+            } else {
+                countdownTimer.textContent = "Exam in progress";
+            }
+        }
+
+        // Simulate Student Login
+        async function simulateStudentLogin(studentId, password) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    // Mock student credentials
+                    const validStudents = {
+                        'ZAM/STD/2026/001': 'student123',
+                        'ZAM/STD/2026/002': 'password456',
+                        'ZAM/STD/2026/003': 'learn2026',
+                        'DEMO001': 'demo123'  // Demo account
+                    };
+
+                    if (validStudents[studentId] === password) {
+                        resolve({
+                            success: true,
+                            data: {
+                                studentId,
+                                fullName: 'Amina Musa',
+                                school: 'Government Secondary School, Gusau',
+                                class: 'SS3 Science',
+                                averageScore: 78.5,
+                                lastActive: new Date().toISOString(),
+                                studyStreak: 7
+                            }
+                        });
+                    } else {
+                        reject({
+                            success: false,
+                            error: 'Invalid student ID or password'
+                        });
+                    }
+                }, 1500);
+            });
+        }
+
+        // Form Submission Handler
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const { isValid, errors } = validateForm();
+            if (!isValid) {
+                if (errors.studentId) studentIdInput.focus();
+                else if (errors.password) passwordInput.focus();
+                return;
+            }
+
+            const studentId = studentIdInput.value.trim();
+            const password = passwordInput.value;
+            const remember = rememberCheckbox.classList.contains('checked');
+
+            showLoading(true);
+
+            try {
+                // Save credentials if "Remember me" is checked
+                studentSession.saveCredentials(studentId, remember);
+
+                // Simulate API call
+                const response = await simulateStudentLogin(studentId, password);
+                
+                if (response.success) {
+                    // Save student data
+                    sessionStorage.setItem('studentData', JSON.stringify(response.data));
+                    sessionStorage.setItem('studentAuthenticated', 'true');
+                    sessionStorage.setItem('loginTime', Date.now());
+
+                    // Track login
+                    trackStudentLogin(response.data);
+
+                    showNotification('Welcome back! Loading your dashboard...', 'success');
+
+                    // Simulate study time recording
+                    studentSession.saveStudyTime(5); // 5 minutes for login session
+
+                    setTimeout(() => {
+                        window.location.href = 'student.html';
+                    }, 2000);
+
+                } else {
+                    throw new Error('Authentication failed');
+                }
+
+            } catch (error) {
+                console.error('Login error:', error);
+                
+                let errorMessage = 'Login failed. Please try again.';
+                if (error.error) errorMessage = error.error;
+                
+                showNotification(errorMessage, 'error');
+                
+                // Clear password field on error
+                passwordInput.value = '';
+                passwordInput.focus();
+                
+                // Track failed attempts
+                const failedAttempts = parseInt(sessionStorage.getItem('failedLoginAttempts') || '0') + 1;
+                sessionStorage.setItem('failedLoginAttempts', failedAttempts.toString());
+                
+                if (failedAttempts >= 3) {
+                    showNotification('Multiple failed attempts. Try demo account: DEMO001 / demo123', 'warning');
+                }
+
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Quick Mock Test
+        function startQuickExam() {
+            showLoading(true, 'Loading mock test...');
+            
+            setTimeout(() => {
+                // In real app, this would navigate to exam page
+                showNotification('Starting 15-minute Mathematics mock test...', 'info');
+                setTimeout(() => {
+                    window.location.href = 'quick-exam.html?subject=math&duration=15';
+                }, 1500);
+            }, 1000);
+        }
+
+        // Analytics Tracking
+        function trackStudentLogin(studentData) {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'studentLogin',
+                'studentClass': studentData.class,
+                'school': studentData.school,
+                'studyStreak': studentData.studyStreak,
+                'timestamp': Date.now()
+            });
+
+            // Save login history
+            const loginHistory = JSON.parse(localStorage.getItem('studentLoginHistory') || '[]');
+            loginHistory.push({
+                studentId: studentData.studentId,
+                timestamp: Date.now(),
+                device: navigator.userAgent
+            });
+            localStorage.setItem('studentLoginHistory', JSON.stringify(loginHistory.slice(-20)));
+        }
+
+        // Event Listeners
+        togglePasswordBtn.addEventListener('click', togglePasswordVisibility);
+        togglePasswordBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                togglePasswordVisibility();
+            }
+        });
+
+        rememberCheckbox.addEventListener('click', toggleRememberMe);
+        rememberCheckbox.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleRememberMe();
+            }
+        });
+
+        loginForm.addEventListener('submit', handleLogin);
+        quickExamBtn.addEventListener('click', startQuickExam);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+Enter to submit form
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                loginForm.requestSubmit();
+            }
+            
+            // Ctrl+E for quick exam
+            if (e.ctrlKey && e.key === 'e') {
+                e.preventDefault();
+                startQuickExam();
+            }
+            
+            // Escape to clear form
+            if (e.key === 'Escape') {
+                studentIdInput.value = '';
+                passwordInput.value = '';
+                studentIdInput.focus();
+            }
+        });
+
+        // Real-time validation
+        studentIdInput.addEventListener('blur', () => {
+            if (studentIdInput.value.trim() && !/^[A-Z0-9\/]{10,20}$/i.test(studentIdInput.value.trim())) {
+                showError(studentIdInput, 'studentId-error', 'Format: ZAM/STD/YYYY/XXX');
+            }
+        });
+
+        passwordInput.addEventListener('input', () => {
+            const errorElement = document.getElementById('password-error');
+            if (passwordInput.value && errorElement.classList.contains('show')) {
+                errorElement.classList.remove('show');
+                passwordInput.classList.remove('error');
+            }
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeForm();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            
+            // Check for session expiry
+            const loginTime = sessionStorage.getItem('loginTime');
+            if (loginTime && (Date.now() - parseInt(loginTime)) > 7200000) { // 2 hours
+                studentSession.clearSession();
+                showNotification('Your session has expired. Please login again.', 'warning');
+            }
+
+            // Check URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const message = urlParams.get('message');
+            if (message === 'registered') {
+                showNotification('Account created successfully! Please login.', 'success');
+            } else if (message === 'password_reset') {
+                showNotification('Password reset successful! Please login with new password.', 'success');
+            }
+
+            // Auto-fill demo on triple click
+            studentIdInput.addEventListener('click', (e) => {
+                if (e.detail === 3) { // Triple click
+                    studentIdInput.value = 'DEMO001';
+                    passwordInput.value = 'demo123';
+                    showNotification('Demo credentials loaded. Click Login to continue.', 'info');
+                }
+            });
+        });
+
+        // Network status
+        window.addEventListener('online', () => {
+            showNotification('Back online! Syncing your progress...', 'success');
+        });
+
+        window.addEventListener('offline', () => {
+            showNotification('You are offline. Some features may be limited.', 'warning');
+        });
+
+        // Error handling
+        window.addEventListener('error', (event) => {
+            console.error('Error:', event.error);
+            showNotification('An error occurred. Please refresh the page.', 'error');
+        });
+
+        // Accessibility improvements
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-navigation');
+            }
+        });
+
+        document.addEventListener('mousedown', () => {
+            document.body.classList.remove('keyboard-navigation');
+        });
+
+        // Service Worker Registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw-student.js')
+                    .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+
+        // Study time tracking
+        let studyStartTime = Date.now();
+        window.addEventListener('beforeunload', () => {
+            const studyMinutes = Math.floor((Date.now() - studyStartTime) / 60000);
+            if (studyMinutes > 0) {
+                studentSession.saveStudyTime(studyMinutes);
+            }
+        });
+    </script>
+</body>
+</html>

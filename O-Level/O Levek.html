@@ -1,0 +1,2332 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="student-reg-2026-token">
+    <meta name="description" content="O-Level Student Registration for Zamfara Digital Learning Platform - Access WAEC/NECO exam preparation, digital learning resources, and career guidance">
+    <meta name="keywords" content="Zamfara, Student Registration, O-Level, WAEC, NECO, Secondary School, Exam Preparation, Digital Learning">
+    <title>O-Level Student Registration | Zamfara Digital Learning Platform</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest-student.json">
+    <meta name="theme-color" content="#1E40AF">
+    <link rel="icon" type="image/x-icon" href="favicon-student.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon-student.png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Framework CSS (Shared) -->
+    <link rel="stylesheet" href="css/registration-framework.css">
+    
+    <style>
+        :root {
+            /* Education Theme - Blue for Learning */
+            --primary-blue: #1E40AF;
+            --secondary-blue: #3B82F6;
+            --accent-blue: #60A5FA;
+            --light-blue: #DBEAFE;
+            --dark-blue: #1E3A8A;
+            
+            /* Education Accent Colors */
+            --academic-gold: #FBBF24;
+            --success-green: #10B981;
+            --science-purple: #8B5CF6;
+            --arts-orange: #F97316;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--primary-blue), var(--science-purple));
+            --gradient-academic: linear-gradient(135deg, var(--academic-gold), #F59E0B);
+            --gradient-science: linear-gradient(135deg, var(--science-purple), #6366F1);
+            --gradient-arts: linear-gradient(135deg, var(--arts-orange), #F59E0B);
+            --gradient-success: linear-gradient(135deg, var(--success-green), #34D399);
+            
+            /* Student UI Colors */
+            --student-bg: #F0F9FF;
+            --card-bg: #FFFFFF;
+            --border-light: #E0F2FE;
+            
+            /* Shadows */
+            --shadow-blue: 0 10px 30px rgba(30, 64, 175, 0.15);
+            --shadow-accent: 0 10px 30px rgba(251, 191, 36, 0.15);
+        }
+
+        /* Student Registration Specific Styles */
+        body.student-theme {
+            background: var(--student-bg);
+            color: var(--text-primary);
+        }
+
+        .registration-header {
+            background: var(--gradient-primary);
+            color: white;
+            border-bottom: 3px solid var(--academic-gold);
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, white, var(--light-blue));
+            border-radius: 12px;
+        }
+
+        .logo-icon i {
+            color: var(--primary-blue);
+            font-size: 1.75rem;
+        }
+
+        .header-badge {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Progress Indicator - Education Theme */
+        .progress-step.active .step-number {
+            background: var(--gradient-primary);
+            color: white;
+            border: 2px solid white;
+            box-shadow: var(--shadow-blue);
+        }
+
+        .progress-step.completed .step-number {
+            background: var(--gradient-success);
+        }
+
+        /* Benefits Panel - Education Theme */
+        .benefits-panel {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M50 50c0-8.284 6.716-15 15-15s15 6.716 15 15-6.716 15-15 15c0 8.284-6.716 15-15 15s-15-6.716-15-15 6.716-15 15-15zM15 15C15 6.716 21.716 0 30 0s15 6.716 15 15-6.716 15-15 15c0 8.284-6.716 15-15 15S0 38.284 0 30s6.716-15 15-15zm15 20c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm40 40c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .benefits-badge {
+            background: rgba(251, 191, 36, 0.2);
+            color: var(--academic-gold);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .benefits-list li {
+            border-left: 4px solid var(--academic-gold);
+        }
+
+        .benefits-list i {
+            color: var(--academic-gold);
+        }
+
+        /* Form Styling for Students */
+        .form-control:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            box-shadow: var(--shadow-blue);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--dark-blue), var(--science-purple));
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-blue);
+        }
+
+        /* Subject Selection Cards */
+        .subject-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .subject-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .subject-card.selected {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+            box-shadow: var(--shadow-blue);
+        }
+
+        .subject-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .subject-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
+        }
+
+        .subject-card.selected .subject-icon {
+            color: var(--primary-blue);
+        }
+
+        .subject-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .subject-code {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Stream Selection */
+        .stream-options {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stream-option {
+            flex: 1;
+            text-align: center;
+            padding: 1.5rem 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            background: var(--card-bg);
+        }
+
+        .stream-option:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stream-option.selected {
+            border-color: var(--primary-blue);
+            background: var(--light-blue);
+        }
+
+        .stream-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .stream-option.selected .stream-icon {
+            color: var(--primary-blue);
+        }
+
+        .stream-name {
+            font-weight: 700;
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .stream-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Exam Timeline */
+        .exam-timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 2rem 0;
+        }
+
+        .exam-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .exam-milestone {
+            position: relative;
+            padding: 1rem 0 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .exam-milestone::before {
+            content: '';
+            position: absolute;
+            left: -0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1rem;
+            height: 1rem;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .milestone-date {
+            font-weight: 700;
+            color: var(--primary-blue);
+            font-size: 0.875rem;
+        }
+
+        .milestone-title {
+            font-weight: 600;
+            margin: 0.25rem 0;
+        }
+
+        .milestone-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Performance Meter */
+        .performance-meter {
+            margin: 1.5rem 0;
+        }
+
+        .subject-performance {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .subject-label {
+            min-width: 120px;
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        .performance-bar {
+            flex: 1;
+            height: 8px;
+            background: var(--border-light);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 1rem;
+        }
+
+        .performance-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .performance-grade {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            color: var(--primary-blue);
+        }
+
+        /* Career Interest Assessment */
+        .career-assessment {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.05), rgba(139, 92, 246, 0.05));
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(30, 64, 175, 0.1);
+        }
+
+        .interest-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .interest-card {
+            padding: 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .interest-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        .interest-card.selected {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+        }
+
+        /* Learning Style Assessment */
+        .learning-style {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .style-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .style-option:hover {
+            border-color: var(--accent-blue);
+        }
+
+        .style-option.selected {
+            background: var(--light-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .style-icon {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+        }
+
+        /* Guardian/Parent Section */
+        .guardian-section {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), rgba(245, 158, 11, 0.05));
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        /* Resource Access Cards */
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .resource-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition-normal);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        /* Study Schedule Builder */
+        .schedule-builder {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(52, 211, 153, 0.05));
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .time-slot {
+            padding: 0.5rem;
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .time-slot.selected {
+            background: var(--success-green);
+            color: white;
+            border-color: var(--success-green);
+        }
+
+        .time-slot.unavailable {
+            background: var(--bg-primary);
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .subject-cards {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .stream-options {
+                flex-direction: column;
+            }
+            
+            .resource-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .interest-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .time-slots {
+                grid-template-columns: repeat(4, 1fr);
+                font-size: 0.7rem;
+            }
+            
+            .performance-meter .subject-performance {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .performance-bar {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            .student-theme {
+                background: #0f172a;
+            }
+            
+            .benefits-panel {
+                background: linear-gradient(135deg, #1e3a8a, #0f172a);
+            }
+            
+            .subject-card {
+                background: #1e293b;
+            }
+            
+            .stream-option {
+                background: #1e293b;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .benefits-panel {
+                background: white !important;
+                color: black !important;
+                border: 2px solid black;
+            }
+            
+            .btn, .file-upload, .subject-card, .stream-option {
+                display: none !important;
+            }
+            
+            .form-control {
+                border: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+<body class="student-theme">
+    <!-- Skip to Main Content -->
+    <a href="#step1" class="skip-to-main">
+        <i class="fas fa-forward"></i> Skip to registration form
+    </a>
+
+    <!-- Header -->
+    <header class="registration-header">
+        <a href="index.html" class="header-logo" aria-label="Zamfara Digital Learning Platform Home">
+            <div class="logo-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="logo-text">
+                <h1>Zamfara Digital Learning</h1>
+                <p>O-Level Student Registration Portal</p>
+            </div>
+        </a>
+        
+        <div class="header-actions">
+            <div class="header-badge">
+                <i class="fas fa-user-graduate"></i>
+                <span>Student Portal</span>
+            </div>
+            <div class="language-selector">
+                <i class="fas fa-globe-africa"></i>
+                <select id="languageSelect" aria-label="Select language">
+                    <option value="en">English</option>
+                    <option value="ha">Hausa</option>
+                </select>
+            </div>
+            <a href="student-login.html" class="header-btn">
+                <i class="fas fa-sign-in-alt"></i>
+                Student Login
+            </a>
+        </div>
+    </header>
+
+    <!-- Progress Container -->
+    <div class="progress-container">
+        <div class="progress-steps">
+            <div class="progress-bar" id="progressBar" style="width: 16.67%;"></div>
+            
+            <div class="progress-step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-info">
+                    <h4>Student Information</h4>
+                    <p>Personal & contact details</p>
+                </div>
+            </div>
+            
+            <div class="progress-step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-info">
+                    <h4>School & Academic</h4>
+                    <p>School details & class</p>
+                </div>
+            </div>
+            
+            <div class="progress-step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-info">
+                    <h4>Subject Selection</h4>
+                    <p>Choose your subjects</p>
+                </div>
+            </div>
+            
+            <div class="progress-step" data-step="4">
+                <div class="step-number">4</div>
+                <div class="step-info">
+                    <h4>Academic Profile</h4>
+                    <p>Performance & goals</p>
+                </div>
+            </div>
+            
+            <div class="progress-step" data-step="5">
+                <div class="step-number">5</div>
+                <div class="step-info">
+                    <h4>Parent/Guardian</h4>
+                    <p>Parent information</p>
+                </div>
+            </div>
+            
+            <div class="progress-step" data-step="6">
+                <div class="step-number">6</div>
+                <div class="step-info">
+                    <h4>Account Setup</h4>
+                    <p>Create login & submit</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="registration-container">
+        <!-- Benefits Panel -->
+        <aside class="benefits-panel">
+            <div class="benefits-header">
+                <div class="benefits-badge">
+                    <i class="fas fa-star"></i>
+                    Free Digital Learning Resources
+                </div>
+                
+                <h2 class="benefits-title">
+                    Excel in Your O-Level Exams
+                </h2>
+                
+                <p class="benefits-subtitle">
+                    Register to access WAEC/NECO preparation materials, 
+                    digital textbooks, past questions, and personalized learning.
+                </p>
+            </div>
+            
+            <ul class="benefits-list">
+                <li>
+                    <i class="fas fa-book-open"></i>
+                    <div class="benefit-text">
+                        <h4>Digital Textbooks</h4>
+                        <p>Access all O-Level textbooks in digital format</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-file-alt"></i>
+                    <div class="benefit-text">
+                        <h4>Past Questions</h4>
+                        <p>10 years of WAEC/NECO past questions with solutions</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <div class="benefit-text">
+                        <h4>Video Lessons</h4>
+                        <p>Recorded lessons by experienced teachers</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-chart-line"></i>
+                    <div class="benefit-text">
+                        <h4>Performance Tracking</h4>
+                        <p>Track your progress and identify weak areas</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-clock"></i>
+                    <div class="benefit-text">
+                        <h4>Study Scheduler</h4>
+                        <p>Personalized study timetable generator</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="fas fa-graduation-cap"></i>
+                    <div class="benefit-text">
+                        <h4>Career Guidance</h4>
+                        <p>University and career path recommendations</p>
+                    </div>
+                </li>
+            </ul>
+            
+            <div class="support-section">
+                <h4>
+                    <i class="fas fa-headset"></i>
+                    Student Support
+                </h4>
+                <div class="support-contacts">
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>0800-STUDENT-HELP</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>students@zamfara.edu.ng</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-comments"></i>
+                        <span>Live Chat: Mon-Fri, 8AM-6PM</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>WhatsApp: +234 800 123 4567</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Registration Form -->
+        <section class="registration-panel">
+            <div class="registration-form-container">
+                <!-- Step 1: Student Information -->
+                <div class="form-step active" id="step1">
+                    <div class="step-header">
+                        <h2>Student Information</h2>
+                        <p>Enter your personal details as they appear on your school records</p>
+                    </div>
+
+                    <form class="registration-form" id="studentForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">
+                                    First Name <span class="required">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" id="firstName" name="firstName" class="form-control" 
+                                           placeholder="Enter first name" required
+                                           pattern="[A-Za-z\s]{2,}">
+                                    <div class="input-icon">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="middleName" class="form-label">
+                                    Middle Name
+                                </label>
+                                <input type="text" id="middleName" name="middleName" 
+                                       class="form-control" placeholder="Enter middle name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">
+                                    Last Name <span class="required">*</span>
+                                </label>
+                                <input type="text" id="lastName" name="lastName" 
+                                       class="form-control" placeholder="Enter last name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dateOfBirth" class="form-label">
+                                    Date of Birth <span class="required">*</span>
+                                </label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" 
+                                       class="form-control" required
+                                       min="1995-01-01" max="2010-12-31">
+                                <div class="form-helper">
+                                    Must be between 14-29 years for O-Level
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    Gender <span class="required">*</span>
+                                </label>
+                                <div class="radio-group">
+                                    <div class="radio-item">
+                                        <input type="radio" id="genderMale" name="gender" value="male" required>
+                                        <label for="genderMale">Male</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="genderFemale" name="gender" value="female">
+                                        <label for="genderFemale">Female</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" class="form-label">
+                                    Phone Number
+                                </label>
+                                <div class="input-group">
+                                    <input type="tel" id="phone" name="phone" class="form-control" 
+                                           placeholder="0803 123 4567"
+                                           pattern="[0-9\s]{11,15}">
+                                    <div class="input-icon">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                </div>
+                                <div class="form-helper">
+                                    For important updates and OTP verification
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="form-label">
+                                    Email Address <span class="required">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="email" id="email" name="email" class="form-control" 
+                                           placeholder="student@email.com" required>
+                                    <div class="input-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nin" class="form-label">
+                                    National Identification Number (NIN)
+                                </label>
+                                <input type="text" id="nin" name="nin" class="form-control" 
+                                       placeholder="11-digit NIN"
+                                       pattern="[0-9]{11}">
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="residentialAddress" class="form-label">
+                                    Residential Address <span class="required">*</span>
+                                </label>
+                                <textarea id="residentialAddress" name="residentialAddress" 
+                                          class="form-control" rows="3" 
+                                          placeholder="Enter complete residential address" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lga" class="form-label">
+                                    Local Government Area <span class="required">*</span>
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="lga" name="lga" class="form-control" required>
+                                        <option value="">Select LGA</option>
+                                        <option value="gusau">Gusau</option>
+                                        <option value="kaura-namoda">Kaura Namoda</option>
+                                        <option value="anka">Anka</option>
+                                        <option value="talata-mafara">Talata Mafara</option>
+                                        <option value="maru">Maru</option>
+                                        <option value="bukkuyum">Bukkuyum</option>
+                                        <option value="gummi">Gummi</option>
+                                        <option value="bungudu">Bungudu</option>
+                                        <option value="tsafe">Tsafe</option>
+                                        <option value="maradun">Maradun</option>
+                                        <option value="shinkafi">Shinkafi</option>
+                                        <option value="bakura">Bakura</option>
+                                        <option value="zurmi">Zurmi</option>
+                                        <option value="birnin-magaji">Birnin Magaji</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="disability" class="form-label">
+                                    Special Needs (if any)
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="disability" name="disability" class="form-control">
+                                        <option value="">None</option>
+                                        <option value="visual">Visual Impairment</option>
+                                        <option value="hearing">Hearing Impairment</option>
+                                        <option value="mobility">Mobility Challenge</option>
+                                        <option value="learning">Learning Disability</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-helper">
+                                    Helps us provide appropriate accommodations
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="exam-timeline">
+                            <h4>
+                                <i class="fas fa-calendar-alt"></i>
+                                Upcoming Exam Dates
+                            </h4>
+                            <div class="exam-milestone">
+                                <div class="milestone-date">March 2026</div>
+                                <div class="milestone-title">WAEC Registration Begins</div>
+                                <div class="milestone-desc">Online registration for May/June WAEC</div>
+                            </div>
+                            <div class="exam-milestone">
+                                <div class="milestone-date">May 2026</div>
+                                <div class="milestone-title">WAEC Exams Start</div>
+                                <div class="milestone-desc">Practical examinations begin</div>
+                            </div>
+                            <div class="exam-milestone">
+                                <div class="milestone-date">June 2026</div>
+                                <div class="milestone-title">NECO Registration</div>
+                                <div class="milestone-desc">Registration for June/July NECO</div>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-outline" id="saveDraftBtn">
+                                <i class="fas fa-save"></i>
+                                Save Draft
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStep1">
+                                Continue to School Details
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2: School & Academic Information -->
+                <div class="form-step" id="step2">
+                    <div class="step-header">
+                        <h2>School & Academic Information</h2>
+                        <p>Details about your current school and academic level</p>
+                    </div>
+
+                    <form class="registration-form" id="schoolForm">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="schoolName" class="form-label">
+                                    School Name <span class="required">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" id="schoolName" name="schoolName" class="form-control" 
+                                           placeholder="Enter your school name" required
+                                           list="schoolSuggestions">
+                                    <div class="input-icon">
+                                        <i class="fas fa-school"></i>
+                                    </div>
+                                </div>
+                                <datalist id="schoolSuggestions">
+                                    <option value="Government Secondary School, Gusau">
+                                    <option value="Federal Government College, Kaura Namoda">
+                                    <option value="Zamfara College of Arts and Science">
+                                    <option value="Sheikh Mahmud School, Gusau">
+                                    <option value="Queen of Apostles College, Gusau">
+                                </datalist>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="schoolType" class="form-label">
+                                    School Type <span class="required">*</span>
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="schoolType" name="schoolType" class="form-control" required>
+                                        <option value="">Select type</option>
+                                        <option value="public">Public/Government</option>
+                                        <option value="private">Private</option>
+                                        <option value="federal">Federal Unity School</option>
+                                        <option value="mission">Mission School</option>
+                                        <option value="islamic">Islamic School</option>
+                                        <option value="community">Community School</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="schoolCode" class="form-label">
+                                    School Center Number
+                                </label>
+                                <input type="text" id="schoolCode" name="schoolCode" 
+                                       class="form-control" placeholder="WAEC/NECO center number">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="currentClass" class="form-label">
+                                    Current Class <span class="required">*</span>
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="currentClass" name="currentClass" class="form-control" required>
+                                        <option value="">Select class</option>
+                                        <option value="ss1">Senior Secondary 1 (SS1)</option>
+                                        <option value="ss2">Senior Secondary 2 (SS2)</option>
+                                        <option value="ss3">Senior Secondary 3 (SS3)</option>
+                                        <option value="alevel">A-Level/Remedial</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="yearOfAdmission" class="form-label">
+                                    Year of Admission
+                                </label>
+                                <input type="number" id="yearOfAdmission" name="yearOfAdmission" 
+                                       class="form-control" placeholder="YYYY"
+                                       min="2015" max="2026" step="1">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="expectedGraduation" class="form-label">
+                                    Expected Graduation Year <span class="required">*</span>
+                                </label>
+                                <input type="number" id="expectedGraduation" name="expectedGraduation" 
+                                       class="form-control" placeholder="YYYY" required
+                                       min="2026" max="2030" step="1">
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="schoolAddress" class="form-label">
+                                    School Address
+                                </label>
+                                <textarea id="schoolAddress" name="schoolAddress" 
+                                          class="form-control" rows="2" 
+                                          placeholder="School physical address"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="principalName" class="form-label">
+                                    Principal/Head Teacher Name
+                                </label>
+                                <input type="text" id="principalName" name="principalName" 
+                                       class="form-control" placeholder="Name of school principal">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="principalPhone" class="form-label">
+                                    Principal Contact
+                                </label>
+                                <input type="tel" id="principalPhone" name="principalPhone" 
+                                       class="form-control" placeholder="Principal phone number">
+                            </div>
+                        </div>
+
+                        <div class="stream-options">
+                            <div class="stream-option" data-stream="science">
+                                <div class="stream-icon">
+                                    <i class="fas fa-flask"></i>
+                                </div>
+                                <div class="stream-name">Science Stream</div>
+                                <div class="stream-desc">
+                                    Physics, Chemistry, Biology, Mathematics
+                                </div>
+                            </div>
+                            
+                            <div class="stream-option" data-stream="arts">
+                                <div class="stream-icon">
+                                    <i class="fas fa-paint-brush"></i>
+                                </div>
+                                <div class="stream-name">Arts/Humanities</div>
+                                <div class="stream-desc">
+                                    Literature, History, Government, CRS/IRS
+                                </div>
+                            </div>
+                            
+                            <div class="stream-option" data-stream="commercial">
+                                <div class="stream-icon">
+                                    <i class="fas fa-calculator"></i>
+                                </div>
+                                <div class="stream-name">Commercial</div>
+                                <div class="stream-desc">
+                                    Accounting, Commerce, Economics, Business
+                                </div>
+                            </div>
+                            
+                            <div class="stream-option" data-stream="tech">
+                                <div class="stream-icon">
+                                    <i class="fas fa-laptop-code"></i>
+                                </div>
+                                <div class="stream-name">Technical</div>
+                                <div class="stream-desc">
+                                    Technical Drawing, ICT, Agriculture, Home Econ
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="selectedStream" name="selectedStream">
+
+                        <div class="resource-cards">
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <h4>Digital Library</h4>
+                                <p>Access 500+ textbooks and reference materials</p>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-video"></i>
+                                </div>
+                                <h4>Video Lessons</h4>
+                                <p>Recorded lessons for all O-Level subjects</p>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <h4>Progress Analytics</h4>
+                                <p>Track performance and identify weak areas</p>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevStep2">
+                                <i class="fas fa-arrow-left"></i>
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStep2">
+                                Continue to Subject Selection
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 3: Subject Selection -->
+                <div class="form-step" id="step3">
+                    <div class="step-header">
+                        <h2>Subject Selection</h2>
+                        <p>Select your O-Level subjects (Choose 8-10 subjects including compulsory ones)</p>
+                    </div>
+
+                    <form class="registration-form" id="subjectForm">
+                        <div class="subject-section">
+                            <h4 style="margin-bottom: 1rem; color: var(--primary-blue);">
+                                <i class="fas fa-book"></i>
+                                Compulsory Subjects (Select all)
+                            </h4>
+                            <div class="subject-cards" id="compulsorySubjects">
+                                <!-- Compulsory subjects will be loaded here -->
+                            </div>
+                        </div>
+
+                        <div class="subject-section" style="margin-top: 2rem;">
+                            <h4 style="margin-bottom: 1rem; color: var(--science-purple);">
+                                <i class="fas fa-flask"></i>
+                                Science Subjects
+                            </h4>
+                            <div class="subject-cards" id="scienceSubjects">
+                                <!-- Science subjects will be loaded here -->
+                            </div>
+                        </div>
+
+                        <div class="subject-section" style="margin-top: 2rem;">
+                            <h4 style="margin-bottom: 1rem; color: var(--arts-orange);">
+                                <i class="fas fa-paint-brush"></i>
+                                Arts & Humanities
+                            </h4>
+                            <div class="subject-cards" id="artsSubjects">
+                                <!-- Arts subjects will be loaded here -->
+                            </div>
+                        </div>
+
+                        <div class="subject-section" style="margin-top: 2rem;">
+                            <h4 style="margin-bottom: 1rem; color: var(--success-green);">
+                                <i class="fas fa-calculator"></i>
+                                Commercial & Technical
+                            </h4>
+                            <div class="subject-cards" id="commercialSubjects">
+                                <!-- Commercial subjects will be loaded here -->
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width" style="margin-top: 2rem;">
+                            <div class="selected-subjects-summary">
+                                <h4>Selected Subjects: <span id="selectedCount">0</span>/10</h4>
+                                <div id="selectedSubjectsList" style="margin-top: 0.5rem; padding: 1rem; background: var(--light-blue); border-radius: var(--radius-md);">
+                                    No subjects selected yet
+                                </div>
+                                <div class="form-helper" style="margin-top: 0.5rem;">
+                                    Minimum: 8 subjects, Maximum: 10 subjects including English and Mathematics
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevStep3">
+                                <i class="fas fa-arrow-left"></i>
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStep3">
+                                Continue to Academic Profile
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 4: Academic Profile -->
+                <div class="form-step" id="step4">
+                    <div class="step-header">
+                        <h2>Academic Profile & Goals</h2>
+                        <p>Tell us about your academic performance and future goals</p>
+                    </div>
+
+                    <form class="registration-form" id="academicForm">
+                        <div class="performance-meter">
+                            <h4 style="margin-bottom: 1.5rem; color: var(--primary-blue);">
+                                <i class="fas fa-chart-line"></i>
+                                Current Academic Performance
+                            </h4>
+                            <p class="form-helper">
+                                Rate your current performance in each selected subject (1 = Poor, 5 = Excellent)
+                            </p>
+                            
+                            <div id="subjectPerformanceContainer">
+                                <!-- Dynamic performance meters will be loaded here -->
+                            </div>
+                        </div>
+
+                        <div class="career-assessment">
+                            <h4>
+                                <i class="fas fa-briefcase"></i>
+                                Career Interests
+                            </h4>
+                            <p class="form-helper">
+                                Select areas you're interested in for career guidance
+                            </p>
+                            
+                            <div class="interest-grid">
+                                <div class="interest-card" data-interest="medicine">
+                                    <i class="fas fa-user-md" style="font-size: 1.5rem; color: var(--science-purple); margin-bottom: 0.5rem;"></i>
+                                    <div style="font-weight: 600;">Medicine & Health</div>
+                                </div>
+                                <div class="interest-card" data-interest="engineering">
+                                    <i class="fas fa-cogs" style="font-size: 1.5rem; color: var(--primary-blue); margin-bottom: 0.5rem;"></i>
+                                    <div style="font-weight: 600;">Engineering</div>
+                                </div>
+                                <div class="interest-card" data-interest="law">
+                                    <i class="fas fa-gavel" style="font-size: 1.5rem; color: var(--dark-blue); margin-bottom: 0.5rem;"></i>
+                                    <div style="font-weight: 600;">Law</div>
+                                </div>
+                                <div class="interest-card" data-interest="business">
+                                    <i class="fas fa-chart-line" style="font-size: 1.5rem; color: var(--success-green); margin-bottom: 0.5rem;"></i>
+                                    <div style="font-weight: 600;">Business & Finance</div>
+                                </div>
+                                <div class="interest-card" data-interest="education">
+                                    <i class="fas fa-chalkboard-teacher" style="font-size: 1.5rem; color: var(--academic-gold); margin-bottom: 0.5rem;"></i>
+                                    <div style="font-weight: 600;">Education</div>
+                                </div>
+                                <div class="interest-card" data-interest="arts">
+                                    <i class="fas fa-palette" style="font-size: 1.5rem; color: var(--arts-orange); margin-bottom: 0.5rem;"></i>
+                                    <div style="font-weight: 600;">Arts & Design</div>
+                                </div>
+                                <div class="interest-card" data-interest="technology">
+                                    <i class="fas fa-laptop-code" style="font-size: 1.5rem; color: var(--science-purple); margin-bottom: 0.5rem;"></i>
+                                    <div style="font-weight: 600;">Technology</div>
+                                </div>
+                                <div class="interest-card" data-interest="agriculture">
+                                    <i class="fas fa-tractor" style="font-size: 1.5rem; color: var(--success-green); margin-bottom: 0.5rem;"></i>
+                                    <div style="font-weight: 600;">Agriculture</div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="careerInterests" name="careerInterests">
+                        </div>
+
+                        <div class="learning-style">
+                            <h4>
+                                <i class="fas fa-brain"></i>
+                                Learning Style Preference
+                            </h4>
+                            <div class="style-option" data-style="visual">
+                                <div class="style-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <div>
+                                    <div style="font-weight: 600;">Visual Learner</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                                        Learn best through videos, diagrams, and images
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="style-option" data-style="auditory">
+                                <div class="style-icon">
+                                    <i class="fas fa-headphones"></i>
+                                </div>
+                                <div>
+                                    <div style="font-weight: 600;">Auditory Learner</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                                        Learn best through lectures, discussions, and audio
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="style-option" data-style="kinesthetic">
+                                <div class="style-icon">
+                                    <i class="fas fa-hands"></i>
+                                </div>
+                                <div>
+                                    <div style="font-weight: 600;">Kinesthetic Learner</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                                        Learn best through practice, experiments, and hands-on
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="learningStyle" name="learningStyle">
+                        </div>
+
+                        <div class="schedule-builder">
+                            <h4>
+                                <i class="fas fa-clock"></i>
+                                Preferred Study Times
+                            </h4>
+                            <p class="form-helper">
+                                Select times when you're usually available for studying
+                            </p>
+                            
+                            <div class="time-slots">
+                                <!-- Time slots will be generated dynamically -->
+                            </div>
+                            <input type="hidden" id="studyTimes" name="studyTimes">
+                        </div>
+
+                        <div class="form-group full-width" style="margin-top: 1.5rem;">
+                            <label for="academicGoals" class="form-label">
+                                Academic Goals
+                            </label>
+                            <textarea id="academicGoals" name="academicGoals" class="form-control" rows="3"
+                                      placeholder="What are your academic goals? e.g., Score A1 in Mathematics, Gain admission to university, etc."></textarea>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevStep4">
+                                <i class="fas fa-arrow-left"></i>
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStep4">
+                                Continue to Parent/Guardian
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 5: Parent/Guardian Information -->
+                <div class="form-step" id="step5">
+                    <div class="step-header">
+                        <h2>Parent/Guardian Information</h2>
+                        <p>Information about your parent or guardian for monitoring and support</p>
+                    </div>
+
+                    <form class="registration-form" id="parentForm">
+                        <div class="guardian-section">
+                            <h4 style="color: var(--academic-gold); margin-bottom: 1.5rem;">
+                                <i class="fas fa-user-friends"></i>
+                                Primary Guardian Information
+                            </h4>
+                            
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="guardianName" class="form-label">
+                                        Guardian Full Name <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="guardianName" name="guardianName" 
+                                           class="form-control" placeholder="Full name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="guardianRelationship" class="form-label">
+                                        Relationship <span class="required">*</span>
+                                    </label>
+                                    <div class="select-wrapper">
+                                        <select id="guardianRelationship" name="guardianRelationship" class="form-control" required>
+                                            <option value="">Select relationship</option>
+                                            <option value="father">Father</option>
+                                            <option value="mother">Mother</option>
+                                            <option value="uncle">Uncle</option>
+                                            <option value="aunt">Aunt</option>
+                                            <option value="brother">Brother</option>
+                                            <option value="sister">Sister</option>
+                                            <option value="grandparent">Grandparent</option>
+                                            <option value="guardian">Legal Guardian</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="guardianPhone" class="form-label">
+                                        Phone Number <span class="required">*</span>
+                                    </label>
+                                    <input type="tel" id="guardianPhone" name="guardianPhone" 
+                                           class="form-control" placeholder="0803 123 4567" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="guardianEmail" class="form-label">
+                                        Email Address
+                                    </label>
+                                    <input type="email" id="guardianEmail" name="guardianEmail" 
+                                           class="form-control" placeholder="guardian@email.com">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="guardianOccupation" class="form-label">
+                                        Occupation
+                                    </label>
+                                    <input type="text" id="guardianOccupation" name="guardianOccupation" 
+                                           class="form-control" placeholder="Occupation/profession">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="guardianEducation" class="form-label">
+                                        Highest Education
+                                    </label>
+                                    <div class="select-wrapper">
+                                        <select id="guardianEducation" name="guardianEducation" class="form-control">
+                                            <option value="">Select education level</option>
+                                            <option value="primary">Primary School</option>
+                                            <option value="secondary">Secondary School</option>
+                                            <option value="nd">ND/NCE</option>
+                                            <option value="bsc">B.Sc/B.A</option>
+                                            <option value="msc">M.Sc/M.A</option>
+                                            <option value="phd">PhD</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-grid" style="margin-top: 1.5rem;">
+                            <div class="form-group full-width">
+                                <label for="emergencyContact" class="form-label">
+                                    Emergency Contact (Other than guardian)
+                                </label>
+                                <input type="text" id="emergencyContact" name="emergencyContact" 
+                                       class="form-control" placeholder="Name and phone number">
+                            </div>
+
+                            <div class="form-group full-width">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="parentConsent" name="parentConsent" required>
+                                    <label for="parentConsent">
+                                        My parent/guardian consents to my registration on this digital learning platform
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="progressReports" name="progressReports" checked>
+                                    <label for="progressReports">
+                                        Send weekly progress reports to my parent/guardian
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="parentPortal" name="parentPortal" checked>
+                                    <label for="parentPortal">
+                                        Create parent portal access for my guardian
+                                    </label>
+                                </div>
+                                <div class="form-helper">
+                                    Allows guardian to monitor progress and receive updates
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="resource-cards">
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                                <h4>Parent Dashboard</h4>
+                                <p>Real-time progress tracking for parents</p>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <h4>Weekly Reports</h4>
+                                <p>Automatic performance reports</p>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <h4>Teacher-Parent Chat</h4>
+                                <p>Direct communication with teachers</p>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevStep5">
+                                <i class="fas fa-arrow-left"></i>
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextStep5">
+                                Continue to Account Setup
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 6: Account Setup & Review -->
+                <div class="form-step" id="step6">
+                    <div class="step-header">
+                        <h2>Account Setup & Review</h2>
+                        <p>Create your login credentials and review your registration</p>
+                    </div>
+
+                    <form class="registration-form" id="accountSetupForm">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="studentUsername" class="form-label">
+                                    Username <span class="required">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" id="studentUsername" name="studentUsername" 
+                                           class="form-control" placeholder="Auto-generated" readonly>
+                                    <div class="input-icon">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                </div>
+                                <div class="form-helper">
+                                    Your unique ID for accessing learning resources
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="studentPassword" class="form-label">
+                                    Create Password <span class="required">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="password" id="studentPassword" name="studentPassword" 
+                                           class="form-control" placeholder="Enter password" required
+                                           onkeyup="checkStudentPasswordStrength()">
+                                    <div class="input-icon">
+                                        <i class="fas fa-lock"></i>
+                                    </div>
+                                </div>
+                                <div class="password-strength">
+                                    <div class="strength-bar">
+                                        <div class="strength-fill" id="studentStrengthFill"></div>
+                                    </div>
+                                    <div class="strength-text" id="studentStrengthText">Password strength: None</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmStudentPassword" class="form-label">
+                                    Confirm Password <span class="required">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="password" id="confirmStudentPassword" name="confirmStudentPassword" 
+                                           class="form-control" placeholder="Confirm password" required
+                                           onkeyup="checkStudentPasswordMatch()">
+                                    <div class="input-icon">
+                                        <i class="fas fa-lock"></i>
+                                    </div>
+                                </div>
+                                <div class="form-helper" id="studentPasswordMatchText"></div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <div class="review-summary" style="background: var(--light-blue); padding: 1.5rem; border-radius: var(--radius-lg); margin: 1rem 0;">
+                                    <h4 style="color: var(--primary-blue); margin-bottom: 1rem;">
+                                        <i class="fas fa-file-alt"></i>
+                                        Registration Summary
+                                    </h4>
+                                    <div id="registrationSummary">
+                                        <!-- Summary will be populated here -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="termsAccept" name="termsAccept" required>
+                                    <label for="termsAccept">
+                                        I agree to the <a href="student-terms.html" target="_blank">Terms of Service</a> and 
+                                        <a href="student-privacy.html" target="_blank">Privacy Policy</a>
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="codeOfConduct" name="codeOfConduct" required>
+                                    <label for="codeOfConduct">
+                                        I agree to abide by the Student Code of Conduct
+                                        <span class="required">*</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="newsletterOptIn" name="newsletterOptIn" checked>
+                                    <label for="newsletterOptIn">
+                                        Receive study tips, exam updates, and learning resources
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="researchConsent" name="researchConsent">
+                                    <label for="researchConsent">
+                                        Allow anonymous data to be used for educational research
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="resource-cards">
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <h4>Mobile App Access</h4>
+                                <p>Study on the go with our mobile application</p>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-wifi"></i>
+                                </div>
+                                <h4>Offline Mode</h4>
+                                <p>Download materials for offline studying</p>
+                            </div>
+                            <div class="resource-card">
+                                <div class="resource-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h4>Study Groups</h4>
+                                <p>Join virtual study groups with classmates</p>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="prevStep6">
+                                <i class="fas fa-arrow-left"></i>
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-primary" id="submitStudentRegistration">
+                                <i class="fas fa-graduation-cap"></i>
+                                Complete Registration
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="registration-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://zamfara.edu.ng" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Education Board
+                </a>
+                <a href="waec-registration.html">
+                    <i class="fas fa-file-signature"></i> WAEC Registration
+                </a>
+                <a href="neco-registration.html">
+                    <i class="fas fa-file-contract"></i> NECO Registration
+                </a>
+                <a href="scholarships.html">
+                    <i class="fas fa-award"></i> Scholarships
+                </a>
+                <a href="career-guidance.html">
+                    <i class="fas fa-compass"></i> Career Guidance
+                </a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Zamfara State Ministry of Education - Digital Learning Initiative</p>
+                <p style="font-size: 0.75rem; margin-top: 0.5rem;">
+                    In partnership with: WAEC • NECO • NERDC • UBEC • UNICEF
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Setting up your digital learning account...</div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon" style="background: var(--gradient-success);">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h2>Welcome to Digital Learning!</h2>
+            <p>
+                Your registration is complete. You now have access to all O-Level learning resources.
+            </p>
+            <p><strong>Student ID:</strong> <span id="studentIdDisplay">Loading...</span></p>
+            <p><strong>Access Code:</strong> <span id="accessCodeDisplay">Loading...</span></p>
+            <div class="modal-actions">
+                <button class="btn btn-primary" onclick="window.location.href='student-dashboard.html'">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Go to Dashboard
+                </button>
+                <button class="btn btn-outline" onclick="downloadStudyPlan()">
+                    <i class="fas fa-download"></i>
+                    Download Study Plan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/registration-framework.js"></script>
+    <script>
+        // Student Registration Configuration
+        const studentConfig = {
+            type: 'student',
+            storageKey: 'zamfaraStudentDraft',
+            steps: 6,
+            
+            subjects: {
+                compulsory: [
+                    { code: 'ENG', name: 'English Language', icon: 'fas fa-language' },
+                    { code: 'MTH', name: 'Mathematics', icon: 'fas fa-calculator' },
+                    { code: 'CIV', name: 'Civic Education', icon: 'fas fa-landmark' }
+                ],
+                science: [
+                    { code: 'PHY', name: 'Physics', icon: 'fas fa-atom' },
+                    { code: 'CHE', name: 'Chemistry', icon: 'fas fa-flask' },
+                    { code: 'BIO', name: 'Biology', icon: 'fas fa-dna' },
+                    { code: 'AGR', name: 'Agricultural Science', icon: 'fas fa-tractor' },
+                    { code: 'PHC', name: 'Physical & Health Education', icon: 'fas fa-running' }
+                ],
+                arts: [
+                    { code: 'LIT', name: 'Literature in English', icon: 'fas fa-book-open' },
+                    { code: 'HIS', name: 'History', icon: 'fas fa-history' },
+                    { code: 'GOV', name: 'Government', icon: 'fas fa-university' },
+                    { code: 'CRS', name: 'Christian Religious Studies', icon: 'fas fa-church' },
+                    { code: 'IRS', name: 'Islamic Religious Studies', icon: 'fas fa-mosque' }
+                ],
+                commercial: [
+                    { code: 'ACC', name: 'Accounting', icon: 'fas fa-file-invoice-dollar' },
+                    { code: 'ECO', name: 'Economics', icon: 'fas fa-chart-line' },
+                    { code: 'COM', name: 'Commerce', icon: 'fas fa-store' },
+                    { code: 'BST', name: 'Business Studies', icon: 'fas fa-briefcase' }
+                ],
+                technical: [
+                    { code: 'ICT', name: 'Computer Studies', icon: 'fas fa-laptop' },
+                    { code: 'TD', name: 'Technical Drawing', icon: 'fas fa-drafting-compass' },
+                    { code: 'HOME', name: 'Home Economics', icon: 'fas fa-utensils' }
+                ]
+            },
+            
+            timeSlots: [
+                '6AM-8AM', '8AM-10AM', '10AM-12PM', 
+                '12PM-2PM', '2PM-4PM', '4PM-6PM',
+                '6PM-8PM', '8PM-10PM'
+            ]
+        };
+
+        // Initialize Student Registration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize framework
+            RegistrationFramework.init(studentConfig);
+            
+            // Generate student username
+            generateStudentUsername();
+            
+            // Load subjects
+            loadSubjects();
+            
+            // Setup stream selection
+            setupStreamSelection();
+            
+            // Setup time slots
+            setupTimeSlots();
+            
+            // Setup subject selection
+            setupSubjectSelection();
+            
+            // Setup learning style selection
+            setupLearningStyleSelection();
+            
+            // Setup career interest selection
+            setupCareerInterestSelection();
+            
+            // Auto-fill demo data for presentation
+            if (window.location.search.includes('demo=true')) {
+                autoFillStudentData();
+            }
+        });
+
+        // Generate student username
+        function generateStudentUsername() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const school = document.getElementById('schoolName').value;
+            
+            if (firstName && lastName) {
+                const schoolCode = school ? school.substring(0, 3).toUpperCase() : 'SCH';
+                const randomNum = Math.floor(100 + Math.random() * 900);
+                const username = `STU${firstName.charAt(0).toUpperCase()}${lastName.substring(0, 3).toUpperCase()}${schoolCode}${randomNum}`;
+                document.getElementById('studentUsername').value = username.toLowerCase();
+            }
+        }
+
+        // Load subjects into cards
+        function loadSubjects() {
+            // Compulsory subjects
+            const compulsoryContainer = document.getElementById('compulsorySubjects');
+            studentConfig.subjects.compulsory.forEach(subject => {
+                compulsoryContainer.appendChild(createSubjectCard(subject, true));
+            });
+
+            // Science subjects
+            const scienceContainer = document.getElementById('scienceSubjects');
+            studentConfig.subjects.science.forEach(subject => {
+                scienceContainer.appendChild(createSubjectCard(subject, false));
+            });
+
+            // Arts subjects
+            const artsContainer = document.getElementById('artsSubjects');
+            studentConfig.subjects.arts.forEach(subject => {
+                artsContainer.appendChild(createSubjectCard(subject, false));
+            });
+
+            // Commercial subjects
+            const commercialContainer = document.getElementById('commercialSubjects');
+            studentConfig.subjects.commercial.forEach(subject => {
+                commercialContainer.appendChild(createSubjectCard(subject, false));
+            });
+
+            // Technical subjects
+            const technicalContainer = document.getElementById('commercialSubjects');
+            studentConfig.subjects.technical.forEach(subject => {
+                technicalContainer.appendChild(createSubjectCard(subject, false));
+            });
+        }
+
+        // Create subject card element
+        function createSubjectCard(subject, isCompulsory) {
+            const card = document.createElement('div');
+            card.className = `subject-card ${isCompulsory ? 'selected' : ''}`;
+            card.dataset.code = subject.code;
+            card.dataset.name = subject.name;
+            card.dataset.compulsory = isCompulsory;
+            
+            card.innerHTML = `
+                <div class="subject-icon">
+                    <i class="${subject.icon}"></i>
+                </div>
+                <div class="subject-name">${subject.name}</div>
+                <div class="subject-code">${subject.code}</div>
+            `;
+            
+            if (!isCompulsory) {
+                card.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                    updateSelectedSubjects();
+                });
+            }
+            
+            return card;
+        }
+
+        // Update selected subjects list
+        function updateSelectedSubjects() {
+            const selectedCards = document.querySelectorAll('.subject-card.selected');
+            const selectedCount = selectedCards.length;
+            const selectedList = document.getElementById('selectedSubjectsList');
+            
+            document.getElementById('selectedCount').textContent = selectedCount;
+            
+            if (selectedCount > 0) {
+                let html = '<div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">';
+                selectedCards.forEach(card => {
+                    html += `<span style="background: var(--primary-blue); color: white; padding: 0.25rem 0.5rem; border-radius: var(--radius-sm); font-size: 0.875rem;">${card.dataset.code}</span>`;
+                });
+                html += '</div>';
+                selectedList.innerHTML = html;
+                
+                // Update performance meters
+                updatePerformanceMeters(selectedCards);
+            } else {
+                selectedList.innerHTML = 'No subjects selected yet';
+            }
+            
+            // Enable/disable next button based on subject count
+            const nextButton = document.getElementById('nextStep3');
+            if (selectedCount >= 8 && selectedCount <= 10) {
+                nextButton.disabled = false;
+            } else {
+                nextButton.disabled = true;
+            }
+        }
+
+        // Update performance meters
+        function updatePerformanceMeters(selectedCards) {
+            const container = document.getElementById('subjectPerformanceContainer');
+            container.innerHTML = '';
+            
+            selectedCards.forEach(card => {
+                const subjectCode = card.dataset.code;
+                const subjectName = card.dataset.name;
+                
+                const performanceDiv = document.createElement('div');
+                performanceDiv.className = 'subject-performance';
+                performanceDiv.innerHTML = `
+                    <div class="subject-label">${subjectName}</div>
+                    <div class="performance-bar">
+                        <div class="performance-fill" data-subject="${subjectCode}" style="width: 0%"></div>
+                    </div>
+                    <div class="performance-grade" id="grade-${subjectCode}">-</div>
+                    <div class="performance-rating" style="display: flex; gap: 0.25rem; margin-left: 1rem;">
+                        ${[1,2,3,4,5].map(num => 
+                            `<button type="button" class="rating-btn" data-subject="${subjectCode}" data-rating="${num}" 
+                                    style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--border-color); background: var(--bg-secondary); cursor: pointer; font-size: 0.75rem;">${num}</button>`
+                        ).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(performanceDiv);
+            });
+            
+            // Add rating event listeners
+            document.querySelectorAll('.rating-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const subject = this.dataset.subject;
+                    const rating = parseInt(this.dataset.rating);
+                    const percent = (rating / 5) * 100;
+                    const grade = getGradeFromRating(rating);
+                    
+                    // Update fill and grade
+                    document.querySelector(`.performance-fill[data-subject="${subject}"]`).style.width = `${percent}%`;
+                    document.getElementById(`grade-${subject}`).textContent = grade;
+                    
+                    // Update button states for this subject
+                    document.querySelectorAll(`.rating-btn[data-subject="${subject}"]`).forEach(rbtn => {
+                        const rbtnRating = parseInt(rbtn.dataset.rating);
+                        if (rbtnRating <= rating) {
+                            rbtn.style.background = 'var(--gradient-primary)';
+                            rbtn.style.color = 'white';
+                            rbtn.style.borderColor = 'var(--primary-blue)';
+                        } else {
+                            rbtn.style.background = 'var(--bg-secondary)';
+                            rbtn.style.color = 'var(--text-secondary)';
+                            rbtn.style.borderColor = 'var(--border-color)';
+                        }
+                    });
+                });
+            });
+        }
+
+        // Convert rating to grade
+        function getGradeFromRating(rating) {
+            const grades = ['F', 'E', 'D', 'C', 'B', 'A'];
+            return grades[rating] || '-';
+        }
+
+        // Setup stream selection
+        function setupStreamSelection() {
+            const streamOptions = document.querySelectorAll('.stream-option');
+            const hiddenInput = document.getElementById('selectedStream');
+            
+            streamOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    streamOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    hiddenInput.value = this.dataset.stream;
+                });
+            });
+        }
+
+        // Setup time slots
+        function setupTimeSlots() {
+            const container = document.querySelector('.time-slots');
+            const hiddenInput = document.getElementById('studyTimes');
+            let selectedTimes = [];
+            
+            studentConfig.timeSlots.forEach(slot => {
+                const slotDiv = document.createElement('div');
+                slotDiv.className = 'time-slot';
+                slotDiv.textContent = slot;
+                slotDiv.dataset.slot = slot;
+                
+                slotDiv.addEventListener('click', function() {
+                    if (!this.classList.contains('unavailable')) {
+                        this.classList.toggle('selected');
+                        
+                        if (this.classList.contains('selected')) {
+                            selectedTimes.push(slot);
+                        } else {
+                            selectedTimes = selectedTimes.filter(t => t !== slot);
+                        }
+                        
+                        hiddenInput.value = selectedTimes.join(',');
+                    }
+                });
+                
+                container.appendChild(slotDiv);
+            });
+        }
+
+        // Setup subject selection
+        function setupSubjectSelection() {
+            // Already handled in createSubjectCard
+        }
+
+        // Setup learning style selection
+        function setupLearningStyleSelection() {
+            const styleOptions = document.querySelectorAll('.style-option');
+            const hiddenInput = document.getElementById('learningStyle');
+            
+            styleOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    styleOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    hiddenInput.value = this.dataset.style;
+                });
+            });
+        }
+
+        // Setup career interest selection
+        function setupCareerInterestSelection() {
+            const interestCards = document.querySelectorAll('.interest-card');
+            const hiddenInput = document.getElementById('careerInterests');
+            let selectedInterests = [];
+            
+            interestCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                    const interest = this.dataset.interest;
+                    
+                    if (this.classList.contains('selected')) {
+                        selectedInterests.push(interest);
+                    } else {
+                        selectedInterests = selectedInterests.filter(i => i !== interest);
+                    }
+                    
+                    hiddenInput.value = selectedInterests.join(',');
+                });
+            });
+        }
+
+        // Student password strength checker
+        function checkStudentPasswordStrength() {
+            const password = document.getElementById('studentPassword').value;
+            const strengthFill = document.getElementById('studentStrengthFill');
+            const strengthText = document.getElementById('studentStrengthText');
+            
+            let strength = 0;
+            let color = '#ef4444';
+            let text = 'Very Weak';
+            
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            
+            switch(strength) {
+                case 1:
+                    color = '#f97316';
+                    text = 'Weak';
+                    break;
+                case 2:
+                    color = '#eab308';
+                    text = 'Fair';
+                    break;
+                case 3:
+                    color = '#84cc16';
+                    text = 'Good';
+                    break;
+                case 4:
+                    color = '#10b981';
+                    text = 'Strong';
+                    break;
+            }
+            
+            const percent = (strength / 4) * 100;
+            strengthFill.style.width = `${percent}%`;
+            strengthFill.style.background = color;
+            strengthText.textContent = `Password strength: ${text}`;
+            strengthText.style.color = color;
+        }
+
+        // Check student password match
+        function checkStudentPasswordMatch() {
+            const password = document.getElementById('studentPassword').value;
+            const confirmPassword = document.getElementById('confirmStudentPassword').value;
+            const matchText = document.getElementById('studentPasswordMatchText');
+            
+            if (confirmPassword) {
+                if (password === confirmPassword) {
+                    matchText.textContent = 'Passwords match';
+                    matchText.style.color = '#10b981';
+                } else {
+                    matchText.textContent = 'Passwords do not match';
+                    matchText.style.color = '#ef4444';
+                }
+            }
+        }
+
+        // Generate registration summary
+        function generateStudentSummary() {
+            const formData = RegistrationFramework.getFormData();
+            const summaryDiv = document.getElementById('registrationSummary');
+            
+            const selectedSubjects = Array.from(document.querySelectorAll('.subject-card.selected'))
+                .map(card => card.dataset.code)
+                .join(', ');
+            
+            const summaryHTML = `
+                <div style="display: grid; gap: 0.75rem;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-secondary);">Student Name:</span>
+                        <span style="font-weight: 600;">${formData.firstName} ${formData.lastName}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-secondary);">School:</span>
+                        <span style="font-weight: 600;">${formData.schoolName || 'Not specified'}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-secondary);">Class:</span>
+                        <span style="font-weight: 600;">${document.getElementById('currentClass').options[document.getElementById('currentClass').selectedIndex].text}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-secondary);">Selected Subjects:</span>
+                        <span style="font-weight: 600;">${selectedSubjects}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-secondary);">Learning Resources:</span>
+                        <span style="font-weight: 600; color: var(--success-green);">Unlocked</span>
+                    </div>
+                </div>
+            `;
+            
+            summaryDiv.innerHTML = summaryHTML;
+            
+            // Generate student ID and access code
+            const studentId = `ZAM-STU-${Date.now().toString().slice(-8)}`;
+            const accessCode = generateAccessCode();
+            
+            document.getElementById('studentIdDisplay').textContent = studentId;
+            document.getElementById('accessCodeDisplay').textContent = accessCode;
+        }
+
+        // Generate access code
+        function generateAccessCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = '';
+            for (let i = 0; i < 8; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        // Submit student registration
+        function submitStudentRegistration() {
+            if (RegistrationFramework.validateStep(6)) {
+                generateStudentSummary();
+                
+                // Show loading
+                RegistrationFramework.showLoading(true);
+                
+                // Simulate API call
+                setTimeout(() => {
+                    RegistrationFramework.showLoading(false);
+                    document.getElementById('successModal').classList.add('active');
+                    
+                    // Clear draft
+                    localStorage.removeItem(studentConfig.storageKey);
+                    
+                    // Track registration in analytics
+                    trackStudentRegistration();
+                }, 2000);
+            }
+        }
+
+        // Auto-fill student data for demo
+        function autoFillStudentData() {
+            document.getElementById('firstName').value = 'Amina';
+            document.getElementById('lastName').value = 'Yusuf';
+            document.getElementById('dateOfBirth').value = '2007-08-15';
+            document.getElementById('genderFemale').checked = true;
+            document.getElementById('phone').value = '08031234567';
+            document.getElementById('email').value = 'amina.yusuf@example.com';
+            document.getElementById('residentialAddress').value = '123 Student Quarters, Gusau';
+            document.getElementById('lga').value = 'gusau';
+            
+            document.getElementById('schoolName').value = 'Government Secondary School, Gusau';
+            document.getElementById('schoolType').value = 'public';
+            document.getElementById('currentClass').value = 'ss2';
+            document.getElementById('expectedGraduation').value = '2025';
+            
+            // Auto-select science stream
+            document.querySelector('.stream-option[data-stream="science"]').click();
+            
+            // Auto-select some subjects
+            setTimeout(() => {
+                document.querySelectorAll('.subject-card').forEach(card => {
+                    const code = card.dataset.code;
+                    if (['ENG', 'MTH', 'PHY', 'CHE', 'BIO', 'AGR', 'CIV', 'ICT'].includes(code)) {
+                        card.click();
+                    }
+                });
+            }, 100);
+            
+            generateStudentUsername();
+        }
+
+        // Track student registration
+        function trackStudentRegistration() {
+            const formData = RegistrationFramework.getFormData();
+            const analyticsData = {
+                event: 'student_registration_complete',
+                class: formData.currentClass,
+                subjects_count: document.querySelectorAll('.subject-card.selected').length,
+                stream: document.getElementById('selectedStream').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            console.log('Student Registration Analytics:', analyticsData);
+        }
+
+        // Download study plan
+        function downloadStudyPlan() {
+            const studyPlan = `
+                ZAMFARA DIGITAL LEARNING PLATFORM
+                STUDY PLAN FOR ${document.getElementById('firstName').value.toUpperCase()} ${document.getElementById('lastName').value.toUpperCase()}
+                
+                Generated on: ${new Date().toLocaleDateString()}
+                
+                RECOMMENDED STUDY SCHEDULE:
+                
+                1. Morning Session (6AM-8AM): Mathematics Practice
+                2. Afternoon Session (2PM-4PM): Science Subjects
+                3. Evening Session (6PM-8PM): Languages & Arts
+                
+                WEEKLY GOALS:
+                - Complete 5 past questions per subject
+                - Watch 3 video lessons
+                - Attend 2 live tutorial sessions
+                
+                RESOURCES AVAILABLE:
+                ✓ Digital Textbooks
+                ✓ Past Questions (10 years)
+                ✓ Video Lessons
+                ✓ Practice Tests
+                ✓ Progress Analytics
+                
+                STUDY TIPS:
+                1. Study in 45-minute blocks with 15-minute breaks
+                2. Focus on weak areas identified in analytics
+                3. Join study groups for collaborative learning
+                4. Use offline mode when internet is unavailable
+                
+                SUPPORT CONTACTS:
+                Student Help: 0800-STUDENT-HELP
+                Email: students@zamfara.edu.ng
+                WhatsApp: +234 800 123 4567
+                
+                Remember: Consistency is key to academic success!
+            `;
+            
+            const blob = new Blob([studyPlan], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Study-Plan-${document.getElementById('studentIdDisplay').textContent}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Service Worker Registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw-student.js')
+                    .then(registration => {
+                        console.log('Service Worker registered for students:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Handle offline study mode
+        window.addEventListener('online', function() {
+            RegistrationFramework.showNotification('Back online. Syncing your progress...', 'info');
+        });
+
+        window.addEventListener('offline', function() {
+            RegistrationFramework.showNotification('You are offline. Downloaded materials are available.', 'warning');
+        });
+    </script>
+</body>
+</html>
